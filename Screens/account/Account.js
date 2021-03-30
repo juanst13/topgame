@@ -6,6 +6,7 @@ import { getCurrentUser, isUserLogged } from '../../Utils/actions'
 import UserLogged from './UserLogged'
 import UserGuest from './UserGuest'
 import { useFocusEffect } from '@react-navigation/native'
+import Login from './Login'
 
 export default function Account() {
     const [login, setLogin] = useState(null)
@@ -21,7 +22,7 @@ export default function Account() {
         return <Loading isVisible={true} text="Cargando..."/>
     }
 
-    return login ? <UserLogged/> : <UserGuest/>
+    return login ? <UserLogged/> : <Login/>
 }
 
 

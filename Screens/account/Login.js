@@ -18,28 +18,28 @@ export default function Login() {
             />
             <View style = {styles.container}>
                 <LoginForm/>
-                <CreateAccount/>
+                {/* <CreateAccount/> */}
             </View>
             <Divider style = {styles.divider}/>
         </KeyboardAwareScrollView>
     )
 }
 
-function CreateAccount(props) {
-    const navigation = useNavigation()
+// function CreateAccount(props) {
+//     const navigation = useNavigation()
     
-    return(
-        <Text 
-        style = {styles.register}
-            onPress={() => navigation.navigate("register")}
-        >
-            ¿Aún no tienes una cuenta?{" "}
-            <Text style = {styles.btncontainer}>
-                Regístrate
-            </Text>
-        </Text>
-    )
-}
+//     return(
+//         <Text 
+//         style = {styles.register}
+//             onPress={() => navigation.navigate("register")}
+//         >
+//             ¿Aún no tienes una cuenta?{" "}
+//             <Text style = {styles.btncontainer}>
+//                 Regístrate
+//             </Text>
+//         </Text>
+//     )
+// }
 
 const styles = StyleSheet.create({
     image:{

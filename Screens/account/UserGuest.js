@@ -19,7 +19,7 @@ export default function UserGuest() {
                 resizeMode = "contain"
                 style={styles.image}
             />
-            <Text style={styles.title}> {"\n"}{"\n"}Consulta tu perfil en Gaming{"\n"}</Text>
+            <Text style={styles.title}> {"\n"}{"\n"}Bienvenido a TopGame{"\n"}</Text>
             <Text style={styles.description}>
                 ¡Explora el mundo Gamer de una forma jámas vista! {"\n"}{"\n"} Esta aventura inmersiva. En busqueda de los mejores juegos, tiendas y articulos. Vota y comenta como ha sido tu experiencia para lograr una aventura que envuelva tus sentidos...
             </Text>
