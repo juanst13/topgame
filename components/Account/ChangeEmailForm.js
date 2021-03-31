@@ -83,7 +83,7 @@ export default function ChangeEmailForm({ email, setShowModal, toastRef, setRelo
             <Input
                 placeholder = "Ingresa tu contraseña"
                 containerStyle = {styles.input}
-                defaultValue = {user.password}
+                defaultValue = {password}
                 secureTextEntry = {!showPassword}
                 password = {true}
                 onChange = {(e) => setPassword(e.nativeEvent.text)}

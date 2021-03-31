@@ -56,7 +56,7 @@ export default function AccountOptions({ user, toastRef, setReloadUser }) {
             case "email":
                 setRenderComponent(
                     <ChangeEmailForm
-                        user = {user}
+                        email = {user.email}
                         setShowModal = {setShowModal}
                         toastRef = {toastRef}
                         setReloadUser = {setReloadUser}

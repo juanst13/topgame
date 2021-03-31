@@ -1,10 +1,10 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-export default function Stores() {
+export default function AddStoresForm() {
     return (
         <View>
-            <Text>Stores...</Text>
+            <Text>AddStoresForm...</Text>
         </View>
     )
 }

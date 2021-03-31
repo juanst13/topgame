@@ -15,6 +15,7 @@ export default function Account() {
         useCallback(() => {
             const user = getCurrentUser()
             user ? setLogin(true) : setLogin(false)
+            console.log(getCurrentUser())
         }, [])
     )
 
@@ -22,7 +23,7 @@ export default function Account() {
         return <Loading isVisible={true} text="Cargando..."/>
     }
 
-    return login ? <UserLogged/> : <Login/>
+    return login ? <UserLogged/> : <UserGuest/>
 }
 
 

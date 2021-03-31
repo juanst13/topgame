@@ -19,10 +19,6 @@ export default function LoginForm() {
 
     const navigation = useNavigation()
 
-    useEffect(() => {
-        setHide(false)
-    }, [])
-
     const onChange = (e, type) => {
         setFormData({ ...formData, [type]: e.nativeEvent.text })
     }
@@ -70,7 +66,7 @@ export default function LoginForm() {
         return isValid
     }
 
-    if(hide){
+    // if(hide){
         return (
     
             <View style = {styles.containerForm}>
@@ -126,7 +122,7 @@ export default function LoginForm() {
                     }
                 />
                 <Loading isVisible={loading} text = "Iniciando Sesión..."/>
-                <Text 
+                {/* <Text 
                     style = {styles.register}
                         onPress={() => navigation.navigate("register")}
                 >
@@ -134,33 +130,33 @@ export default function LoginForm() {
                         <Text style = {styles.btncontainer}>
                             Regístrate
                         </Text>
-                </Text>
+                </Text> */}
             </View>
         )
-    }else{
-        return(
-            <ScrollView>
-                <Text style={styles.title}> {"\n"}{"\n"}Bienvenido a TopGame{"\n"}</Text>
-                <Text style={styles.description}>
-                    ¡Explora el mundo Gamer de una forma jámas vista! {"\n"}{"\n"} Esta aventura inmersiva. En busqueda de los mejores juegos, tiendas y articulos. Vota y comenta como ha sido tu experiencia para lograr una aventura que envuelva tus sentidos...
-                </Text>
-                <Button
-                        title = "  Ver tu perfil"
-                        buttonStyle = {styles.btn}
-                        containerStyle = {styles.btnContainer}
-                        onPress = {() => setHide(true)}
-                        icon = {
-                            <Icon
-                                type = "material-community"
-                                name = "account-star"
-                                color = "white"
-                                size = {26}
-                            />
-                        }
-                />
-            </ScrollView>
-        )
-    }
+    // }else{
+    //     return(
+    //         <ScrollView>
+    //             <Text style={styles.title}> {"\n"}{"\n"}Bienvenido a TopGame{"\n"}</Text>
+    //             <Text style={styles.description}>
+    //                 ¡Explora el mundo Gamer de una forma jámas vista! {"\n"}{"\n"} Esta aventura inmersiva. En busqueda de los mejores juegos, tiendas y articulos. Vota y comenta como ha sido tu experiencia para lograr una aventura que envuelva tus sentidos...
+    //             </Text>
+    //             <Button
+    //                     title = "  Ver tu perfil"
+    //                     buttonStyle = {styles.btn}
+    //                     containerStyle = {styles.btnContainer}
+    //                     onPress = {() => setHide(true)}
+    //                     icon = {
+    //                         <Icon
+    //                             type = "material-community"
+    //                             name = "account-star"
+    //                             color = "white"
+    //                             size = {26}
+    //                         />
+    //                     }
+    //             />
+    //         </ScrollView>
+    //     )
+    // }
 }
 
 const defaultFormValues = () => {
