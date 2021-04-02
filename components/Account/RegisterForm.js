@@ -182,7 +182,13 @@ export default function RegisterForm() {
 }
 
 const defaultFormValues = () => {
-    return { email: "", password: "", confirm: "", validateEmail: null,  validatePassword: null,  validateConfirm: null  }
+    return { 
+        email: "", 
+        password: "", 
+        confirm: "", 
+        validateEmail: null,  
+        validatePassword: null,  
+        validateConfirm: null  }
 }
 
 const styles = StyleSheet.create({

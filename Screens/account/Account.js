@@ -15,7 +15,6 @@ export default function Account() {
         useCallback(() => {
             const user = getCurrentUser()
             user ? setLogin(true) : setLogin(false)
-            console.log(getCurrentUser())
         }, [])
     )
 

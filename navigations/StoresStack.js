@@ -18,7 +18,7 @@ export default function StoresStack() {
             <Stack.Screen
                 name = "add-store"
                 component = {AddStores}
-                options = {{ title: "Agregar Tienda" }}
+                options = {{ title: "Crear Tienda" }}
             />
         </Stack.Navigator>
     )
