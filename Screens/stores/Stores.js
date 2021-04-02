@@ -35,7 +35,7 @@ export default function Stores({ navigation }) {
 const styles = StyleSheet.create({
     icon: {
         position: "absolute",
-        bottom: 500,
+        top: 150,
         right: 10,
         shadowColor: "black",
         shadowOffset: { width: 2, height: 2},
