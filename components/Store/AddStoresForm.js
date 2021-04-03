@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Alert, Dimensions, StyleSheet, ScrollView, Text, View } from 'react-native'
+import { Alert, Dimensions, StyleSheet, ScrollView, Switch, Text, View } from 'react-native'
 import { Avatar, Input, Image, Button, Icon, Slider } from 'react-native-elements'
 import CountryPicker from 'react-native-country-picker-modal'
 import { map, size, filter, isEmpty } from 'lodash'
@@ -7,15 +7,14 @@ import MapView from 'react-native-maps'
 import uuid from 'random-uuid-v4'
 
 import { getCurrentLocation, loadImageFromGallery, validateEmail } from '../../Utils/helpers'
+import { addDocumentWithOutId, getCurrentUser, uploadImage } from '../../Utils/actions'
 import Modal from '../../components/Modal'
-import { ButtonGroup } from 'react-native-elements/dist/buttons/ButtonGroup'
-import { Switch } from 'react-native'
-import { uploadImage } from '../../Utils/actions'
 
 const widthScreen = Dimensions.get("window").width
 
 export default function AddStoresForm({ toastRef, setLoading, navigation }) {
     const [formData, setFormData] = useState(defaultFormValues())
+    const [digitalStore, setDigitalStore] = useState(false)
     const [errorName, setErrorName] = useState(null)
     const [errorAddress, setErrorAddress] = useState(null)
     const [errorEmail, setErrorEmail] = useState(null)
@@ -30,11 +29,34 @@ export default function AddStoresForm({ toastRef, setLoading, navigation }) {
         if(!validateForm()){
             return
         }
+
         setLoading(true)
-        const response = await uploadImages()
-        console.log(response)
+        const responseUploadImages = await uploadImages()
+        const store = {
+            name:   formData.name,
+            address:   formData.address,
+            storeDigital:   digitalStore,
+            email:   formData.email,
+            url:   formData.url,
+            phone:   formData.phone,
+            description:   formData.description,
+            callingCode:   formData.callingCode,
+            location:   locationStore,
+            images:   responseUploadImages,
+            rating:   0,
+            ratingTotal:   0,
+            quantityVoting:   0,
+            createAdd: new Date(),
+            createBy: getCurrentUser().uid
+        }
+        const responseAddDocument = await addDocumentWithOutId("stores", store)
         setLoading(false)
-        console.log("Creando...")
+
+        if(!responseAddDocument.statusResponse){
+            toastRef.current.show("Error al registrar la tienda, intenta mas tarde.",3000)
+            console.log(responseAddDocument.error)
+        }
+        navigation.navigate("stores")
     }
 
     const uploadImages = async() => {
@@ -64,7 +86,7 @@ export default function AddStoresForm({ toastRef, setLoading, navigation }) {
             isValid = false
         }
 
-        if ((isEmpty(formData.address)) && (formData.digitalStore === false)){
+        if ((isEmpty(formData.address)) && (digitalStore === false)){
             setErrorAddress("Debes ingresar la dirección de la tienda")
             isValid = false
         }
@@ -79,12 +101,12 @@ export default function AddStoresForm({ toastRef, setLoading, navigation }) {
             isValid = false
         }
 
-        if ((formData.digitalStore === true) && (isEmpty(formData.url))){
+        if ((digitalStore === true) && (isEmpty(formData.url))){
             setErrorUrl("Debes ingresar un email o página web de la tienda")
             isValid = false
         }
         
-        if((!locationStore) && (!formData.digitalStore)){
+        if((!locationStore) && (digitalStore === false)){
             toastRef.current.show("Debes de localizar la tienda en el mapa", 3000)
             isValid = false
         }else if(size(imagesSelected) === 0){
@@ -112,6 +134,8 @@ export default function AddStoresForm({ toastRef, setLoading, navigation }) {
             <FormAdd
                 formData = {formData}
                 setFormData = {setFormData}
+                digitalStore = {digitalStore}
+                setDigitalStore = {setDigitalStore}
                 errorName = {errorName}
                 errorAddress = {errorAddress}
                 errorEmail = {errorEmail}
@@ -284,7 +308,9 @@ function UploadImage({ toastRef, imagesSelected, setImagesSelected }){
 
 function FormAdd({ 
     formData, 
-    setFormData, 
+    setFormData,
+    digitalStore,
+    setDigitalStore,
     errorName, 
     errorAddress, 
     errorEmail, 
@@ -303,8 +329,9 @@ function FormAdd({
     }
 
     const toggleSwitch = (value) => {
-        setFormData({...formData, digitalStore: value})
-
+        
+        setDigitalStore(value)
+    
     }
 
     const validatePress = () => {
@@ -318,7 +345,7 @@ function FormAdd({
         return
     }
 
-    if(formData.digitalStore){
+    if(digitalStore){
         return(
             <View style = {styles.viewForm}>
                 <Input
@@ -334,7 +361,7 @@ function FormAdd({
                     <Switch
                         style={{alignItems: "flex-start"}}
                         onValueChange={toggleSwitch}
-                        value={formData.digitalStore}
+                        value={digitalStore}
                         thumbColor = "#073a9a"
                         trackColor = {{false: "#052c73" ,true: "#84a4e0" }}
                     />
@@ -358,6 +385,7 @@ function FormAdd({
                 />
                 <Input
                     placeholder = "Página Web"
+                    keyboardType = "email-address"
                     defaultValue = {formData.url}
                     onChange = {(e) => onChange(e, "url")}
                     errorMessage = {errorUrl}
@@ -424,7 +452,7 @@ function FormAdd({
                     <Switch
                         style={{alignItems: "flex-end"}}
                         onValueChange={toggleSwitch}
-                        value={formData.digitalStore}
+                        value = {digitalStore}
                         thumbColor = "#FFFFFF"
                         trackColor = {{false: "#C3C3C3" ,true: "#84a4e0" }}
                     />
@@ -493,7 +521,6 @@ const defaultFormValues = () => {
     return{
         name: "",
         address: "",
-        digitalStore: false,
         email:"",
         url: "",
         phone: "",

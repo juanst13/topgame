@@ -11,7 +11,7 @@ export default function StoresStack() {
     return (
         <Stack.Navigator>
             <Stack.Screen
-                name = "store"
+                name = "stores"
                 component = {Stores}
                 options = {{ title: "Tiendas" }}
             />
