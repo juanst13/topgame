@@ -1,18 +1,38 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Icon } from 'react-native-elements'
 import firebase from 'firebase/app'
+import { useFocusEffect } from "@react-navigation/native"
 
-import { getCurrentUser, isUserLogged } from '../../Utils/actions'
+import { getCurrentUser, getStores, isUserLogged } from '../../Utils/actions'
+import Loading from '../../components/Loading'
 
 export default function Stores({ navigation }) {
     const [user, setUser] = useState(null)
+    const [startStore, setStartStore] = useState(null)
+    const [stores, setStores] = useState([])    
+    const [loading, setLoading] = useState(false)
+
+    const limitStores = 7
+    console.log(stores)
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged((userInfo) => {
             userInfo ? setUser(true) : setUser(false)
         } )
     }, [])
+
+    useFocusEffect(
+        useCallback(async() => {
+            setLoading(true)
+            const response = await getStores(limitStores)
+            if(response.statusResponse){
+                setStartStore(response.startStore)
+                setStores(response.stores)
+            }
+            setLoading(false)
+        }, [])
+    )
 
     return (
         <View style={styles.viewBody}>
@@ -28,6 +48,7 @@ export default function Stores({ navigation }) {
                             />
                 )
             }
+            <Loading isVisible={loading} text="Cargando tiendas..."/>
         </View>
     )
 }

@@ -1,3 +1,3 @@
 export const containerScreen = {
-    marginHorizontal: 40
+    marginHorizontal: 30
 }

@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native'
 import { validateEmail } from '../../Utils/helpers'
 import { registerUser } from '../../Utils/actions'
 import Loading from '../Loading'
-import { btn, containerForm } from '../../Styles/index'
+import { btn, containerForm, containerScreen } from '../../Styles'
 
 export default function RegisterForm() {
     const [showPassword, setShowPassword] = useState(false)
@@ -104,69 +104,92 @@ export default function RegisterForm() {
 
     return (
         <View style = {styles.containerForm}>
-            <Input
-                containerStyle = {styles.form}
-                placeholder = "Ingresa tu email..."
-                onChange = {(e) => onChange(e, "email")}
-                keyboardType = "email-address"
-                errorMessage = {errorEmail}
-                defaultValue = {formData.email}
-                onTextInput = {validatePress}
-                onBlur = {validatePress}
-                rightIcon={
-                    <Icon
-                        type = "material-community"
-                        name =  "progress-check"
-                        size = {22}
-                        color = { formData.validateEmail === "true" ? "#073a9a" : "#c1c1c1" }
-                    />
-                }
-            />
-            <Input
-                containerStyle = {styles.form}
-                placeholder = "Ingresa tu contraseña..."
-                password = {true}
-                secureTextEntry = {!showPassword}
-                onChange = {(e) => onChange(e, "password")}
-                errorMessage = {errorPassword}
-                defaultValue = {formData.password}
-                onTextInput = {validatePressPassword}
-                onBlur = {validatePressPassword}
-                rightIcon={
-                    <Icon
-                        type = "material-community"
-                        name = { showPassword ? "eye-off-outline" : "eye-outline"}
-                        onPress={() => setShowPassword(!showPassword)}
-                        color = { formData.validatePassword === "true" ? "#073a9a" : "#C2C2C2" }
-                        size = {22}
-                    />
-                }
-            />
-            <Input
-                containerStyle = {styles.form}
-                placeholder = "Confirma tu contraseña..."
-                password = {true}
-                secureTextEntry = {!showPassword}
-                onChange = {(e) => onChange(e, "confirm")}
-                errorMessage = {errorConfirm}
-                defaultValue = {formData.confirm}
-                onTextInput = {validatePressConfirm}
-                onBlur = {validatePressConfirm}
-                rightIcon={
-                    <Icon
-                        type = "material-community"
-                        name = { showPassword ? "eye-off-outline" : "eye-outline"}
-                        onPress={() => setShowPassword(!showPassword)}
-                        color = { formData.validateConfirm === "true" ? "#073a9a" : "#C2C2C2" }
-                        size = {22}
-                    />
-                }
-            />
+            <Text style={styles.title}>
+                {"\n"}
+                <Icon
+                    type = "material-community"
+                    name = "sword"
+                    size = {30}
+                    color = "white"
+                />
+                {" "}Iniciemos esta aventura...
+            </Text>
+            <View style = {styles.input}>
+                <Input
+                    containerStyle = {styles.container}
+                    inputContainerStyle = {styles.containerInput}
+                    placeholder = "Ingresa tu email..."
+                    onChange = {(e) => onChange(e, "email")}
+                    keyboardType = "email-address"
+                    errorMessage = {errorEmail}
+                    renderErrorMessage = {false}
+                    errorStyle = {styles.errorInput}
+                    defaultValue = {formData.email}
+                    onTextInput = {validatePress}
+                    onBlur = {validatePress}
+                    rightIcon={
+                        <Icon
+                            type = "material-community"
+                            name =  "progress-check"
+                            size = {22}
+                            color = { formData.validateEmail === "true" ? "#073a9a" : "#c1c1c1" }
+                        />
+                    }
+                />
+            </View>
+            <View style = {styles.input}>
+                <Input
+                    containerStyle = {styles.container}
+                    inputContainerStyle = {styles.containerInput}
+                    placeholder = "Ingresa tu contraseña..."
+                    password = {true}
+                    secureTextEntry = {!showPassword}
+                    onChange = {(e) => onChange(e, "password")}
+                    errorMessage = {errorPassword}
+                    renderErrorMessage = {false}
+                    defaultValue = {formData.password}
+                    onTextInput = {validatePressPassword}
+                    onBlur = {validatePressPassword}
+                    rightIcon={
+                        <Icon
+                            type = "material-community"
+                            name = { showPassword ? "eye-off-outline" : "eye-outline"}
+                            onPress={() => setShowPassword(!showPassword)}
+                            color = { formData.validatePassword === "true" ? "#073a9a" : "#C2C2C2" }
+                            size = {22}
+                        />
+                    }
+                />
+            </View>
+            <View style = {styles.input}>
+                <Input
+                    containerStyle = {styles.container}
+                    inputContainerStyle = {styles.containerInput}
+                    placeholder = "Confirma tu contraseña..."
+                    password = {true}
+                    secureTextEntry = {!showPassword}
+                    onChange = {(e) => onChange(e, "confirm")}
+                    errorMessage = {errorConfirm}
+                    renderErrorMessage = {false}
+                    defaultValue = {formData.confirm}
+                    onTextInput = {validatePressConfirm}
+                    onBlur = {validatePressConfirm}
+                    rightIcon={
+                        <Icon
+                            type = "material-community"
+                            name = { showPassword ? "eye-off-outline" : "eye-outline"}
+                            onPress={() => setShowPassword(!showPassword)}
+                            color = { formData.validateConfirm === "true" ? "#073a9a" : "#C2C2C2" }
+                            size = {22}
+                        />
+                    }
+                />
+            </View>
             <Button
                 icon={
                     <Icon
                         type = "material-community"
-                        name = "account-plus-outline"
+                        name = "account-plus"
                         size = {22}
                         color = "white"  
                     />
@@ -200,5 +223,34 @@ const styles = StyleSheet.create({
     },
     btn:{
         ...btn.btnIn
+    },
+    input:{
+        marginTop: 10,
+        borderLeftWidth: 1,
+        borderRightWidth: 3,
+        borderTopWidth: 1,
+        borderBottomWidth: 3,
+        width: "90%",
+        borderRadius: 25,
+        borderColor: "#C3C3C3",
+        backgroundColor: "white",
+        opacity: 0.6,
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    container:{
+        ...containerScreen.containerScreen
+    },
+    title:{
+        fontWeight: "bold",
+        fontSize: 30,
+        marginBottom: 10,
+        textAlign: "left",
+        position: "relative",
+        marginHorizontal: 40,
+        color: "#F3F3F3"
+    },
+    containerInput:{
+        borderBottomWidth: 0
     }
 })

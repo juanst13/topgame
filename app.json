@@ -21,18 +21,25 @@
       "bundleIdentifier": "com.gr.games"
     },
     "android": {
-      "package": "com.gr.games",
+      "package": "com.gr.games",  
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAXmc2CPVBvO1lP5JTbBycnFsSRdn455x0"
+        }
+      },
+ 
       "permissions": [
         "CAMERA_ROLL",
         "READ_EXTERNAL_STORAGE",
         "WRITE_EXTERNAL_STORAGE",
         "LOCATION",
         "ACCESS_COARSE_LOCATION",
-        "ACCESS_FINE_LOCATION"
+        "ACCESS_FINE_LOCATION",
+        "MEDIA_LIBRARY"
       ]
     },
     "web": {

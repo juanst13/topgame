@@ -1,32 +1,33 @@
 import React from 'react'
-import { StyleSheet, Image, Text, View } from 'react-native'
+import { ImageBackground } from 'react-native'
+import { Dimensions, StyleSheet, Image, Text, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import RegisterForm from '../../components/Account/RegisterForm'
 import { containerScreen } from '../../Styles'
 
+const {width,height} = Dimensions.get("window")
+
 export default function Register() {
     return (
         <KeyboardAwareScrollView>
-            <Image
-                source = {require('../../assets/Game_Logo.png')}
-                resizeMode = "contain"
+            <ImageBackground
+                source = {require('../../assets/crystal_background.jpg')}
+                resizeMode = "cover"
                 style = {styles.image}
-            />
-            <View style = {styles.container}>
-                <RegisterForm/>
-            </View>
+            >
+                <View style = {styles.container}>
+                    <RegisterForm/>
+                </View>
+            </ImageBackground>
         </KeyboardAwareScrollView>
     )
 }
 
 const styles = StyleSheet.create({
     image:{
-        height: 150,
-        width: "100%",
-        marginBottom: 20,
-        opacity: 0.8,
-        marginTop: 20
+        height: height,
+        width: width
     },
     container:{
         ...containerScreen.containerScreen
