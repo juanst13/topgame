@@ -53,11 +53,11 @@ export default function UserLogged() {
                 icon = {
                     <Icon
                         type = "material-community"
-                        name = {"logout"}
+                        name = "logout"
                         size = {22}
                         color = "#073a9a"
                     />
-                }   
+                }  
             />
             <Toast ref={toastRef} position = "center" opacity = {0.9}/>
             <Loading isVisible = {loading} text = {loadingText}/>
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         ...btn.btn
     },
     title:{
-        color: "#1d62d9"
+        color: "#073a9a"
     },
     container:{
         minHeight: "100%",

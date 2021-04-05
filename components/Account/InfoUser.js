@@ -51,7 +51,7 @@ export default function InfoUser({ user, setLoadingText, setLoading }) {
                 <Avatar.Accessory 
                     {...icon={
                             size: 22, 
-                            color: "#9db6e6", 
+                            color: "#073a9a", 
                             reverse: false, 
                             raised: true
                         }
@@ -80,9 +80,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "row",
-        //backgroundColor: "#f1f1f3",
         paddingVertical: 30,
-        backgroundColor: "#010713"
+        backgroundColor: "#03163a"
     },
     view:{
         marginLeft: 15
@@ -90,11 +89,11 @@ const styles = StyleSheet.create({
     displayname:{
         fontWeight: "bold",
         paddingBottom: 5,
-        color: "#c1c1c1"
+        color: "#ffffff"
     },
     email:{
         paddingBottom: 5,
-        color: "#c1c1c1"
+        color: "#cccccc"
     },
     avatar:{
         borderRadius: 40,
