@@ -8,8 +8,6 @@ import { btn, containerScreen } from '../../Styles'
 
 const {width, height} = Dimensions.get("window")
 
-const height2 = height - 100
-
 export default function UserGuest() {
     const Navigation = useNavigation()
 

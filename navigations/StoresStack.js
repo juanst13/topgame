@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import Stores from '../Screens/stores/Stores'
 import AddStores from '../Screens/stores/AddStores'
+import Store from '../Screens/stores/Store'
 
 const Stack = createStackNavigator()
 
@@ -19,6 +20,10 @@ export default function StoresStack() {
                 name = "add-store"
                 component = {AddStores}
                 options = {{ title: "Crear Tienda" }}
+            />
+            <Stack.Screen
+                name = "store"
+                component = {Store}
             />
         </Stack.Navigator>
     )

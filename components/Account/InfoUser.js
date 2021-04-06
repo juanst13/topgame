@@ -2,12 +2,17 @@ import React, { useState } from 'react'
 import { Alert } from 'react-native'
 import { StyleSheet, Text, View } from 'react-native'
 import { Avatar, Icon } from 'react-native-elements'
+import UserLogged from '../../Screens/account/UserLogged'
+import { useNavigation } from '@react-navigation/native'
 
 import { updateProfile, uploadImage } from '../../Utils/actions'
 import { loadImageFromGallery } from '../../Utils/helpers'
+import AccountOptions from './AccountOptions'
 
 export default function InfoUser({ user, setLoadingText, setLoading }) {
+    const navigation = useNavigation()
     const [photoUrl, setPhotoUrl] = useState(user.photoURL)
+    const [isVisible, setIsVisible] = useState(false)
 
     const changePhoto = async() =>{
         const result = await loadImageFromGallery([1, 1])
@@ -71,6 +76,12 @@ export default function InfoUser({ user, setLoadingText, setLoading }) {
                     }
                 </Text>
             </View>
+            <Icon
+                type = "material-community"
+                name = "menu-down"
+                onPress = {() =>  setIsVisible(true) }
+                color = "white"
+            />
         </View>
     )
 }

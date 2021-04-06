@@ -141,3 +141,27 @@ export const getStores = async(limitStores) => {
     }
     return result
 }
+
+export const getMoreStores = async(limitStores, startStore) => {
+    const result = { statusResponse: true, error: null, stores: [], startStore: null }
+    try {
+        const response = await db
+        .collection("stores")
+        .orderBy("createAdd", "desc")
+        .startAfter(startStore.data().createAdd)
+        .limit(limitStores)
+        .get()  
+        if (response.docs.length > 0) {
+            result.startStore = response.docs[response.docs.length - 1]
+        }
+        response.forEach((doc) => {
+            const store = doc.data()
+            store.id = doc.id
+            result.stores.push(store)
+        })
+    } catch (error) {
+        result.statusResponse = false
+        result.error = error
+    }
+    return result
+}

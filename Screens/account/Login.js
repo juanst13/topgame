@@ -8,7 +8,6 @@ import LoginForm from '../../components/Account/LoginForm'
 import { containerScreen } from '../../Styles'
 
 const {width, height} = Dimensions.get("window")
-const height2 = height - 200
 
 export default function Login() {
 
@@ -26,7 +25,6 @@ export default function Login() {
                             <Divider style = {styles.divider}/>
                         </View>
                     </ImageBackground>
-
             </View>
         </KeyboardAwareScrollView>
     )
@@ -69,6 +67,7 @@ const styles = StyleSheet.create({
     },
     btncontainer:{
         color: "#5380d3",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "white"
     }
 })

@@ -40,7 +40,9 @@ export default function AccountOptions({ user, toastRef, setReloadUser, isVisibl
             },
             {
                 title: "Volver",
-                onPress: () =>  setIsVisible(false)
+                onPress: () =>  setIsVisible(false),
+                iconNameLeft: "chevron-left",
+                iconColorLeft: "#de10bc"
             }
         ]
     }

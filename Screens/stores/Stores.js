@@ -3,9 +3,11 @@ import { StyleSheet, Text, View } from 'react-native'
 import { Icon } from 'react-native-elements'
 import firebase from 'firebase/app'
 import { useFocusEffect } from "@react-navigation/native"
+import { size } from 'lodash'
 
-import { getCurrentUser, getStores, isUserLogged } from '../../Utils/actions'
+import { getCurrentUser, getMoreStores, getStores, isUserLogged } from '../../Utils/actions'
 import Loading from '../../components/Loading'
+import ListStores from '../../components/Store/ListStores'
 
 export default function Stores({ navigation }) {
     const [user, setUser] = useState(null)
@@ -14,8 +16,7 @@ export default function Stores({ navigation }) {
     const [loading, setLoading] = useState(false)
 
     const limitStores = 7
-    console.log(stores)
-
+    
     useEffect(() => {
         firebase.auth().onAuthStateChanged((userInfo) => {
             userInfo ? setUser(true) : setUser(false)
@@ -34,8 +35,35 @@ export default function Stores({ navigation }) {
         }, [])
     )
 
+    const handleLoadMore = async() => {
+        if (!startStore){
+            return
+        }
+
+        setLoading(true)
+        const response = await getMoreStores(limitStores, startStore)
+        if(response.statusResponse){
+            setStartStore(response.startStore)
+            setStores([... stores, ...response.stores])
+        }
+        setLoading(false)
+    }
+
     return (
         <View style={styles.viewBody}>
+            {
+                size(stores) > 0 ?(
+                    <ListStores 
+                    stores = {stores} 
+                    navigation = {navigation}
+                    handleLoadMore = {handleLoadMore}
+                    />
+                ):(
+                    <View style = {styles.notFoundView}>
+                        <Text style = {styles.notFoundText}>No hay tiendas registradas.</Text>
+                    </View>
+                )
+            }
            { 
                 user && (
                         <Icon
@@ -64,5 +92,14 @@ const styles = StyleSheet.create({
     },
     viewBody:{
         flex: 1
+    },
+    notFoundView:{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    notFoundText:{
+        fontSize: 18,
+        fontWeight: "bold"
     }
 })
