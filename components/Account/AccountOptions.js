@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { map } from 'lodash'
 import { StyleSheet, Text, View } from 'react-native'
-import { Icon, ListItem } from 'react-native-elements'
+import { Button, BottomSheet, Icon, ListItem } from 'react-native-elements'
 
 import Modal from '../Modal'
 import ChangeDisplayNameForm from './ChangeDisplayNameForm'
 import ChangeEmailForm from './ChangeEmailForm'
 import ChangePasswordForm from './ChangePasswordForm'
 
-export default function AccountOptions({ user, toastRef, setReloadUser }) {
+export default function AccountOptions({ user, toastRef, setReloadUser, isVisible, setIsVisible }) {
     const [showModal, setShowModal] = useState(false)
     const [renderComponent, setRenderComponent] = useState(null)
 
@@ -37,6 +37,10 @@ export default function AccountOptions({ user, toastRef, setReloadUser }) {
                 iconNameRight: "chevron-right",
                 iconColorRight: "#9db6e6",
                 onPress: () => selectedComponent("password")   
+            },
+            {
+                title: "Volver",
+                onPress: () =>  setIsVisible(false)
             }
         ]
     }
@@ -78,7 +82,10 @@ export default function AccountOptions({ user, toastRef, setReloadUser }) {
     const menuOptions = generateoptions();
 
     return (
-        <View>
+        <BottomSheet
+            isVisible = {isVisible}
+            containerStyle = {{ backgroundColor: 'rgba(0.5, 0.25, 0, 0.2)' }}
+        >
             {
                 map(menuOptions, (menu, index) => (
                     <ListItem
@@ -107,7 +114,7 @@ export default function AccountOptions({ user, toastRef, setReloadUser }) {
                     renderComponent
                 }
             </Modal>
-        </View>
+        </BottomSheet>
     )
 }
 

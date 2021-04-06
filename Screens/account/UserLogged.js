@@ -18,6 +18,7 @@ export default function UserLogged() {
     const [loadingText, setLoadingText] = useState("")
     const [user, setUser] = useState(null)
     const [reloadUser, setReloadUser] = useState(false)
+    const [isVisible, setIsVisible] = useState(false)
 
     useEffect(() => {
         setUser(getCurrentUser())
@@ -34,10 +35,16 @@ export default function UserLogged() {
                             setLoadingText = {setLoadingText}
                             setLoading = {setLoading}
                         />
+                        <Button
+                            title = "List"
+                            onPress = {() =>  setIsVisible(true) }
+                        />
                         <AccountOptions
                             user = {user}
                             toastRef = {toastRef}
                             setReloadUser = {setReloadUser}
+                            isVisible = {isVisible}
+                            setIsVisible = {setIsVisible}
                         />
                     </View>
                 )
