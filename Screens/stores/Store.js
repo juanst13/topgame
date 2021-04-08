@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Alert, Dimensions,  StyleSheet, Text, ScrollView } from 'react-native'
+import { Alert, Dimensions,  StyleSheet, Text, ScrollView, View } from 'react-native'
+import { AirbnbRating, Rating } from 'react-native-elements'
+
 
 import CarouselImage from '../../components/CarouselImage'
 import Loading from '../../components/Loading'
@@ -12,11 +14,14 @@ export default function Store({ navigation, route}) {
     const [store, setStore] = useState(null)
     const [activeSlide, setActiveSlide] = useState(0)
 
+    //navigation.setOptions({ title: name })
+
     useEffect(() => {
         (async() => {
             const response = await getDocumentById("stores", id) 
             if (response.statusResponse){
                 setStore(response.document)
+                console.log(store)
             } else {
                 setStore({})
                 Alert.alert("Ocurrio un problema cargando la tienda, intente más tarde.")
@@ -28,8 +33,6 @@ export default function Store({ navigation, route}) {
         return <Loading isVisible = {true} text = "Cargando..."/>
     }
 
-    navigation.setOptions({ title: name })
-
     return (
         <ScrollView stytle = {styles.viewBody}>
             <CarouselImage
@@ -39,13 +42,53 @@ export default function Store({ navigation, route}) {
                 activeSlide = {activeSlide}
                 setActiveSlide = {setActiveSlide}
             />
-            <Text>{store.description}</Text>
+            <TitleStore
+                name = {store.name}
+                description = {store.description}
+                rating = {store.rating}
+            />
         </ScrollView>
+    )
+}   
+
+function TitleStore({ name, description, rating }) {
+    return(
+        <View style = {styles.viewStoreTitle}>
+            <View style = {styles.viewStoreContainer}>
+                <Text style = {styles.nameStore}>{name}</Text>
+                <Rating
+                    style={styles.rating}
+                    imageSize={20}
+                    readonly
+                    startingValue = {parseFloat(rating)}
+                />
+            </View>
+            <Text style = {styles.description}>{description}</Text>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
-    viewBody :{
-        flex: 1
+    viewBody : {
+        flex: 1,
+        backgroundColor: "#fff"
+    },
+    viewStoreTitle : {
+        padding: 15,
+    },
+    viewStoreContainer : {
+        flexDirection: "row"
+    },
+    nameStore : {
+        fontWeight: "bold"
+    },
+    rating : {
+        position: "absolute",
+        right: 0
+    },
+    description : {
+        marginTop: 10,
+        color: "gray",
+        textAlign: "justify"
     }
 })
