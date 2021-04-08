@@ -24,14 +24,17 @@ export default function Stores({ navigation }) {
     }, [])
 
     useFocusEffect(
-        useCallback(async() => {
-            setLoading(true)
-            const response = await getStores(limitStores)
-            if(response.statusResponse){
-                setStartStore(response.startStore)
-                setStores(response.stores)
+        useCallback(() => {
+            async function getData() {
+                setLoading(true)
+                const response = await getStores(limitStores)
+                if(response.statusResponse){
+                    setStartStore(response.startStore)
+                    setStores(response.stores)
+                }
+                setLoading(false)
             }
-            setLoading(false)
+            getData()
         }, [])
     )
 

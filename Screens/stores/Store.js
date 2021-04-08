@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Alert, Dimensions,  StyleSheet, Text, ScrollView, View } from 'react-native'
-import { AirbnbRating, Rating } from 'react-native-elements'
+import { Rating } from 'react-native-ratings'
 
 
 import CarouselImage from '../../components/CarouselImage'
@@ -14,7 +14,7 @@ export default function Store({ navigation, route}) {
     const [store, setStore] = useState(null)
     const [activeSlide, setActiveSlide] = useState(0)
 
-    //navigation.setOptions({ title: name })
+    navigation.setOptions({ title: name })
 
     useEffect(() => {
         (async() => {
