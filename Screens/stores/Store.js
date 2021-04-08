@@ -10,6 +10,7 @@ const  widthScreen = Dimensions.get("window").width
 export default function Store({ navigation, route}) {
     const { id, name } = route.params
     const [store, setStore] = useState(null)
+    const [activeSlide, setActiveSlide] = useState(0)
 
     useEffect(() => {
         (async() => {
@@ -35,6 +36,8 @@ export default function Store({ navigation, route}) {
                 images = {store.images}
                 height = {200}
                 width = {widthScreen}
+                activeSlide = {activeSlide}
+                setActiveSlide = {setActiveSlide}
             />
             <Text>{store.description}</Text>
         </ScrollView>
