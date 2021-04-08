@@ -7,7 +7,6 @@ import { useNavigation } from '@react-navigation/native'
 
 import { updateProfile, uploadImage } from '../../Utils/actions'
 import { loadImageFromGallery } from '../../Utils/helpers'
-import AccountOptions from './AccountOptions'
 
 export default function InfoUser({ user, setLoadingText, setLoading }) {
     const navigation = useNavigation()
@@ -83,8 +82,10 @@ export default function InfoUser({ user, setLoadingText, setLoading }) {
                 color = "white"
             />
         </View>
-    )
+    )     
 }
+
+
 
 const styles = StyleSheet.create({
     container:{

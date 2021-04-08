@@ -21,15 +21,15 @@ export default function UserLogged() {
     const [loadingText, setLoadingText] = useState("")
     const [user, setUser] = useState(null)
     const [reloadUser, setReloadUser] = useState(false)
-    const [isVisible, setIsVisible] = useState(false)
+    const [isVisible, setIsVisible] = useState(false)   
 
     useEffect(() => {
         setUser(getCurrentUser())
         setReloadUser(false)
     }, [reloadUser])
 
-    return (
-        
+
+    return (    
         <View style = {styles.container}>
             <BackgroundImage
                 source = {require('../../assets/31.png')}

@@ -1,12 +1,48 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { Alert, Dimensions,  StyleSheet, Text, ScrollView } from 'react-native'
 
-export default function Store() {
+import CarouselImage from '../../components/CarouselImage'
+import Loading from '../../components/Loading'
+import { getDocumentById } from '../../Utils/actions'
+
+const  widthScreen = Dimensions.get("window").width
+
+export default function Store({ navigation, route}) {
+    const { id, name } = route.params
+    const [store, setStore] = useState(null)
+
+    useEffect(() => {
+        (async() => {
+            const response = await getDocumentById("stores", id) 
+            if (response.statusResponse){
+                setStore(response.document)
+            } else {
+                setStore({})
+                Alert.alert("Ocurrio un problema cargando la tienda, intente más tarde.")
+            }
+        })()
+    }, [])
+
+    if (!store){
+        return <Loading isVisible = {true} text = "Cargando..."/>
+    }
+
+    navigation.setOptions({ title: name })
+
     return (
-        <View>
-            <Text>Store...</Text>
-        </View>
+        <ScrollView stytle = {styles.viewBody}>
+            <CarouselImage
+                images = {store.images}
+                height = {200}
+                width = {widthScreen}
+            />
+            <Text>{store.description}</Text>
+        </ScrollView>
     )
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    viewBody :{
+        flex: 1
+    }
+})
