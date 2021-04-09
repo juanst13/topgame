@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Alert, Dimensions, StyleSheet, ScrollView, Switch, Text, View } from 'react-native'
 import { Avatar, Input, Image, Button, Icon, Slider } from 'react-native-elements'
 import CountryPicker from 'react-native-country-picker-modal'
-import { map, size, filter, isEmpty } from 'lodash'
+import { map, size, filter, isEmpty, isNull } from 'lodash'
 import MapView from 'react-native-maps'
 import uuid from 'random-uuid-v4'
 
@@ -182,6 +182,7 @@ function MapStore({ isVisibleMap, setIsVisibleMap, setLocationStore, toastRef })
         setLocationStore(newRegion)
         toastRef.current.show("Localización guardada correctamente",3000)
         setIsVisibleMap(false)
+        console.log(newRegion)
     }
 
     return(
@@ -344,119 +345,45 @@ function FormAdd({
         }
         return
     }
-
-    if(digitalStore){
         return(
             <View style = {styles.viewForm}>
-                <Input
-                    placeholder = "Nombre de la tienda"
-                    defaultValue = {formData.name}
-                    onChange = {(e) => onChange(e, "name")}
-                    errorMessage = {errorName}
-                />
                 <View style = {styles.viewSwitch}>
-                    <Text style = {styles.textSwitch}>
-                        Tienda Digital?
-                    </Text>
-                    <Switch
-                        style={{alignItems: "flex-start"}}
-                        onValueChange={toggleSwitch}
-                        value={digitalStore}
-                        thumbColor = "#073a9a"
-                        trackColor = {{false: "#052c73" ,true: "#84a4e0" }}
-                    />
-                </View>
-                <Input
-                    placeholder = "Email de la tienda"
-                    keyboardType = "email-address"
-                    defaultValue = {formData.email}
-                    onChange = {(e) => onChange(e, "email")}
-                    errorMessage = {errorEmail}
-                    onTextInput = {validatePress}
-                    onBlur = {validatePress}
-                    rightIcon={
-                        <Icon
-                            type = "material-community"
-                            name =  "progress-check"
-                            size = {22}
-                            color = { formData.validateEmail === "true" ? "#073a9a" : "#c1c1c1" }
-                        />
+                    {digitalStore
+                        ?   <Text style = {styles.viewTextSwitch}>
+                                Tienda: 100% digital
+                            </Text>
+                        :   <Text style = {styles.viewTextSwitch}>
+                                Tienda: Tradicional - Digital
+                            </Text>
                     }
-                />
-                <Input
-                    placeholder = "Página Web"
-                    keyboardType = "email-address"
-                    defaultValue = {formData.url}
-                    onChange = {(e) => onChange(e, "url")}
-                    errorMessage = {errorUrl}
-                />
-                <View style = {styles.phoneView}>
-                    <CountryPicker
-                        withFlag
-                        withCallingCode
-                        withFilter
-                        withCallingCodeButton
-                        containerStyle = {styles.countryPicker}
-                        countryCode = {country}
-                        onSelect = {(country) =>{
-                            setFormData({
-                                ...formData, 
-                                "country": country.cca2, 
-                                "callingCode": country.callingCode[0]})
-                        }}
-                    />
-                    <Input
-                        placeholder = "WhatsApp de la tienda..."
-                        keyboardType = "phone-pad"
-                        containerStyle = {styles.inputPhone}
-                        defaultValue = {formData.phone}
-                        onChange = {(e) => onChange(e, "phone")}
-                        errorMessage = {errorPhone}
-                    />
-                </View>
-                <Input
-                        placeholder = "Descripción de la tienda"
-                        multiline
-                        containerStyle = {styles.textArea}
-                        defaultValue = {formData.description}
-                        onChange = {(e) => onChange(e, "description")}
-                        errorMessage = {errorDescription}
-                />
-            </View>
-        )
-    }else{
-        return(
-            <View style = {styles.viewForm}>
-                <Input
-                    placeholder = "Nombre de la tienda"
-                    defaultValue = {formData.name}
-                    onChange = {(e) => onChange(e, "name")}
-                    errorMessage = {errorName}
-                />
-                <Input
-                    placeholder = "Dirección de la tienda"
-                    defaultValue = {formData.address}
-                    onChange = {(e) => onChange(e, "address")}
-                    errorMessage = {errorAddress}
-                    rightIcon = {{
-                        type: "material-community",
-                        name: "google-maps",
-                        color: locationStore ? "#073a9a" : "#C2C2C2",
-                        onPress: () => setIsVisibleMap(true)
-                    }}
-                />
-                <View style = {styles.viewSwitch}>
-                    <Text style = {styles.textSwitch}>
-                        Tienda Digital?
-                    </Text>
                     <Switch
-                        style={{alignItems: "flex-end"}}
                         onValueChange={toggleSwitch}
                         value = {digitalStore}
-                        thumbColor = "#FFFFFF"
-                        trackColor = {{false: "#C3C3C3" ,true: "#84a4e0" }}
+                        thumbColor = { digitalStore ? "#073a9a" : "#ffffff"}
+                        trackColor = {{false: "#c3c3c3" ,true: "#6b92d9" }}
                     />
                 </View>
+                <Input
+                    placeholder = "Nombre de la tienda"
+                    defaultValue = {formData.name}
+                    onChange = {(e) => onChange(e, "name")}
+                    errorMessage = {errorName}
+                />
+                {digitalStore
+                    ?   <Text></Text>
+                    :   <Input
+                            placeholder = "Dirección de la tienda"
+                            defaultValue = {formData.address}
+                            onChange = {(e) => onChange(e, "address")}
+                            errorMessage = {errorAddress}
+                            rightIcon = {{
+                                type: "material-community",
+                                name: "google-maps",
+                                color: locationStore ? "#073a9a" : "#C2C2C2",
+                                onPress: () => setIsVisibleMap(true)
+                            }}
+                        />
+                }
                 <Input
                     placeholder = "Email de la tienda"
                     keyboardType = "email-address"
@@ -514,7 +441,6 @@ function FormAdd({
                 />
             </View>
         )
-    }
 }
 
 const defaultFormValues = () => {
@@ -603,14 +529,15 @@ const styles = StyleSheet.create({
     viewMapBtnSave:{
         backgroundColor: "#073a9a"
     },
-    textSwitch:{
-        fontSize: 17,
+    viewTextSwitch:{
+        fontSize: 19,
         marginHorizontal: 10,
         marginVertical: 17,
-        color: "#878787"
+        color: "#878787",
+        fontWeight: "bold"
     },
     viewSwitch:{
-        flexDirection: "row"
+        flexDirection: "row",
+        justifyContent:"space-between" 
     }
-
 })

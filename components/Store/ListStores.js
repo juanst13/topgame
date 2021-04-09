@@ -72,6 +72,7 @@ function Store({ store, navigation, handleLoadMore }) {
                                     : "Experiencia: Digital y tradicional"
                             }
                         </Text>
+                        <Text></Text>
                     </View>
                 </View>
             </TouchableOpacity>
