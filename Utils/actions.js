@@ -1,7 +1,7 @@
 import { firebaseApp } from './firebase'
 import * as firebase from 'firebase'
 import 'firebase/firestore'
-import { result } from 'lodash'
+import { map } from 'lodash'
 
 import { fileToBlob } from './helpers'
 
@@ -172,6 +172,107 @@ export const getDocumentById = async(collection, id) => {
         const response = await db.collection(collection).doc(id).get()
         result.document = response.data()
         result.document.id = response.id
+    } catch (error) {
+        result.statusResponse = false
+        result.error = error
+    }
+    return result
+}
+
+export const updateDocument = async(collection, id, data) => {
+    const result = { statusResponse: true, error: null }
+    try {
+        await db.collection(collection).doc(id).update(data)
+    } catch (error) {
+        result.statusResponse = false
+        result.error = error
+    }
+    return result
+}
+
+export const getStoreReviews = async(id) => {
+    const result = { statusResponse: true, error: null, reviews: [] }
+    try {
+        const response = await db
+            .collection("reviews")
+            .where("idStore", "==", id)
+            .get()
+        response.forEach((doc) => {
+            const review = doc.data()
+            review.id = doc.id
+            result.reviews.push(review)
+        })
+    } catch (error) {
+        result.statusResponse = false
+        result.error = error
+    }
+    return result
+}
+
+export const getIsFavorite = async(idStore) => {
+    const result = { statusResponse: true, error: null, isFavorite: false }
+    try {
+        const response = await db
+        .collection("favorites")
+        .where("idStore", "==", idStore)
+        .where("idUser", "==", getCurrentUser().uid)
+        .get()
+        result.isFavorite = response.docs.length > 0
+    } catch (error) {
+        result.statusResponse = false
+        result.error = error
+    }
+    return result
+}
+
+export const removeFavorites = async(idStore) => {
+    const result = { statusResponse: true, error: null }
+    try {
+        const response = await db
+        .collection("favorites")
+        .where("idStore", "==", idStore)
+        .where("idUser", "==", getCurrentUser().uid)
+        .get()
+        response.forEach(async(doc) => {
+            const favoriteId = doc.id
+            await db.collection("favorites").doc(favoriteId).delete()
+        })
+    } catch (error) {
+        result.statusResponse = false
+        result.error = error
+    }
+    return result
+}
+
+export const getFavorites = async() => {
+    const result = { statusResponse: true, error: null, favorites: [] }
+    try {
+        const response = await db
+        .collection("favorites")
+        .where("idUser", "==", getCurrentUser().uid)
+        .get()
+        // const storesId = []
+        // response.forEach(async(doc) => {
+        //     const favorite = doc.data()
+        //     storesId.push(favorite.idStore)
+        // })
+        // await Promise.all(
+        //     map(storesId, async(storeId) => {
+        //         const response2 = await getDocumentById("stores", storeId)
+        //         if(response2.statusResponse)
+        //         {
+        //             result.favorites.push(response2.document)
+        //         }
+        //     })
+        // )
+
+        await Promise.all(
+            map(response.docs, async(doc) => {
+                const favorite = doc.data()
+                const responseGetStore = await getDocumentById("stores", favorite.idStore)
+                result.favorites.push(responseGetStore.document)
+            })
+        )
     } catch (error) {
         result.statusResponse = false
         result.error = error

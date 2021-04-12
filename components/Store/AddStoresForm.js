@@ -54,7 +54,6 @@ export default function AddStoresForm({ toastRef, setLoading, navigation }) {
 
         if(!responseAddDocument.statusResponse){
             toastRef.current.show("Error al registrar la tienda, intenta mas tarde.",3000)
-            console.log(responseAddDocument.error)
         }
         navigation.navigate("stores")
     }
@@ -182,7 +181,6 @@ function MapStore({ isVisibleMap, setIsVisibleMap, setLocationStore, toastRef })
         setLocationStore(newRegion)
         toastRef.current.show("Localización guardada correctamente",3000)
         setIsVisibleMap(false)
-        console.log(newRegion)
     }
 
     return(

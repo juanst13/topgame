@@ -1,10 +1,10 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-export default function Search() {
+export default function FavoritesGames() {
     return (
         <View>
-            <Text>Find YOU!</Text>
+            <Text>FavoritesGames...</Text>
         </View>
     )
 }

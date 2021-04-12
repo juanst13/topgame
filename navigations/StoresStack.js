@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Stores from '../Screens/stores/Stores'
 import AddStores from '../Screens/stores/AddStores'
 import Store from '../Screens/stores/Store'
+import AddReviewStore from '../Screens/stores/AddReviewStore'
 
 const Stack = createStackNavigator()
 
@@ -24,6 +25,11 @@ export default function StoresStack() {
             <Stack.Screen
                 name = "store"
                 component = {Store}
+            />
+            <Stack.Screen
+                name = "add-review-store"
+                component = {AddReviewStore}
+                options = {{ title: "Nuevo Comentario" }}
             />
         </Stack.Navigator>
     )
