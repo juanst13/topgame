@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, Alert, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useFocusEffect } from "@react-navigation/native"
-import { Button, Icon } from 'react-native-elements'
+import { Button, Icon, Image } from 'react-native-elements'
 import Toast from 'react-native-easy-toast'
 import firebase from 'firebase/app'
 
@@ -39,33 +39,67 @@ export default function Favorites({ navigation }) {
         return <UserNoLogged navigation = {navigation}/>
     }
 
-    if (!stores){
-        return <Loading isVisible = {true} test = "Cargando tiendas..."/>
-    } else if (stores?.lenght === 0){
+    if (!stores) {
+        return <Loading isVisible={true} text="Cargando tiendas..."/>
+    } else if(stores?.length === 0){
         return <NotFoundStore/>
     }
 
     return (
         <View style = {styles.viewBody}>
-            <Toast ref = {toastRef} position = "center" opacity = {0.9}/>
-            <Loading isVisible = {loading} text = "Por favor espere..." />
             <View style = {styles.btns}>
-                <Button
-                    containerStyle = {styles.containerBtn}
-                    title = "Juegos"
+                <Icon
+                    containerStyle = {styles.leftIcon}
+                    type = "material-community"
+                    name = "controller-classic-outline"
                     onPress = {() => navigation.navigate("list-favorites-games")}
+                    size = {35}
                 />
-                <Button
-                    containerStyle = {styles.containerBtn}
-                    title = "Tiendas"
-                    onPress = {() => navigation.navigate("list-favorites-stores")}
-                />
-                <Button
-                    containerStyle = {styles.containerBtn}
-                    title = "Consolas"
-                    onPress = {() => navigation.navigate("list-favorites-consoles")}
+                <Text style = {styles.title}>Tiendas Favoritas</Text>
+                <Icon
+                    containerStyle = {styles.rigthIcon}
+                    type = "material-community"
+                    name = "controller-classic-outline"
+                    onPress = {() => navigation.navigate("list-favorites-games")}
+                    size = {35}
                 />
             </View>
+            {
+                stores  ? (
+                    <FlatList
+                        data = {stores}
+                        keyExtractor = {(item, index) => index.toString()}
+                        renderItem = {(store) => (
+                            <Store
+                                store = {store}
+                                setLoading = {setLoading}
+                                toastRef = {toastRef}
+                                navigation = {navigation}
+                            />
+                        )}
+                    />
+                ) : (
+                    <View style = {styles.loaderStore}>
+                        <ActivityIndicator size = "large"/>
+                        <Text style = {{textAlign: "center"}}>
+                            Cargando tiendas
+                        </Text>
+                    </View>
+                )
+            }
+            <Toast ref = {toastRef} position = "center" opacity = {0.9}/>
+            <Loading isVisible = {loading} text = "Por favor espere..." />
+        </View>
+    )
+}
+
+function Store({ store, setLoading, toastRef, navigation}) {
+    const { id, name, images } = store.item
+
+    console.log(store)
+    return(
+        <View>
+            <Text>{name}</Text>
         </View>
     )
 }
@@ -100,15 +134,40 @@ function UserNoLogged({ navigation }){
 
 const styles = StyleSheet.create({
     viewBody:{
-        flex:1
+        flex:1,
+        backgroundColor: "#f2f2f2"
     },
-    btns:{
-        flex: 1,
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "flex-end"
+    leftIcon:{
+        position: "absolute",
+        top: 0,
+        right: 0,
+        backgroundColor: "#fff",
+        borderBottomLeftRadius: 100,
+        padding: 5,
+        paddingLeft: 15
+    },
+    rigthIcon:{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        backgroundColor: "#fff",
+        borderBottomRightRadius: 100,
+        padding: 5,
+        paddingRight: 15
     },
     containerBtn:{
         padding: 5
+    },
+    title:{
+        fontSize: 30,
+        textAlign: "center",
+        fontWeight: "bold"
+    },
+    loaderStore:{
+        marginVertical: 10
+    },
+    btns:{
+        paddingVertical: 10,
+        paddingBottom: 20
     }
 })

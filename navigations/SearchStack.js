@@ -20,17 +20,17 @@ export default function SearchStack() {
             <Stack.Screen
                 name = "list-favorites-stores"
                 component = {Favorites}
-                options = {{ title: "Tiendas favoritas" }}
+                options = {{ title: "Favoritos" }}
             />
             <Stack.Screen
                 name = "list-favorites-consoles"
                 component = {FavoritesConsoles}
-                options = {{ title: "Consolas favoritas" }}
+                options = {{ title: "Favoritos" }}
             />
             <Stack.Screen
                 name = "list-favorites-games"
                 component = {FavoritesGames}
-                options = {{ title: "Juegos favoritos" }}
+                options = {{ title: "Favoritos" }}
             />
         </Stack.Navigator>
     )
