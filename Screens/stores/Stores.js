@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import {  Dimensions, ImageBackground, StyleSheet, Text, View } from 'react-native'
 import { Icon } from 'react-native-elements'
 import firebase from 'firebase/app'
 import { useFocusEffect } from "@react-navigation/native"
@@ -8,6 +8,8 @@ import { size } from 'lodash'
 import { getCurrentUser, getMoreStores, getStores, isUserLogged } from '../../Utils/actions'
 import Loading from '../../components/Loading'
 import ListStores from '../../components/Store/ListStores'
+
+const {width, height} = Dimensions.get("window")
 
 export default function Stores({ navigation }) {
     const [user, setUser] = useState(null)
@@ -54,32 +56,38 @@ export default function Stores({ navigation }) {
 
     return (
         <View style={styles.viewBody}>
-            {
-                size(stores) > 0 ?(
-                    <ListStores 
-                    stores = {stores} 
-                    navigation = {navigation}
-                    handleLoadMore = {handleLoadMore}
-                    />
-                ):(
-                    <View style = {styles.notFoundView}>
-                        <Text style = {styles.notFoundText}>No hay tiendas registradas.</Text>
-                    </View>
-                )
-            }
-           { 
-                user && (
-                        <Icon
-                                type = "material-community"
-                                name = "home-city"//"store-outline"
-                                containerStyle =  {styles.icon}
-                                reverse
-                                color = "#d9b453"
-                                onPress = {() => navigation.navigate("add-store")}
-                            />
-                )
-            }
-            <Loading isVisible={loading} text="Cargando tiendas..."/>
+             <ImageBackground
+                source = {require('../../assets/crystal_background.jpg')}
+                resizeMode = "cover"
+                style = {styles.imageBackground}
+            >
+                {
+                    size(stores) > 0 ?(
+                        <ListStores 
+                        stores = {stores} 
+                        navigation = {navigation}
+                        handleLoadMore = {handleLoadMore}
+                        />
+                    ):(
+                        <View style = {styles.notFoundView}>
+                            <Text style = {styles.notFoundText}>No hay tiendas registradas.</Text>
+                        </View>
+                    )
+                }
+            { 
+                    user && (
+                            <Icon
+                                    type = "material-community"
+                                    name = "book-plus-multiple"
+                                    containerStyle =  {styles.icon}
+                                    color = "#bd65ed"
+                                    size= {50}
+                                    onPress = {() => navigation.navigate("add-store")}
+                                />
+                    )
+                }
+                <Loading isVisible={loading} text="Cargando tiendas..."/>
+            </ImageBackground>
         </View>
     )
 }
@@ -91,7 +99,11 @@ const styles = StyleSheet.create({
         right: 10,
         shadowColor: "black",
         shadowOffset: { width: 2, height: 2},
-        shadowOpacity: 0.5
+        shadowOpacity: 0.5,
+        backgroundColor: "#fff",
+        borderColor: "#000000",
+        borderRadius: 50,
+        padding: 5
     },
     viewBody:{
         flex: 1
@@ -104,5 +116,9 @@ const styles = StyleSheet.create({
     notFoundText:{
         fontSize: 18,
         fontWeight: "bold"
+    },
+    imageBackground:{
+        width: width, 
+        height: height
     }
 })
