@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react'
 import { Alert, Dimensions, StyleSheet, Text, ScrollView, View } from 'react-native'
 import { Rating } from 'react-native-ratings'
-import { Icon, ListItem } from 'react-native-elements'
+import { Icon, Image, ListItem } from 'react-native-elements'
 import { map } from 'lodash'
 import { useFocusEffect } from '@react-navigation/native'
 import firebase from 'firebase/app'
@@ -19,7 +19,7 @@ import { formatPhone } from '../../Utils/helpers'
 import MapStore from '../../components/Store/MapStore'
 import ListReviews from '../../components/Store/ListReviews'
 
-const  widthScreen = Dimensions.get("window").width
+const  width = Dimensions.get("window").width
 
 export default function Store({ navigation, route}) {
     const { id, name } = route.params
@@ -107,7 +107,7 @@ export default function Store({ navigation, route}) {
             <CarouselImage
                 images = {store.images}
                 height = {200}
-                width = {widthScreen}
+                width = {width}
                 activeSlide = {activeSlide}
                 setActiveSlide = {setActiveSlide}
             />
@@ -116,7 +116,7 @@ export default function Store({ navigation, route}) {
                     type = "material-community"
                     name = { isFavorite ? "heart" : "heart-outline"}
                     onPress = { isFavorite ? removeFavorite : addFavorite}
-                    color = "#442484"
+                    color = "#073a9a"
                     size = {35}
                     underlayColor = "transparent"
                 />
@@ -130,7 +130,7 @@ export default function Store({ navigation, route}) {
                 name = {store.name}
                 location = {store.location}
                 address = {store.address}
-                email = {store.address}
+                email = {store.email}
                 phone = {formatPhone(store.callingCode, store.phone)}
                 url = {store.url}
                 digitalStore = {store.storeDigital}
@@ -147,7 +147,7 @@ export default function Store({ navigation, route}) {
 
 function StoreInfo ({ name, location, address, email, phone, url, digitalStore }) {
     const listInfo = [
-        { text: address, iconName: "map-marker" },
+        !digitalStore && { text: address, iconName: "map-marker" },
         { text: phone, iconName: "phone" },
         { text: email, iconName: "at" },
         { text: url, iconName: "web" }
@@ -158,15 +158,20 @@ function StoreInfo ({ name, location, address, email, phone, url, digitalStore }
             <Text  style = {styles.storeInfoTitle}>
                 Información sobre la tienda
             </Text>
-            {digitalStore 
-                ?   <Text>Tienda 100% digital</Text>
-                :   <MapStore
-                        location = {location}
-                        name = {name}
-                        height = {150}
-                    />
-            }
+            {   
+                digitalStore 
+                    ?   <Image
+                            source = {require('../../assets/digital-store.jpg')}
+                            resizeMode = "cover"
+                            style={styles.image}
+                        />
 
+                    :   <MapStore
+                            location = {location}
+                            name = {name}
+                            height = {150}
+                        />
+            }
             {
                 map(listInfo, (item, index) => (
                     <ListItem
@@ -176,7 +181,7 @@ function StoreInfo ({ name, location, address, email, phone, url, digitalStore }
                         <Icon
                             type = "material-community"
                             name = {item.iconName}
-                            color = "#442484"
+                            color = "#073a9a"
                         />
                         <ListItem.Content>
                             <ListItem.Title>{item.text}</ListItem.Title>
@@ -213,6 +218,7 @@ const styles = StyleSheet.create({
     },
     viewStoreTitle : {
         padding: 15,
+        marginBottom: 10
     },
     viewStoreContainer : {
         flexDirection: "row"
@@ -230,8 +236,8 @@ const styles = StyleSheet.create({
         textAlign: "justify"
     },
     viewStoreInfo:{
-        margin: 15,
-        marginTop: 25
+        marginLeft: 15,
+        marginRight: 15
     },
     storeInfoTitle:{
         fontSize: 20,
@@ -239,7 +245,7 @@ const styles = StyleSheet.create({
         marginBottom: 15
     },
     containerListItem:{
-        borderBottomColor: "#A376c7",
+        borderBottomColor: "#073a9a",
         borderBottomWidth: 1
     },
     viewFavorite:{
@@ -250,5 +256,9 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 100,
         padding: 5,
         paddingLeft: 15
+    },
+    image:{
+        height: 150,
+        width: width
     }
 })

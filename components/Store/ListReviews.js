@@ -35,7 +35,7 @@ export default function ListReviews({ navigation, idStore }) {
             {
                 userLogged ? (
                     <Button
-                        title = "Escribe una opinión"
+                        title = "Escribe tu experiencia"
                         buttonStyle = {styles.btnAddReview}
                         titleStyle = {styles.btnTitleAddReview}
                         onPress = {() => navigation.navigate(
@@ -45,7 +45,7 @@ export default function ListReviews({ navigation, idStore }) {
                         icon = {{
                             type: "material-community",
                             name: "square-edit-outline",
-                            color: "#a376c7"
+                            color: "#091d41"
                         }}
                     />
                 ):(
@@ -76,44 +76,46 @@ function Review({ reviewDocument }) {
     const createReview = new Date(createAt.seconds * 1000)
 
     return (
-        <View style={styles.viewReview}>
-            <View style={styles.imageAvatar}>
-                <Avatar
-                    renderPlaceholderContent={<ActivityIndicator color="#fff"/>}
-                    size="large"
-                    rounded
-                    containerStyle={styles.imageAvatarUser}
-                    source={
-                        avatar
-                            ? { uri: avatar}
-                            : require("../../assets/avatar-default.jpg")
-                    }
-                />
+            <View style={styles.viewReview}>
+                <View style={styles.imageAvatar}>
+                    <Avatar
+                        renderPlaceholderContent={<ActivityIndicator color="#fff"/>}
+                        size="large"
+                        rounded
+                        containerStyle={styles.imageAvatarUser}
+                        source={
+                            avatar
+                                ? { uri: avatar}
+                                : require("../../assets/avatar-default.jpg")
+                        }
+                    />
+                </View>
+                <View style={styles.viewInfo}>
+                    <Text style={styles.reviewTitle}>{title}</Text>
+                    <Text style={styles.reviewText}>{review}</Text>
+                    <Rating
+                        imageSize={15}
+                        startingValue={rating}
+                        readonly
+                        tintColor = "#d2e0f7"
+                    />
+                    <Text style={styles.reviewDate}>{moment(createReview).format("LLL")}</Text>
+                </View>
             </View>
-            <View style={styles.viewInfo}>
-                <Text style={styles.reviewTitle}>{title}</Text>
-                <Text style={styles.reviewText}>{review}</Text>
-                <Rating
-                    imageSize={15}
-                    startingValue={rating}
-                    readonly
-                />
-                <Text style={styles.reviewDate}>{moment(createReview).format("LLL")}</Text>
-            </View>
-        </View>
     )
 }
 
 const styles = StyleSheet.create({
     btnAddReview:{
-        backgroundColor: "transparent"
+        backgroundColor: "transparent",
+        marginVertical: 15
     },
     btnTitleAddReview:{
-        color: "#a376c7"
+        color: "#091d41"
     },
     mustLoginText:{
         textAlign: "center",
-        color: "#a376c7",
+        color: "#091d41",
         padding: 20
     },
     loginText:{
@@ -124,7 +126,13 @@ const styles = StyleSheet.create({
         padding: 10,
         paddingBottom: 20,
         borderBottomColor: "#e3e3e3",
-        borderBottomWidth: 1
+        width: "95%",
+        height: 100,
+        alignSelf: "center",
+        borderRadius: 15,
+        color: "#f2f2f2",
+        margin: 5,
+        backgroundColor: "#d2e0f7"
     },
     imageAvatar:{
         marginRight: 15

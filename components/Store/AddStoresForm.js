@@ -101,7 +101,7 @@ export default function AddStoresForm({ toastRef, setLoading, navigation }) {
         }
 
         if ((digitalStore === true) && (isEmpty(formData.url))){
-            setErrorUrl("Debes ingresar un email o página web de la tienda")
+            setErrorUrl("Debes ingresar una página web de la tienda")
             isValid = false
         }
         
@@ -351,7 +351,7 @@ function FormAdd({
                                 Tienda: 100% digital
                             </Text>
                         :   <Text style = {styles.viewTextSwitch}>
-                                Tienda: Tradicional - Digital
+                                Tienda: Tradicional
                             </Text>
                     }
                     <Switch
