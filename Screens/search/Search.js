@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     icon:{
         position: "absolute",
         top: 150,
-        right: 10,
+        right: 15,
         shadowColor: "black",
         shadowOffset: { width: 2, height: 2},
         shadowOpacity: 0.5

@@ -57,7 +57,7 @@ export default function Stores({ navigation }) {
     return (
         <View style={styles.viewBody}>
              <ImageBackground
-                source = {require('../../assets/crystal_background.jpg')}
+                source = {require('../../assets/652753.png')}
                 resizeMode = "cover"
                 style = {styles.imageBackground}
             >
@@ -70,7 +70,9 @@ export default function Stores({ navigation }) {
                         />
                     ):(
                         <View style = {styles.notFoundView}>
-                            <Text style = {styles.notFoundText}>No hay tiendas registradas.</Text>
+                            <Text style = {styles.notFoundText}>
+                                No hay tiendas registradas.
+                            </Text>
                         </View>
                     )
                 }
@@ -80,8 +82,8 @@ export default function Stores({ navigation }) {
                                     type = "material-community"
                                     name = "book-plus-multiple"
                                     containerStyle =  {styles.icon}
-                                    color = "#bd65ed"
-                                    size= {50}
+                                    color = "#fff"
+                                    size= {35}
                                     onPress = {() => navigation.navigate("add-store")}
                                 />
                     )
@@ -96,12 +98,10 @@ const styles = StyleSheet.create({
     icon: {
         position: "absolute",
         top: 150,
-        right: 10,
+        right: 15,
         shadowColor: "black",
         shadowOffset: { width: 2, height: 2},
         shadowOpacity: 0.5,
-        backgroundColor: "#fff",
-        borderColor: "#000000",
         borderRadius: 50,
         padding: 5
     },
@@ -115,7 +115,8 @@ const styles = StyleSheet.create({
     },
     notFoundText:{
         fontSize: 18,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "white"
     },
     imageBackground:{
         width: width, 
