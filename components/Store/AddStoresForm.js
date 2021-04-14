@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Alert, Dimensions, StyleSheet, ScrollView, Switch, Text, View } from 'react-native'
+import { Alert, ImageBackground, Dimensions, StyleSheet, ScrollView, Switch, Text, View } from 'react-native'
 import { Avatar, Input, Image, Button, Icon, Slider } from 'react-native-elements'
 import CountryPicker from 'react-native-country-picker-modal'
 import { map, size, filter, isEmpty, isNull } from 'lodash'
@@ -9,8 +9,9 @@ import uuid from 'random-uuid-v4'
 import { getCurrentLocation, loadImageFromGallery, validateEmail } from '../../Utils/helpers'
 import { addDocumentWithOutId, getCurrentUser, uploadImage } from '../../Utils/actions'
 import Modal from '../../components/Modal'
+import { btn } from '../../Styles'
 
-const widthScreen = Dimensions.get("window").width
+const {width, height} = Dimensions.get("window")
 
 export default function AddStoresForm({ toastRef, setLoading, navigation }) {
     const [formData, setFormData] = useState(defaultFormValues())
@@ -130,36 +131,42 @@ export default function AddStoresForm({ toastRef, setLoading, navigation }) {
             <ImageStore
                 imageStore = {imagesSelected[0]}
             />
-            <FormAdd
-                formData = {formData}
-                setFormData = {setFormData}
-                digitalStore = {digitalStore}
-                setDigitalStore = {setDigitalStore}
-                errorName = {errorName}
-                errorAddress = {errorAddress}
-                errorEmail = {errorEmail}
-                errorUrl = {errorUrl}
-                errorPhone = {errorPhone}
-                errorDescription = {errorDescription}
-                setIsVisibleMap = {setIsVisibleMap}
-                locationStore = {locationStore}
-            />
-            <UploadImage
-                toastRef = {toastRef}
-                imagesSelected = {imagesSelected}
-                setImagesSelected = {setImagesSelected}
-            />
-            <Button
-                title = "Crear Tienda"
-                onPress = {addStore}
-                buttonStyle = {styles.btnAddRestaurant}
-            />
-            <MapStore
-                isVisibleMap = {isVisibleMap}
-                setIsVisibleMap = {setIsVisibleMap}
-                setLocationStore = {setLocationStore}
-                toastRef = {toastRef}
-            />
+            <ImageBackground
+                source = {require('../../assets/206954.jpg')}
+                resizeMode = "cover"
+                style = {styles.imageBackground}
+            >
+                <FormAdd
+                    formData = {formData}
+                    setFormData = {setFormData}
+                    digitalStore = {digitalStore}
+                    setDigitalStore = {setDigitalStore}
+                    errorName = {errorName}
+                    errorAddress = {errorAddress}
+                    errorEmail = {errorEmail}
+                    errorUrl = {errorUrl}
+                    errorPhone = {errorPhone}
+                    errorDescription = {errorDescription}
+                    setIsVisibleMap = {setIsVisibleMap}
+                    locationStore = {locationStore}
+                />
+                <UploadImage
+                    toastRef = {toastRef}
+                    imagesSelected = {imagesSelected}
+                    setImagesSelected = {setImagesSelected}
+                />
+                <Button
+                    title = "Crear Tienda"
+                    onPress = {addStore}
+                    buttonStyle = {styles.btnAddStore}
+                />
+                <MapStore
+                    isVisibleMap = {isVisibleMap}
+                    setIsVisibleMap = {setIsVisibleMap}
+                    setLocationStore = {setLocationStore}
+                    toastRef = {toastRef}
+                />
+            </ImageBackground>
         </ScrollView>
     )
 }
@@ -230,7 +237,7 @@ function ImageStore({ imageStore }){
     return(
         <View style = {styles.viewPhoto}>
             <Image
-                style = {{ width: widthScreen, height: 200 }}
+                style = {{ width: width, height: 200 }}
                 source = {
                     imageStore
                     ? {uri: imageStore}
@@ -345,98 +352,101 @@ function FormAdd({
     }
         return(
             <View style = {styles.viewForm}>
-                <View style = {styles.viewSwitch}>
-                    {digitalStore
-                        ?   <Text style = {styles.viewTextSwitch}>
-                                Tienda: 100% digital
-                            </Text>
-                        :   <Text style = {styles.viewTextSwitch}>
-                                Tienda: Tradicional
-                            </Text>
-                    }
-                    <Switch
-                        onValueChange={toggleSwitch}
-                        value = {digitalStore}
-                        thumbColor = { digitalStore ? "#073a9a" : "#ffffff"}
-                        trackColor = {{false: "#c3c3c3" ,true: "#6b92d9" }}
+                    <View style = {styles.viewSwitch}>
+                        {digitalStore
+                            ?   <Text style = {styles.viewTextSwitch}>
+                                    Tienda: 100% digital
+                                </Text>
+                            :   <Text style = {styles.viewTextSwitch}>
+                                    Tienda: Tradicional
+                                </Text>
+                        }
+                        <Switch
+                            onValueChange={toggleSwitch}
+                            value = {digitalStore}
+                            thumbColor = { digitalStore ? "#073a9a" : "#ffffff"}
+                            trackColor = {{false: "#c3c3c3" ,true: "#6b92d9" }}
+                        />
+                    </View>
+                    <Input
+                        placeholder = "Nombre de la tienda"
+                        defaultValue = {formData.name}
+                        onChange = {(e) => onChange(e, "name")}
+                        errorMessage = {errorName}
                     />
-                </View>
-                <Input
-                    placeholder = "Nombre de la tienda"
-                    defaultValue = {formData.name}
-                    onChange = {(e) => onChange(e, "name")}
-                    errorMessage = {errorName}
-                />
-                {digitalStore
-                    ?   <Text></Text>
-                    :   <Input
-                            placeholder = "Dirección de la tienda"
-                            defaultValue = {formData.address}
-                            onChange = {(e) => onChange(e, "address")}
-                            errorMessage = {errorAddress}
-                            rightIcon = {{
-                                type: "material-community",
-                                name: "google-maps",
-                                color: locationStore ? "#073a9a" : "#C2C2C2",
-                                onPress: () => setIsVisibleMap(true)
-                            }}
-                        />
-                }
-                <Input
-                    placeholder = "Email de la tienda"
-                    keyboardType = "email-address"
-                    defaultValue = {formData.email}
-                    onChange = {(e) => onChange(e, "email")}
-                    errorMessage = {errorEmail}
-                    onTextInput = {validatePress}
-                    onBlur = {validatePress}
-                    rightIcon={
-                        <Icon
-                            type = "material-community"
-                            name =  "progress-check"
-                            size = {22}
-                            color = { formData.validateEmail === "true" ? "#073a9a" : "#c1c1c1" }
-                        />
+                    {digitalStore
+                        ?   <Text></Text>
+                        :   <Input
+                                placeholder = "Dirección de la tienda"
+                                defaultValue = {formData.address}
+                                onChange = {(e) => onChange(e, "address")}
+                                errorMessage = {errorAddress}
+                                rightIcon = {{
+                                    type: "material-community",
+                                    name: "google-maps",
+                                    color: locationStore ? "#073a9a" : "#C2C2C2",
+                                    onPress: () => setIsVisibleMap(true)
+                                }}
+                            />
                     }
-                />
-                <Input
-                    placeholder = "Página Web"
-                    defaultValue = {formData.url}
-                    onChange = {(e) => onChange(e, "url")}
-                    errorMessage = {errorUrl}
-                />
-                <View style = {styles.phoneView}>
-                    <CountryPicker
-                        withFlag
-                        withCallingCode
-                        withFilter
-                        withCallingCodeButton
-                        containerStyle = {styles.countryPicker}
-                        countryCode = {country}
-                        onSelect = {(country) =>{
-                            setFormData({
-                                ...formData, 
-                                "country": country.cca2, 
-                                "callingCode": country.callingCode[0]})
-                        }}
+                    <Input
+                        placeholder = "Email de la tienda"
+                        keyboardType = "email-address"
+                        defaultValue = {formData.email}
+                        onChange = {(e) => onChange(e, "email")}
+                        errorMessage = {errorEmail}
+                        onTextInput = {validatePress}
+                        onBlur = {validatePress}
+                        rightIcon={
+                            <Icon
+                                type = "material-community"
+                                name =  "progress-check"
+                                size = {22}
+                                color = { formData.validateEmail === "true" ? "#073a9a" : "#c1c1c1" }
+                            />
+                        }
                     />
                     <Input
-                        placeholder = "WhatsApp de la tienda..."
-                        keyboardType = "phone-pad"
-                        containerStyle = {styles.inputPhone}
-                        defaultValue = {formData.phone}
-                        onChange = {(e) => onChange(e, "phone")}
-                        errorMessage = {errorPhone}
+                        placeholder = "Página Web"
+                        defaultValue = {formData.url}
+                        onChange = {(e) => onChange(e, "url")}
+                        errorMessage = {errorUrl}
                     />
-                </View>
-                <Input
-                        placeholder = "Descripción de la tienda"
-                        multiline
-                        containerStyle = {styles.textArea}
-                        defaultValue = {formData.description}
-                        onChange = {(e) => onChange(e, "description")}
-                        errorMessage = {errorDescription}
-                />
+                    <View style = {styles.phoneView}>
+                        <CountryPicker
+                            withFlag
+                            withCallingCode
+                            withFilter
+                            withCallingCodeButton
+                            containerStyle = {styles.countryPicker}
+                            countryCode = {country}
+                            onSelect = {(country) =>{
+                                setFormData({
+                                    ...formData, 
+                                    "country": country.cca2, 
+                                    "callingCode": country.callingCode[0]})
+                                setCallingCode(country.callingCode)
+                                setCountry(country.cca2)
+                            }}
+                            
+                        />
+                        <Input
+                            placeholder = "WhatsApp de la tienda..."
+                            keyboardType = "phone-pad"
+                            containerStyle = {styles.inputPhone}
+                            defaultValue = {formData.phone}
+                            onChange = {(e) => onChange(e, "phone")}
+                            errorMessage = {errorPhone}
+                        />
+                    </View>
+                    <Input
+                            placeholder = "Descripción de la tienda"
+                            multiline
+                            containerStyle = {styles.textArea}
+                            defaultValue = {formData.description}
+                            onChange = {(e) => onChange(e, "description")}
+                            errorMessage = {errorDescription}
+                    />
             </View>
         )
 }
@@ -460,10 +470,14 @@ const styles = StyleSheet.create({
         height: "100%"
     },
     viewForm:{
-        marginHorizontal: 10
+        marginHorizontal: 10,
+        borderRadius: 10,
+        opacity: 0.8,
+        backgroundColor: "#fff",
+        marginVertical: 10
     },
     textArea:{
-        height: 100,
+        height: 80,
         width: "100%"
     },
     phoneView:{
@@ -474,14 +488,15 @@ const styles = StyleSheet.create({
     inputPhone:{
         width: "80%"
     },
-    btnAddRestaurant:{
-        margin: 20,
-        backgroundColor: "#073a9a"
+    btnAddStore:{
+        margin: 10,
+        backgroundColor: "#073a9a",
+        ...btn.btnIn
     },
     viewImage:{
         flexDirection: "row",
         marginHorizontal: 20,
-        marginTop: 30
+        marginVertical: 5
     },
     containerIcon:{
         alignItems: "center",
@@ -503,8 +518,7 @@ const styles = StyleSheet.create({
     },
     viewPhoto:{
         alignItems: "center",
-        height: 200,
-        marginBottom: 20
+        height: 200
     },
     mapStyle:{
         width: "100%",
@@ -513,7 +527,7 @@ const styles = StyleSheet.create({
     viewMapBtn:{
         flexDirection: "row",
         justifyContent: "center",
-        marginTop: 10
+        marginTop: 10        
     },
     viewMapBtnContainerCancel:{
         paddingLeft: 5
@@ -531,11 +545,15 @@ const styles = StyleSheet.create({
         fontSize: 19,
         marginHorizontal: 10,
         marginVertical: 17,
-        color: "#878787",
+        color: "#4e4e4e",
         fontWeight: "bold"
     },
     viewSwitch:{
         flexDirection: "row",
         justifyContent:"space-between" 
+    },
+    imageBackground:{
+        width: width, 
+        height: height
     }
 })

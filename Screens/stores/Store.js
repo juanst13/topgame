@@ -114,10 +114,10 @@ export default function Store({ navigation, route}) {
             <View style = {styles.viewFavorite}>
                 <Icon
                     type = "material-community"
-                    name = { isFavorite ? "heart" : "heart-outline"}
+                    name = { isFavorite ? "bookmark-plus" : "bookmark-plus-outline"}
                     onPress = { isFavorite ? removeFavorite : addFavorite}
-                    color = "#073a9a"
-                    size = {35}
+                    color = { isFavorite ? "#073a9a" : "#9c9c9c"}//"#d9b453"
+                    size = {30}
                     underlayColor = "transparent"
                 />
             </View>
@@ -245,17 +245,19 @@ const styles = StyleSheet.create({
         marginBottom: 15
     },
     containerListItem:{
-        borderBottomColor: "#073a9a",
+        borderBottomColor: "#84a4e0",
         borderBottomWidth: 1
     },
     viewFavorite:{
         position: "absolute",
         top: 0,
-        right: 0,
+        right: 40,
         backgroundColor: "#fff",
-        borderBottomLeftRadius: 100,
-        padding: 5,
-        paddingLeft: 15
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 10,
+        //borderRadius: 30,
+        //padding: 2,
+        paddingBottom: 5
     },
     image:{
         height: 150,

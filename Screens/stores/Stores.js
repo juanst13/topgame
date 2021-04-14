@@ -57,7 +57,7 @@ export default function Stores({ navigation }) {
     return (
         <View style={styles.viewBody}>
              <ImageBackground
-                source = {require('../../assets/652753.png')}
+                source = {require('../../assets/206954.jpg')}
                 resizeMode = "cover"
                 style = {styles.imageBackground}
             >
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     icon: {
         position: "absolute",
         top: 150,
-        right: 15,
+        right: 4,
         shadowColor: "black",
         shadowOffset: { width: 2, height: 2},
         shadowOpacity: 0.5,

@@ -8,6 +8,7 @@ import { Rating } from 'react-native-ratings'
 import { useFocusEffect } from '@react-navigation/native'
 
 import { getStoreReviews } from '../../Utils/actions'
+import { btn } from '../../Styles/btn'
 
 moment.locale("es")
 
@@ -35,7 +36,7 @@ export default function ListReviews({ navigation, idStore }) {
             {
                 userLogged ? (
                     <Button
-                        title = "Escribe tu experiencia"
+                        title = "Cuentanos tu experiencia"
                         buttonStyle = {styles.btnAddReview}
                         titleStyle = {styles.btnTitleAddReview}
                         onPress = {() => navigation.navigate(
@@ -45,7 +46,7 @@ export default function ListReviews({ navigation, idStore }) {
                         icon = {{
                             type: "material-community",
                             name: "square-edit-outline",
-                            color: "#091d41"
+                            color: "#073a9a"
                         }}
                     />
                 ):(
@@ -108,10 +109,15 @@ function Review({ reviewDocument }) {
 const styles = StyleSheet.create({
     btnAddReview:{
         backgroundColor: "transparent",
-        marginVertical: 15
+        marginVertical: 15,
+        borderWidth: 2,
+        borderRadius: 10,
+        width: "95%",
+        alignSelf: "center",
+        borderColor: "#84a4e0"    
     },
     btnTitleAddReview:{
-        color: "#091d41"
+        color: "#073a9a"
     },
     mustLoginText:{
         textAlign: "center",
@@ -129,7 +135,9 @@ const styles = StyleSheet.create({
         width: "95%",
         height: 100,
         alignSelf: "center",
-        borderRadius: 15,
+        borderTopRightRadius: 15,
+        borderBottomRightRadius: 15,
+        borderBottomLeftRadius: 15,
         color: "#f2f2f2",
         margin: 5,
         backgroundColor: "#d2e0f7"

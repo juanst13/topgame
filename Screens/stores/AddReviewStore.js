@@ -8,6 +8,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 import Loading from '../../components/Loading'
 import { addDocumentWithOutId, getCurrentUser, getDocumentById, updateDocument } from '../../Utils/actions'
+import { btn } from '../../Styles/btn'
 
 export default function AddReviewStore({ navigation, route}) {
     const { idStore } = route.params
@@ -172,6 +173,6 @@ const styles = StyleSheet.create({
         width: "95%"
     },
     btn: {
-        backgroundColor: "#442484"
+        ...btn.btnIn
     }
 })

@@ -2,6 +2,7 @@ import React from 'react'
 import { ActivityIndicator, Dimensions, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Icon, Image } from 'react-native-elements'
 import { size } from 'lodash'
+import { Rating } from 'react-native-ratings'
 
 import { formatPhone } from '../../Utils/helpers'
 
@@ -33,6 +34,7 @@ function Store({ store, navigation, handleLoadMore }) {
         email, 
         phone, 
         url,
+        rating,
         storeDigital, 
         callingCode } = store.item
         const imageStore = images[0]
@@ -77,12 +79,11 @@ function Store({ store, navigation, handleLoadMore }) {
                             </Text>
                             <Text></Text>
                         </View>
-                        <Icon
-                            type = "material-community"
-                            name = { storeDigital ? "cloud-check" : "store"}
-                            color = "white"
-                            containerStyle =  {styles.icon}
-                            size = {35}
+                        <Rating
+                            style={styles.rating}
+                            imageSize={20}
+                            readonly
+                            startingValue = {parseFloat(rating)}
                         />
                     </View>
                 </View>
@@ -94,36 +95,33 @@ const styles = StyleSheet.create({
     viewStore:{
         flex: 1,
         marginTop: 10,
-        marginLeft: 10,
-        marginBottom: 10,
-        marginRight: 10
+        marginBottom: 10
     },
     viewStoreInfo:{
         flexDirection: "row",
         justifyContent: "space-between",
-        borderLeftWidth: 3,
-        borderRightWidth: 3,
+        //borderLeftWidth: 3,
+        //borderRightWidth: 3,
         // borderTopWidth: 1,
         // borderBottomWidth: 3,
-        width: width-100,
+        width: width-60,
         //borderTopRightRadius: 25,
         borderBottomRightRadius: 95,
         borderColor: "#0489db",
-        // backgroundColor: "white",
-        // opacity: 0.6
+        backgroundColor: "white",
         // borderBottomWidth: 1,
         // borderTopWidth: 1
         //borderTopLeftRadius: 25,
-        borderBottomLeftRadius: 15,
-        marginHorizontal: 20,
+        borderBottomLeftRadius: 10,
+        marginHorizontal: 10
     },
     imageStore:{
-        width: width-100,
+        width: width-60,
         height: 100,
-        marginHorizontal: 20,
-        borderTopLeftRadius: 15,
+        marginHorizontal: 10,
+        borderTopLeftRadius: 10,
         //borderBottomLeftRadius: 50,
-        borderTopRightRadius: 15,
+        borderTopRightRadius: 10,
         //borderBottomRightRadius: 50
         //borderRadius: 50
     },
@@ -134,22 +132,16 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 16,
         left: 10,
-        top: 10,
-        color: "white"
+        top: 5,
+        color: "#073a9a"
     },
     storeInformation:{
-        paddingTop: 1,
         color: "gray",
         left: 10,
-        top: 10
+        top: 5
     },
-    storeDescription:{
-        paddingTop: 2,
-        color: "gray",
-        width: "75%"
-    },
-    icon:{
-        marginTop: 20,
+    rating:{
+        marginTop: 6,
         marginRight: 30
     }
 })
