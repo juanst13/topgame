@@ -79,16 +79,32 @@ export default function Stores({ navigation }) {
             { 
                     user && (
                             <Icon
-                                    type = "material-community"
-                                    name = "book-plus-multiple"
-                                    containerStyle =  {styles.icon}
-                                    color = "#fff"
-                                    size= {35}
-                                    onPress = {() => navigation.navigate("add-store")}
-                                />
+                                type = "material-community"
+                                name = "book-plus-multiple"
+                                containerStyle =  {styles.icon}
+                                color = "#fff"
+                                size= {35}
+                                onPress = {() => navigation.navigate("add-store")}
+                            />
                     )
-                }
-                <Loading isVisible={loading} text="Cargando tiendas..."/>
+            }
+            <Icon
+                type = "material-community"
+                name = "newspaper-variant-multiple"
+                containerStyle =  {styles.iconTop}
+                color = "#fff"
+                size= {35}
+                onPress = {() => navigation.navigate("news")}
+            />
+            <Icon
+                type = "material-community"
+                name = "trophy-award"
+                containerStyle =  {styles.iconBottom}
+                color = "#fff"
+                size= {35}
+                onPress = {() => navigation.navigate("news")}
+            />
+            <Loading isVisible={loading} text="Cargando tiendas..."/>
             </ImageBackground>
         </View>
     )
@@ -121,5 +137,25 @@ const styles = StyleSheet.create({
     imageBackground:{
         width: width, 
         height: height
+    },
+    iconTop:{
+        position: "absolute",
+        top: 75,
+        right: 4,
+        shadowColor: "black",
+        shadowOffset: { width: 2, height: 2},
+        shadowOpacity: 0.5,
+        borderRadius: 50,
+        padding: 5
+    },
+    iconBottom:{
+        position: "absolute",
+        top: 200,
+        right: 4,
+        shadowColor: "black",
+        shadowOffset: { width: 2, height: 2},
+        shadowOpacity: 0.5,
+        borderRadius: 50,
+        padding: 5
     }
 })

@@ -128,14 +128,14 @@ export default function AddStoresForm({ toastRef, setLoading, navigation }) {
 
     return (
         <ScrollView style = {styles.viewContainer}>
-            <ImageStore
-                imageStore = {imagesSelected[0]}
-            />
             <ImageBackground
                 source = {require('../../assets/206954.jpg')}
                 resizeMode = "cover"
                 style = {styles.imageBackground}
             >
+                <ImageStore
+                imageStore = {imagesSelected[0]}
+                />
                 <FormAdd
                     formData = {formData}
                     setFormData = {setFormData}
@@ -467,7 +467,7 @@ const defaultFormValues = () => {
 
 const styles = StyleSheet.create({
     viewContainer:{
-        height: "100%"
+        
     },
     viewForm:{
         marginHorizontal: 10,
@@ -518,7 +518,8 @@ const styles = StyleSheet.create({
     },
     viewPhoto:{
         alignItems: "center",
-        height: 200
+        height: 200,
+        top: 5
     },
     mapStyle:{
         width: "100%",
@@ -553,7 +554,6 @@ const styles = StyleSheet.create({
         justifyContent:"space-between" 
     },
     imageBackground:{
-        width: width, 
-        height: height
+        width: width
     }
 })

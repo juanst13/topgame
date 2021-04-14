@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import { Button, Icon, Input } from 'react-native-elements'
 import { set, size } from 'lodash'
 import { useNavigation } from '@react-navigation/native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import { validateEmail } from '../../Utils/helpers'
 import { registerUser } from '../../Utils/actions'
@@ -103,7 +104,7 @@ export default function RegisterForm() {
     }
 
     return (
-        <View style = {styles.containerForm}>
+        <KeyboardAwareScrollView style = {styles.containerForm}>
             <Text style={styles.title}>
                 {"\n"}
                 <Icon
@@ -200,7 +201,7 @@ export default function RegisterForm() {
                 containerStyle = {styles.btnContainer}
             />
             <Loading isVisible={loading} text="Creando Cuenta..."/>
-        </View>
+        </KeyboardAwareScrollView>
     )
 }
 

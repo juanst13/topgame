@@ -3,6 +3,7 @@ import { StyleSheet, ScrollView, TextInput,Text, View } from 'react-native'
 import { Button, Icon, Input } from 'react-native-elements'
 import { isEmpty, result, set, size } from 'lodash'
 import { useNavigation } from '@react-navigation/native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import { validateEmail } from '../../Utils/helpers'
 import { loginWithEmailAndPassword, registerUser } from '../../Utils/actions'
@@ -67,7 +68,7 @@ export default function LoginForm() {
     }
         return (
     
-            <View style = {styles.containerForm}>
+            <KeyboardAwareScrollView style = {styles.containerForm}>
                 <Text style={styles.title}>
                     {"\n"}
                     <Icon
@@ -137,7 +138,7 @@ export default function LoginForm() {
                     }
                 />
                 <Loading isVisible={loading} text = "Iniciando Sesión..."/>
-            </View>
+            </KeyboardAwareScrollView>
         )
 }
 
