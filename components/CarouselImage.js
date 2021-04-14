@@ -57,18 +57,18 @@ const styles = StyleSheet.create({
         alignSelf: "center"
     },
     dotActive:{
-        width: 20,
-        height: 20,
-        borderRadius: 10,
+        width: 16,
+        height: 16,
+        borderRadius: 8,
         marginHorizontal: 2,
-        backgroundColor: "#442484"
+        backgroundColor: "#073a9a"
     },
     dotInactive:{
         width: 14,
         height: 14,
         borderRadius: 7,
         marginHorizontal: 2,
-        backgroundColor: "#fff"
+        backgroundColor: "#84a4e0"
     }
 
 })

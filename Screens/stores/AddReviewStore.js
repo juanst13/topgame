@@ -8,7 +8,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 import Loading from '../../components/Loading'
 import { addDocumentWithOutId, getCurrentUser, getDocumentById, updateDocument } from '../../Utils/actions'
-import { btn } from '../../Styles/btn'
+import { btn } from '../../Styles'
 
 export default function AddReviewStore({ navigation, route}) {
     const { idStore } = route.params
@@ -129,13 +129,13 @@ export default function AddReviewStore({ navigation, route}) {
                     onChange = {(e) => setReview(e.nativeEvent.text)}
                     errorMessage = {errorReview}
                 />
-                <Button
+            </View>
+            <Button
                     title = "Enviar Comentario"
                     containerStyle={styles.btnContainer}
                     buttonStyle={styles.btn}
                     onPress = {addReview}
                 />
-            </View>
             <Toast ref = {toastRef} position = "center" opacity = {0.9}/>
             <Loading isVisible = {loading} text = "Enviando Comentario"/>
         </KeyboardAwareScrollView>
@@ -154,7 +154,13 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         margin: 10,
-        marginTop: 40
+        borderRadius: 10,
+        backgroundColor: "white",
+        paddingTop: 15,
+        borderBottomWidth: 2,
+        borderRightWidth: 2,
+        borderRightColor: "#c4c4c4",
+        borderBottomColor: "#c4c4c4"
     },
     input:{
         marginBottom: 10
@@ -170,7 +176,8 @@ const styles = StyleSheet.create({
         justifyContent: "flex-end",
         marginTop: 20,
         marginBottom: 10,
-        width: "95%"
+        width: "95%",
+        alignSelf: "center"
     },
     btn: {
         ...btn.btnIn
