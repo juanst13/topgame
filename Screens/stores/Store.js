@@ -6,6 +6,7 @@ import { map } from 'lodash'
 import { useFocusEffect } from '@react-navigation/native'
 import firebase from 'firebase/app'
 import Toast from 'react-native-easy-toast'
+import * as Font from 'expo-font'
 
 import CarouselImage from '../../components/CarouselImage'
 import Loading from '../../components/Loading'
@@ -24,6 +25,38 @@ const  width = Dimensions.get("window").width
 export default function Store({ navigation, route}) {
     const { id, name } = route.params
     const toastRef = useRef()
+
+    const [fontsLoaded, setFontsLoaded] = useState(false)
+
+    useEffect(() => {
+        if(!fontsLoaded){
+           loadFonts() 
+        }
+    })
+
+    const loadFonts = async() => {
+        await Font.loadAsync({
+            'Suranna-Regular': 
+            require
+            ("../../assets/fonts/Suranna-Regular.ttf"),
+            'Lobster-Regular': 
+            require
+            ("../../assets/fonts/Lobster-Regular.ttf"),
+            'Antonio-Regular': 
+            require
+            ("../../assets/fonts/Antonio-Regular.ttf"),
+            'Inconsolata-Regular': 
+            require
+            ("../../assets/fonts/Inconsolata-Regular.ttf"),
+            'OrelegaOne-Regular': 
+            require
+            ("../../assets/fonts/OrelegaOne-Regular.ttf"),
+            'PlayfairDisplay-Regular': 
+            require
+            ("../../assets/fonts/PlayfairDisplay-Regular.ttf")
+        })
+        setFontsLoaded(true)
+    }
 
     const [store, setStore] = useState(null)
     const [activeSlide, setActiveSlide] = useState(0)
@@ -224,7 +257,8 @@ const styles = StyleSheet.create({
         flexDirection: "row"
     },
     nameStore : {
-        fontWeight: "bold"
+        fontWeight: "bold",
+        fontSize: 18
     },
     rating : {
         position: "absolute",
@@ -233,7 +267,9 @@ const styles = StyleSheet.create({
     description : {
         marginTop: 10,
         color: "gray",
-        textAlign: "justify"
+        textAlign: "justify",
+        fontFamily: "Lobster-Regular",
+        fontSize: 18
     },
     viewStoreInfo:{
         marginLeft: 15,

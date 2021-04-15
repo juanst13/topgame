@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ActivityIndicator, Dimensions, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Icon, Image } from 'react-native-elements'
-import { size } from 'lodash'
+import { filter, map, size } from 'lodash'
 import { Rating } from 'react-native-ratings'
 
 import { formatPhone } from '../../Utils/helpers'
@@ -9,6 +9,8 @@ import { formatPhone } from '../../Utils/helpers'
 const {width, height} = Dimensions.get("window")
 
 export default function ListStores({ stores, navigation, handleLoadMore }) {
+    const [isFavorite, setIsFavorite] = useState(false)
+
     return (
         <View>
             <FlatList
@@ -17,7 +19,17 @@ export default function ListStores({ stores, navigation, handleLoadMore }) {
                 onEndReachedThreshold = {0.5}
                 onEndReached = {handleLoadMore}
                 renderItem = {(store) => (
-                    <Store store = {store} navigation = {navigation}/>
+                    <Store 
+                        store = {store} 
+                        navigation = {navigation} 
+                        // isFavorite = {isFavorite} 
+                        // setIsFavorite = {
+                        //     map(favorites, async(favorite) => {
+                        //         setIsFavorite(filter(favorite.id == store.id))
+                        //         clg
+                        //     })
+                        //}
+                    />
                 )}
             />
         </View>
@@ -86,7 +98,7 @@ function Store({ store, navigation, handleLoadMore }) {
                                             ?   "star-outline"
                                             :   "star"
                                         }
-                                size = {20}
+                                size = {30}
                                 style = {styles.scoreIcon}
                                 color = { rating === 0 
                                             ?   "#898989"
@@ -96,10 +108,18 @@ function Store({ store, navigation, handleLoadMore }) {
                             <Text style = {styles.score}>  
                                 {
                                     rating === 0 
-                                        ? "  - -"
-                                        : "  " + parseFloat(rating).toFixed(1)
+                                        ? "- -"
+                                        : parseFloat(rating).toFixed(1)
                                 }
                             </Text>
+                            {/* <Icon
+                                type = "material-community"
+                                name = { isFavorite ? "bookmark-plus" : "bookmark-plus-outline"}
+                                color = { isFavorite  ? "#073a9a" : "#9c9c9c"}//"#d9b453"
+                                size = {30}
+                                underlayColor = "transparent"
+                                style = {styles.favIcon}
+                            /> */}
                         </View>
                     </View>
                 </View>
@@ -117,13 +137,13 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         //borderLeftWidth: 3,
-        //borderRightWidth: 3,
+        borderRightWidth: 3,
         // borderTopWidth: 1,
-        // borderBottomWidth: 3,
+        borderBottomWidth: 3,
         width: width-60,
         //borderTopRightRadius: 25,
         borderBottomRightRadius: 95,
-        borderColor: "#0489db",
+        borderColor: "#c3c3c3",
         backgroundColor: "white",
         // borderBottomWidth: 1,
         // borderTopWidth: 1
@@ -165,12 +185,17 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         flex: 1,
         alignSelf: "center",
-        padding: 5
+        padding: 5,
+        alignItems: "center"
     },
     scoreIcon:{
-        color: "#073a9a"
+        color: "#073a9a",
+        marginRight: 3
     },
     score:{
-        
+        fontSize: 16
+    },
+    favIcon:{
+        marginLeft: 10
     }
 })

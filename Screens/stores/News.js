@@ -52,12 +52,12 @@ export default function News({ navigation }) {
     }
 
     return (
-        <ScrollView style={styles.viewBody}>
-            <ImageBackground
+        <View style={styles.viewBody}>
+            {/* <ImageBackground
                 source = {require('../../assets/206954.jpg')}
                 resizeMode = "cover"
                 style = {styles.imageBackground}
-            >
+            > */}
                 {
                     size(news) > 0 ?(
                         <ListNews
@@ -101,8 +101,8 @@ export default function News({ navigation }) {
                     size= {35}
                     onPress = {() => navigation.navigate("news")}
                 />
-            </ImageBackground>
-        </ScrollView>
+            {/* </ImageBackground> */}
+        </View>
     )
 }
 

@@ -285,9 +285,9 @@ export const getNews = async(limitNews) => {
     try {
         const response = await db
         .collection("news")
-        .orderBy("createAt", "desc")
+        .where("category", "==", "Tiendas")
         .limit(limitNews)
-        .get()  
+        .get()
         if (response.docs.length > 0) {
             result.startNew = response.docs[response.docs.length - 1]
         }
@@ -308,8 +308,9 @@ export const getMoreNews = async(limitNews, startNew) => {
     try {
         const response = await db
         .collection("news")
+        .where("category", "==", "Tiendas")
         .orderBy("createAt", "desc")
-        .startAfter(startNew.data().createAdd)
+        .startAfter(startNew.data().createAt)
         .limit(limitNews)
         .get()  
         if (response.docs.length > 0) {
@@ -324,5 +325,8 @@ export const getMoreNews = async(limitNews, startNew) => {
         result.statusResponse = false
         result.error = error
     }
+    console.log(result)
     return result
 }
+
+

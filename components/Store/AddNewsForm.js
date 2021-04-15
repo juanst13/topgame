@@ -14,7 +14,7 @@ const {width, height} = Dimensions.get("window")
 
 export default function AddNewsForm({ navigation, setLoading, toastRef }) {
     const [formData, setFormData] = useState(defaultFormValues())
-    const [category, setCategory] = useState("")
+    const [category, setCategory] = useState("Consolas")
     const [errorName, setErrorName] = useState(null)
     const [errorDescription, setErrorDescrition] = useState(null)
     const [errorCategory, setErrorCategory] = useState(null)

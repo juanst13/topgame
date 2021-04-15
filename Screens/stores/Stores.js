@@ -6,7 +6,7 @@ import { useFocusEffect } from "@react-navigation/native"
 import { size } from 'lodash'
 import stickybits from 'stickybits'
 
-import { getCurrentUser, getMoreStores, getStores, isUserLogged } from '../../Utils/actions'
+import { getCurrentUser, getFavorites, getMoreStores, getStores, isUserLogged } from '../../Utils/actions'
 import Loading from '../../components/Loading'
 import ListStores from '../../components/Store/ListStores'
 import { ScrollView } from 'react-native-gesture-handler'
@@ -19,6 +19,7 @@ export default function Stores({ navigation }) {
     const [startStore, setStartStore] = useState(null)
     const [stores, setStores] = useState([])    
     const [loading, setLoading] = useState(false)
+    // const [favorites, setFavorites] = useState([])
 
     const limitStores = 7
     
@@ -37,6 +38,10 @@ export default function Stores({ navigation }) {
                     setStartStore(response.startStore)
                     setStores(response.stores)
                 }
+                // const favoriteResponse = await getFavorites()
+                // if(favoriteResponse.statusResponse){
+                //     setFavorites(favoriteResponse.favorites)
+                // }
                 setLoading(false)
             }
             getData()
@@ -58,18 +63,19 @@ export default function Stores({ navigation }) {
     }
 
     return (
-        <ScrollView containerStyle={styles.viewBody}>
-             <ImageBackground
-                source = {require('../../assets/206954.jpg')}
-                resizeMode = "cover"
-                style = {styles.imageBackground}
-            >
+        <View style = {styles.viewBody}>
+        {/* //      <ImageBackground
+        //         source = {require('../../assets/206954.jpg')}
+        //         resizeMode = "cover"
+        //         style = {styles.imageBackground}
+        //     > */}
                 {
                     size(stores) > 0 ?(
                         <ListStores 
-                        stores = {stores} 
-                        navigation = {navigation}
-                        handleLoadMore = {handleLoadMore}
+                            stores = {stores} 
+                            navigation = {navigation}
+                            handleLoadMore = {handleLoadMore}
+                            // favorites = {favorites}
                         />
                     ):(
                         <View style = {styles.notFoundView}>
@@ -79,18 +85,16 @@ export default function Stores({ navigation }) {
                         </View>
                     )
                 }
-                <View stickybits>
-                { 
-                        user && (
-                                <Icon
-                                    type = "material-community"
-                                    name = "book-plus-multiple"
-                                    containerStyle =  {styles.icon}
-                                    color = "#fff"
-                                    size= {35}
-                                    onPress = {() => navigation.navigate("add-store")}
-                                />
-                        )
+                {   user && (
+                        <Icon
+                            type = "material-community"
+                            name = "book-plus-multiple"
+                            containerStyle =  {styles.icon}
+                            color = "#fff"
+                            size= {35}
+                            onPress = {() => navigation.navigate("add-store")}
+                        />
+                    )
                 }
                 <Icon
                     type = "material-community"
@@ -108,10 +112,9 @@ export default function Stores({ navigation }) {
                     size= {35}
                     onPress = {() => navigation.navigate("news")}
                 />
-                </View>
                 <Loading isVisible={loading} text="Cargando tiendas..."/>
-            </ImageBackground>
-        </ScrollView>
+            {/* </ImageBackground> */}
+        </View>
     )
 }
 
@@ -127,8 +130,7 @@ const styles = StyleSheet.create({
         padding: 5
     },
     viewBody:{
-        flexDirection: "row",
-        display: "flex"
+        backgroundColor: "#cfcfcf"
     },
     notFoundView:{
         flex: 1,
@@ -138,7 +140,9 @@ const styles = StyleSheet.create({
     notFoundText:{
         fontSize: 18,
         fontWeight: "bold",
-        color: "white"
+        color: "white",
+        justifyContent: "center",
+        alignSelf: "center"
     },
     imageBackground:{
         width: width, 

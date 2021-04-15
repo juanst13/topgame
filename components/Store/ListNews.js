@@ -57,19 +57,21 @@ function Notice({ notice, navigation, handleLoadMore }) {
                                     description
                                 }
                             </Text>
+                        </View>
+                        <View style ={styles.ratingC}>
                             <Text style = {styles.newInformation}>
                                 {
                                     category
                                 }
                             </Text>
-                            <Text></Text>
+                            <Rating
+                                style={styles.rating}
+                                imageSize={20}
+                                readonly
+                                startingValue = {parseFloat(rating)}
+                                style = {styles.rating}
+                            />
                         </View>
-                        <Rating
-                            style={styles.rating}
-                            imageSize={20}
-                            readonly
-                            startingValue = {parseFloat(rating)}
-                        />
                     </View>
                 </View>
             </TouchableOpacity>
@@ -79,20 +81,22 @@ function Notice({ notice, navigation, handleLoadMore }) {
 const styles = StyleSheet.create({
     viewNew:{
         flex: 1,
-        marginTop: 10,
-        marginBottom: 10
+        marginTop: 5,
+        marginBottom: 5
+    },
+    ratingC:{
+        flexDirection: "row",
+        justifyContent: "space-between"
     },
     viewNewInfo:{
-        flexDirection: "row",
-        justifyContent: "space-between",
         //borderLeftWidth: 3,
-        //borderRightWidth: 3,
+        borderRightWidth: 3,
         // borderTopWidth: 1,
-        // borderBottomWidth: 3,
+        borderBottomWidth: 3,
         width: width-60,
         //borderTopRightRadius: 25,
         borderBottomRightRadius: 10,
-        borderColor: "#0489db",
+        borderColor: "#C9C9C9",
         backgroundColor: "white",
         // borderBottomWidth: 1,
         // borderTopWidth: 1
@@ -122,11 +126,10 @@ const styles = StyleSheet.create({
     },
     newInformation:{
         color: "gray",
-        left: 10,
-        top: 5
+        left: 10
     },
     rating:{
-        marginTop: 6,
-        marginRight: 30
+        marginRight: 10,
+        marginBottom: 5
     }
 })
