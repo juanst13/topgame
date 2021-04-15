@@ -179,7 +179,6 @@ function MapStore({ isVisibleMap, setIsVisibleMap, setLocationStore, toastRef })
                 const response = await getCurrentLocation()
                 if(response.status){
                     setNewRegion(response.location)
-                    
                 }
             })()
     }, [])
@@ -201,7 +200,7 @@ function MapStore({ isVisibleMap, setIsVisibleMap, setLocationStore, toastRef })
                         <MapView
                             style = {styles.mapStyle}
                             initialRegion = {newRegion}
-                            showsUserLocation
+                            showsUserLocation={true}
                             onRegionChange = {(region) => setNewRegion(region)}
                         >
                             <MapView.Marker
@@ -518,8 +517,7 @@ const styles = StyleSheet.create({
     },
     viewPhoto:{
         alignItems: "center",
-        height: 200,
-        top: 5
+        height: 200
     },
     mapStyle:{
         width: "100%",

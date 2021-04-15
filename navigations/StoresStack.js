@@ -8,6 +8,7 @@ import Store from '../Screens/stores/Store'
 import AddReviewStore from '../Screens/stores/AddReviewStore'
 import News from '../Screens/stores/News'
 import AddNews from '../Screens/stores/AddNews'
+import Notice from '../Screens/stores/Notice'
 
 const Stack = createStackNavigator()
 
@@ -42,6 +43,10 @@ export default function StoresStack() {
                 name = "add-new"
                 component = {AddNews}
                 options = {{ title: "Crear Noticia" }}
+            />
+            <Stack.Screen
+                name = "new"
+                component = {Notice}
             />
         </Stack.Navigator>
     )

@@ -79,12 +79,28 @@ function Store({ store, navigation, handleLoadMore }) {
                             </Text>
                             <Text></Text>
                         </View>
-                        <Rating
-                            style={styles.rating}
-                            imageSize={20}
-                            readonly
-                            startingValue = {parseFloat(rating)}
-                        />
+                        <View style = {styles.calification}>
+                            <Icon 
+                                type = "material-community"
+                                name =  { rating === 0 
+                                            ?   "star-outline"
+                                            :   "star"
+                                        }
+                                size = {20}
+                                style = {styles.scoreIcon}
+                                color = { rating === 0 
+                                            ?   "#898989"
+                                            :   "#edaf0d"
+                                        }
+                            />
+                            <Text style = {styles.score}>  
+                                {
+                                    rating === 0 
+                                        ? "  - -"
+                                        : "  " + parseFloat(rating).toFixed(1)
+                                }
+                            </Text>
+                        </View>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -143,5 +159,18 @@ const styles = StyleSheet.create({
     rating:{
         marginTop: 6,
         marginRight: 30
+    },
+    calification:{
+        flexDirection: "row",
+        justifyContent: "center",
+        flex: 1,
+        alignSelf: "center",
+        padding: 5
+    },
+    scoreIcon:{
+        color: "#073a9a"
+    },
+    score:{
+        
     }
 })

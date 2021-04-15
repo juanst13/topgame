@@ -279,3 +279,50 @@ export const getFavorites = async() => {
     }
     return result
 }
+
+export const getNews = async(limitNews) => {
+    const result = { statusResponse: true, error: null, news: [], startNew: null }
+    try {
+        const response = await db
+        .collection("news")
+        .orderBy("createAt", "desc")
+        .limit(limitNews)
+        .get()  
+        if (response.docs.length > 0) {
+            result.startNew = response.docs[response.docs.length - 1]
+        }
+        response.forEach((doc) => {
+            const notice = doc.data()
+            notice.id = doc.id
+            result.news.push(notice)
+        })
+    } catch (error) {
+        result.statusResponse = false
+        result.error = error
+    }
+    return result
+}
+
+export const getMoreNews = async(limitNews, startNew) => {
+    const result = { statusResponse: true, error: null, news: [], startNew: null }
+    try {
+        const response = await db
+        .collection("news")
+        .orderBy("createAt", "desc")
+        .startAfter(startNew.data().createAdd)
+        .limit(limitNews)
+        .get()  
+        if (response.docs.length > 0) {
+            result.startNew = response.docs[response.docs.length - 1]
+        }
+        response.forEach((doc) => {
+            const notice = doc.data()
+            notice.id = doc.id
+            result.news.push(notice)
+        })
+    } catch (error) {
+        result.statusResponse = false
+        result.error = error
+    }
+    return result
+}
