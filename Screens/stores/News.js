@@ -108,7 +108,8 @@ export default function News({ navigation }) {
 
 const styles = StyleSheet.create({
     viewBody:{
-        height: "100%"
+        height: "100%",
+        backgroundColor: "#cfcfcf"
     },
     icon: {
         position: "absolute",

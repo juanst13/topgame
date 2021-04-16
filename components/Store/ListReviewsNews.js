@@ -7,12 +7,12 @@ import { map, size } from 'lodash'
 import { Rating } from 'react-native-ratings'
 import { useFocusEffect } from '@react-navigation/native'
 
-import { getStoreReviews } from '../../Utils/actions'
+import { getNoticeReviews, getStoreReviews } from '../../Utils/actions'
 import { btn } from '../../Styles/btn'
 
 moment.locale("es")
 
-export default function ListReviews({ navigation, idStore }) {
+export default function ListReviewsNews({ navigation, idNotice }) {
     const [userLogged, setUserLogged] = useState(false)
     const [reviews, setReviews] = useState([])
 
@@ -23,7 +23,7 @@ export default function ListReviews({ navigation, idStore }) {
     useFocusEffect(
         useCallback(() => {
             (async() => {
-                const response = await getStoreReviews(idStore)
+                const response = await getNoticeReviews(idNotice)
                 if (response.statusResponse) {
                     setReviews(response.reviews)
                 }
@@ -40,8 +40,8 @@ export default function ListReviews({ navigation, idStore }) {
                         buttonStyle = {styles.btnAddReview}
                         titleStyle = {styles.btnTitleAddReview}
                         onPress = {() => navigation.navigate(
-                            "add-review-store", 
-                            { idStore })
+                            "add-review-notice", 
+                            { idNotice })
                         }
                         icon = {{
                             type: "material-community",
@@ -107,6 +107,7 @@ function Review({ reviewDocument }) {
 }
 
 const styles = StyleSheet.create({
+    
     btnAddReview:{
         backgroundColor: "transparent",
         marginVertical: 15,

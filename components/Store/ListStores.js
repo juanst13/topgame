@@ -189,8 +189,7 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     scoreIcon:{
-        color: "#073a9a",
-        marginRight: 3
+        marginRight: 3  
     },
     score:{
         fontSize: 16

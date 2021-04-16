@@ -325,8 +325,95 @@ export const getMoreNews = async(limitNews, startNew) => {
         result.statusResponse = false
         result.error = error
     }
-    console.log(result)
     return result
 }
 
+export const getFavoritesNews = async() => {
+    const result = { statusResponse: true, error: null, favorites: [] }
+    try {
+        const response = await db
+        .collection("favoritesNews")
+        .where("idUser", "==", getCurrentUser().uid)
+        .get()
+        // const storesId = []
+        // response.forEach(async(doc) => {
+        //     const favorite = doc.data()
+        //     storesId.push(favorite.idStore)
+        // })
+        // await Promise.all(
+        //     map(storesId, async(storeId) => {
+        //         const response2 = await getDocumentById("stores", storeId)
+        //         if(response2.statusResponse)
+        //         {
+        //             result.favorites.push(response2.document)
+        //         }
+        //     })
+        // )
 
+        await Promise.all(
+            map(response.docs, async(doc) => {
+                const favorite = doc.data()
+                const responseGetNotice = await getDocumentById("favoritesNews", favorite.idNotice)
+                result.favorites.push(responseGetNotice.document)
+            })
+        )
+    } catch (error) {
+        result.statusResponse = false
+        result.error = error
+    }
+    return result
+}
+
+export const getIsFavoriteNotice = async(idNotice) => {
+    const result = { statusResponse: true, error: null, isFavorite: false }
+    try {
+        const response = await db
+        .collection("favoritesNews")
+        .where("idNotice", "==", idNotice)
+        .where("idUser", "==", getCurrentUser().uid)
+        .get()
+        result.isFavorite = response.docs.length > 0
+    } catch (error) {
+        result.statusResponse = false
+        result.error = error
+    }
+    return result
+}
+
+export const removeFavoritesNews = async(idNotice) => {
+    const result = { statusResponse: true, error: null }
+    try {
+        const response = await db
+        .collection("favoritesNews")
+        .where("idNotice", "==", idNotice)
+        .where("idUser", "==", getCurrentUser().uid)
+        .get()
+        response.forEach(async(doc) => {
+            const favoriteId = doc.id
+            await db.collection("favoritesNews").doc(favoriteId).delete()
+        })
+    } catch (error) {
+        result.statusResponse = false
+        result.error = error
+    }
+    return result
+}
+
+export const getNoticeReviews = async(id) => {
+    const result = { statusResponse: true, error: null, reviews: [] }
+    try {
+        const response = await db
+            .collection("reviewsNews")
+            .where("idNotice", "==", id)
+            .get()
+        response.forEach((doc) => {
+            const review = doc.data()
+            review.id = doc.id
+            result.reviews.push(review)
+        })
+    } catch (error) {
+        result.statusResponse = false
+        result.error = error
+    }
+    return result
+}

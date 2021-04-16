@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Alert } from 'react-native'
 import { StyleSheet, Text, View } from 'react-native'
 import { Avatar, Icon } from 'react-native-elements'
-import UserLogged from '../../Screens/account/UserLogged'
 import { useNavigation } from '@react-navigation/native'
 
 import { updateProfile, uploadImage } from '../../Utils/actions'

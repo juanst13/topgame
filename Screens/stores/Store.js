@@ -68,7 +68,11 @@ export default function Store({ navigation, route}) {
          user ? setUserLogged(true) : setUserLogged(false)
     })
 
-    navigation.setOptions({ title: name })
+    React.useLayoutEffect(() => {
+        navigation.setOptions({
+          title: name === '' ? 'No title' : name,
+        });
+      }, [navigation, name])
 
     useFocusEffect(
         useCallback(() => {
@@ -269,7 +273,8 @@ const styles = StyleSheet.create({
         color: "gray",
         textAlign: "justify",
         fontFamily: "Lobster-Regular",
-        fontSize: 18
+        fontSize: 18,
+        textAlign: "justify"
     },
     viewStoreInfo:{
         marginLeft: 15,

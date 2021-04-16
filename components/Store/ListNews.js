@@ -33,7 +33,7 @@ function Notice({ notice, navigation, handleLoadMore }) {
         const imagesNew = images[0]
 
         const goNotice = () => {
-            navigation.navigate("new", { id, name })
+            navigation.navigate("notice", { id, name })
         }
 
         return (
@@ -52,26 +52,42 @@ function Notice({ notice, navigation, handleLoadMore }) {
                     <View  style = {styles.viewNewInfo}>
                         <View>
                             <Text style = {styles.newTitle}>{name}</Text>
-                            <Text style = {styles.newInformation}>
-                                {
-                                    description
-                                }
-                            </Text>
                         </View>
-                        <View style ={styles.ratingC}>
-                            <Text style = {styles.newInformation}>
-                                {
-                                    category
-                                }
-                            </Text>
-                            <Rating
-                                style={styles.rating}
-                                imageSize={20}
-                                readonly
-                                startingValue = {parseFloat(rating)}
-                                style = {styles.rating}
-                            />
+                        <View style = {styles.calification}>
+                            <View>
+                                <Icon 
+                                    type = "material-community"
+                                    name =  { rating === 0 
+                                                ?   "star-outline"
+                                                :   "star"
+                                            }
+                                    size = {30}
+                                    style = {styles.scoreIcon}
+                                    color = { rating === 0 
+                                                ?   "#898989"
+                                                :   "#edaf0d"
+                                            }
+                                />
+                            </View>
+                            <View>
+                                <Text style = {styles.score}>  
+                                    {
+                                        rating === 0 
+                                            ? "- -"
+                                            : parseFloat(rating).toFixed(1)
+                                    }
+                                </Text>
+                            </View>
                         </View>
+                            {/* <Icon
+                                type = "material-community"
+                                name = { isFavorite ? "bookmark-plus" : "bookmark-plus-outline"}
+                                color = { isFavorite  ? "#073a9a" : "#9c9c9c"}//"#d9b453"
+                                size = {30}
+                                underlayColor = "transparent"
+                                style = {styles.favIcon}
+                            /> */}
+
                     </View>
                 </View>
             </TouchableOpacity>
@@ -81,12 +97,8 @@ function Notice({ notice, navigation, handleLoadMore }) {
 const styles = StyleSheet.create({
     viewNew:{
         flex: 1,
-        marginTop: 5,
+        marginTop: 10,
         marginBottom: 5
-    },
-    ratingC:{
-        flexDirection: "row",
-        justifyContent: "space-between"
     },
     viewNewInfo:{
         //borderLeftWidth: 3,
@@ -102,7 +114,9 @@ const styles = StyleSheet.create({
         // borderTopWidth: 1
         //borderTopLeftRadius: 25,
         borderBottomLeftRadius: 10,
-        marginHorizontal: 10
+        marginHorizontal: 10,
+        flexDirection: "row",
+        justifyContent: "space-between"
     },
     imageNew:{
         width: width-60,
@@ -131,5 +145,13 @@ const styles = StyleSheet.create({
     rating:{
         marginRight: 10,
         marginBottom: 5
+    },
+    calification:{
+        flexDirection: "row",
+        alignItems: "center",
+        marginHorizontal: 10
+    },
+    scoreIcon:{
+        marginRight: 3  
     }
 })

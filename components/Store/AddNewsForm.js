@@ -24,19 +24,23 @@ export default function AddNewsForm({ navigation, setLoading, toastRef }) {
         if(!validateForm()){
             return
         }
+        
+        const user = getCurrentUser()
 
         setLoading(true)
         const responseUploadImagesNews = await imagesUploadNew()
         const notice = {
             name: formData.name,
-            desciption: formData.description,
+            description: formData.description,
             category: category,
             images: responseUploadImagesNews,
             rating:   0,
             ratingTotal:   0,
             quantityVoting:   0,
             createAt: new Date(),
-            createBy: getCurrentUser().uid
+            createBy: user.uid,
+            createByName: user.displayName,
+            avatar: user.photoURL
         }
 
         const responseAddDocument = await addDocumentWithOutId("news", notice)

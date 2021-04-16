@@ -96,7 +96,6 @@ export default function Favorites({ navigation }) {
 function Store({ store, setLoading, toastRef, navigation}) {
     const { id, name, images } = store.item
 
-    console.log(store)
     return(
         <View>
             <Text>{name}</Text>

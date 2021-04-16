@@ -10,8 +10,8 @@ import Loading from '../../components/Loading'
 import { addDocumentWithOutId, getCurrentUser, getDocumentById, updateDocument } from '../../Utils/actions'
 import { btn } from '../../Styles'
 
-export default function AddReviewStore({ navigation, route }) {
-    const { idStore } = route.params
+export default function AddReviewNotice({ navigation, route }) {
+    const { idNotice } = route.params
     const toastRef = useRef()
 
     const [rating, setRating] = useState(null)
@@ -31,14 +31,14 @@ export default function AddReviewStore({ navigation, route }) {
         const data = {
             idUser: user.uid,
             avatar: user.photoURL,
-            idStore,
+            idNotice,
             title,
             rating,
             review,
             createAt: new Date()
         }
 
-        const responseAddReview = await addDocumentWithOutId("reviews", data)
+        const responseAddReview = await addDocumentWithOutId("reviewsNews", data)
         if(!responseAddReview.statusResponse){
             setLoading(false)
             toastRef.current.show(
@@ -48,30 +48,30 @@ export default function AddReviewStore({ navigation, route }) {
             return
         }
 
-        const responseGetStore = await getDocumentById("stores", idStore)
-        if (!responseGetStore.statusResponse){
+        const responseGetNotice = await getDocumentById("news", idNotice)
+        if (!responseGetNotice.statusResponse){
             setLoading(false)
             toastRef.current.show(
-                "Error al obtener la tienda, por favor intentarlo mas tarde."
+                "Error al obtener la noticia, por favor intentarlo mas tarde."
                 , 3000
             )
             return
         }
 
-        const store = responseGetStore.document
-        const ratingTotal = store.ratingTotal + rating
-        const quantityVoting = store.quantityVoting + 1
+        const notice = responseGetNotice.document
+        const ratingTotal = notice.ratingTotal + rating
+        const quantityVoting = notice.quantityVoting + 1
         const ratingResult = ratingTotal / quantityVoting
-        const responseUpdateStore = await updateDocument("stores", idStore, {
+        const responseUpdateNotice = await updateDocument("news", idNotice, {
             ratingTotal,
             quantityVoting,
             rating: ratingResult
         })
         setLoading(false)
 
-        if (!responseUpdateStore.statusResponse){
+        if (!responseUpdateNotice.statusResponse){
             toastRef.current.show(
-                "Error al actualizar la tienda, por favor intentarlo mas tarde."
+                "Error al actualizar la noticia, por favor intentarlo mas tarde."
                 , 3000
             )
             return
@@ -86,7 +86,7 @@ export default function AddReviewStore({ navigation, route }) {
         let isValid = true
 
         if (!rating){
-            toastRef.current.show("Debes darle una puntuación a la tienda.", 3000)
+            toastRef.current.show("Debes darle una puntuación a la noticia.", 3000)
             isValid = false
         }
 
