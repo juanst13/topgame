@@ -11,7 +11,6 @@ import AddNews from '../Screens/stores/AddNews'
 import Notice from '../Screens/stores/Notice'
 import AddReviewNotice from '../Screens/stores/AddReviewNotice'
 import { Button, Icon } from 'react-native-elements'
-import TopStore from '../Screens/stores/TopStore'
 
 const Stack = createStackNavigator()
 
@@ -26,8 +25,11 @@ export default function StoresStack({ navigation }) {
                 headerRight: (props) => (
                     <Button
                         title = "Noticias"
-                        titleStyle = {{ color: "#84a4e0", fontSize: 20}}
-                        buttonStyle = {{ backgroundColor: "#fff", paddingHorizontal: 5, marginHorizontal: 10 }}
+                        titleStyle = {{ color: "#84a4e0", fontSize: 20, marginRight: 10 }}
+                        buttonStyle = {{ 
+                            backgroundColor: "#fff", 
+                            paddingHorizontal: 5, 
+                            marginHorizontal: 20 }}
                         icon ={
                             <Icon
                                 type = "material-community"
@@ -79,12 +81,7 @@ export default function StoresStack({ navigation }) {
                 options = {{ title: "Nuevo Comentario",
                 headerTintColor: "#073a9a" }}
             />
-            <Stack.Screen
-                name = "top-stores"
-                component = {TopStore}
-                options = {{ title: "Top 10",
-                headerTintColor: "#073a9a" }}
-            />
+            
         </Stack.Navigator>
     )
 }

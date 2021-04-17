@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     },
     RightIconBottom:{
         position: "absolute",
-        bottom: 90,
+        bottom: 80,
         right: 4,
         shadowColor: "black",
         shadowOffset: { width: 2, height: 2},
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     },
     RightIconTop:{
         position: "absolute",
-        bottom: 160,
+        bottom: 150,
         right: 4,
         shadowColor: "black",
         shadowOffset: { width: 2, height: 2},
@@ -266,7 +266,7 @@ const styles = StyleSheet.create({
     },
     iconBottom:{
         position: "absolute",
-        bottom: 20,
+        bottom: 10,
         right: 4,
         shadowColor: "black",
         shadowOffset: { width: 2, height: 2},

@@ -354,10 +354,10 @@ function FormAdd({
                     <View style = {styles.viewSwitch}>
                         {digitalStore
                             ?   <Text style = {styles.viewTextSwitch}>
-                                    Tienda: 100% digital
+                                    Tienda 100% digital
                                 </Text>
                             :   <Text style = {styles.viewTextSwitch}>
-                                    Tienda: Tradicional
+                                    Tienda Tradicional
                                 </Text>
                         }
                         <Switch

@@ -3,11 +3,12 @@ import { View, Text } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { Button, Icon } from 'react-native-elements'
 
-import Search from '../Screens/search/Search'
 import Favorites from '../Screens/search/Favorites'
 import FavoritesConsoles from '../Screens/search/FavoritesConsoles'
 import FavoritesGames from '../Screens/search/FavoritesGames'
 import FavoritesNews from '../Screens/search/FavoritesNews'
+import TopStore from '../Screens/search/TopStore'
+import Search from '../Screens/search/Search'
 
 
 const Stack = createStackNavigator()
@@ -46,11 +47,11 @@ export default function SearchStack({ navigation }) {
                     headerRight: (props) => (
                         <Button
                             title = "Tiendas"
-                            titleStyle = {{ color: "#fff", fontSize: 20}}
+                            titleStyle = {{ color: "#fff", fontSize: 20, marginRight: 10 }}
                             buttonStyle = {{ 
                                 backgroundColor: "#073a9a", 
                                 paddingHorizontal: 5, 
-                                marginHorizontal: 10,
+                                marginHorizontal: 20,
                                 paddingVertical: 2 
                             }}
                             icon ={
@@ -61,7 +62,6 @@ export default function SearchStack({ navigation }) {
                                     marginHorizontal = {5}
                                 />
                             }
-                            onPress = {() => navigation.navigate("list-favorites-stores")}
                         />
                     )
                 }}
@@ -74,11 +74,11 @@ export default function SearchStack({ navigation }) {
                 headerRight: (props) => (
                     <Button
                         title = "Consolas"
-                        titleStyle = {{ color: "#fff", fontSize: 20}}
+                        titleStyle = {{ color: "#fff", fontSize: 20, marginRight: 10 }}
                         buttonStyle = {{ 
                             backgroundColor: "#073a9a", 
                             paddingHorizontal: 5, 
-                            marginHorizontal: 10,
+                            marginHorizontal: 20,
                             paddingVertical: 2 
                         }}
                         icon ={
@@ -102,11 +102,11 @@ export default function SearchStack({ navigation }) {
                 headerRight: (props) => (
                     <Button
                         title = "Juegos"
-                        titleStyle = {{ color: "#fff", fontSize: 20}}
+                        titleStyle = {{ color: "#fff", fontSize: 20, marginRight: 10 }}
                         buttonStyle = {{ 
                             backgroundColor: "#073a9a", 
                             paddingHorizontal: 5, 
-                            marginHorizontal: 10,
+                            marginHorizontal: 20,
                             paddingVertical: 2 
                         }}
                         icon ={
@@ -130,17 +130,45 @@ export default function SearchStack({ navigation }) {
                 headerRight: (props) => (
                     <Button
                         title = "Noticias"
-                        titleStyle = {{ color: "#fff", fontSize: 20}}
+                        titleStyle = {{ color: "#fff", fontSize: 20, marginRight: 10 }}
                         buttonStyle = {{ 
                             backgroundColor: "#073a9a", 
                             paddingHorizontal: 5, 
-                            marginHorizontal: 10,
+                            marginHorizontal: 20,
                             paddingVertical: 2 
                         }}
                         icon ={
                             <Icon
                                 type = "material-community"
                                 name = "newspaper-variant-multiple"
+                                color = "#fff"
+                                marginHorizontal = {5}
+                            />
+                        }
+                        onPress = {() => navigation.navigate("list-favorites-stores")}
+                    />
+                )
+            }}
+        />
+        <Stack.Screen
+                name = "top-stores"
+                component = {TopStore}
+                options = {{ title: "Top 10",
+                headerTintColor: "#073a9a",
+                headerRight: (props) => (
+                    <Button
+                        title = "Tiendas"
+                        titleStyle = {{ color: "#fff", fontSize: 20, marginRight: 10 }}
+                        buttonStyle = {{ 
+                            backgroundColor: "#073a9a", 
+                            paddingHorizontal: 5, 
+                            marginHorizontal: 20,
+                            paddingVertical: 2 
+                        }}
+                        icon ={
+                            <Icon
+                                type = "material-community"
+                                name = "star"
                                 color = "#fff"
                                 marginHorizontal = {5}
                             />

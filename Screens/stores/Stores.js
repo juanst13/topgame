@@ -90,22 +90,13 @@ export default function Stores({ navigation }) {
                             type = "material-community"
                             name = "book-plus-multiple"
                             containerStyle =  {styles.icon}
-                            color = "#84a4e0"
-                            size= {20}
+                            color = "#d9b453"
+                            size= {25}
                             reverse
                             onPress = {() => navigation.navigate("add-store")}
                         />
                     )
                 }
-                <Icon
-                    type = "material-community"
-                    name = "trophy"
-                    containerStyle =  {styles.iconBottom}
-                    color = "#d9b453"
-                    size= {20}
-                    reverse
-                    onPress = {() => navigation.navigate("top-stores")}
-                />
                 <Loading isVisible={loading} text="Cargando tiendas..."/>
             {/* </ImageBackground> */}
         </View>
@@ -115,11 +106,11 @@ export default function Stores({ navigation }) {
 const styles = StyleSheet.create({
     icon: {
         position: "absolute",
-        bottom: 90,
-        right: 4,
+        bottom: 10,
+        right: 10,
         shadowColor: "black",
         shadowOffset: { width: 2, height: 2},
-        shadowOpacity: 0.5,
+        shadowOpacity: 0.9,
         borderRadius: 50,
         padding: 5
     },
@@ -144,7 +135,7 @@ const styles = StyleSheet.create({
     iconTop:{
         position: "absolute",
         bottom: 160,
-        right: 4,
+        right: 10,
         shadowColor: "black",
         shadowOffset: { width: 2, height: 2},
         shadowOpacity: 0.5,
@@ -154,7 +145,7 @@ const styles = StyleSheet.create({
     iconBottom:{
         position: "absolute",
         bottom: 20,
-        right: 4,
+        right: 10,
         shadowColor: "black",
         shadowOffset: { width: 2, height: 2},
         shadowOpacity: 0.5,
