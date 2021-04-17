@@ -417,3 +417,23 @@ export const getNoticeReviews = async(id) => {
     }
     return result
 }
+
+export const getTopStore = async(limit) => {
+    const result = { statusResponse: true, error: null, stores: [] }
+    try {
+        const response = await db
+        .collection("stores")
+        .orderBy("rating", "desc")
+        .limit(limit)
+        .get()
+        response.forEach((doc) => {
+            const store = doc.data()
+            store.id = doc.id
+            result.stores.push(store)
+        })
+    } catch (error) {
+        result.statusResponse = false
+        result.error = error
+    }
+    return result
+}

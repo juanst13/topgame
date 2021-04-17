@@ -14,7 +14,7 @@ const {width, height} = Dimensions.get("window")
 
 export default function AddNewsForm({ navigation, setLoading, toastRef }) {
     const [formData, setFormData] = useState(defaultFormValues())
-    const [category, setCategory] = useState("Consolas")
+    const [category, setCategory] = useState("Tiendas")
     const [errorName, setErrorName] = useState(null)
     const [errorDescription, setErrorDescrition] = useState(null)
     const [errorCategory, setErrorCategory] = useState(null)
@@ -212,17 +212,7 @@ function AddForm({ formData, setFormData, errorName, errorDescription, category,
         <View>   
             <View style = {styles.viewBody}>
                 <View style = {styles.dropdownView}>
-                    <Text style = {styles.category}>Categoria</Text>
-                    <DropDownPicker
-                        items={[
-                            {label: 'Consolas', value: 'Consolas'},
-                            {label: 'Juegos', value: 'Juegos'},
-                            {label: 'Tiendas', value: 'Tiendas'},
-                        ]}
-                        defaultValue = 'Consolas'
-                        onChangeItem = {item => setCategory(item.value)}
-                        containerStyle = {styles.dropdown}
-                    />
+                    <Text style = {styles.category}>Noticias de nuestras {category}</Text>
                 </View>
                 <Input
                     placeholder = "Nombre de la noticia"

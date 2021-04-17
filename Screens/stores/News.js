@@ -88,16 +88,7 @@ export default function News({ navigation }) {
                 }
                 <Icon
                     type = "material-community"
-                    name = "book-multiple"
-                    containerStyle =  {styles.iconTop}
-                    color = "#073a9a"
-                    size= {20}
-                    reverse
-                    onPress = {() => navigation.navigate("stores")}
-                />
-                <Icon
-                    type = "material-community"
-                    name = "trophy-award"
+                    name = "trophy"
                     containerStyle =  {styles.iconBottom}
                     color = "#d9b453"
                     size= {20}

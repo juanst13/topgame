@@ -144,7 +144,7 @@ function Store({ store, setLoading, toastRef, navigation, setRealoadData }) {
             <TouchableOpacity
                 onPress = {() => navigation.navigate("stores", {
                     screen: "store",
-                    params: {id}
+                    params: {id, name}
                 })}
             >
                 <Image
@@ -191,7 +191,7 @@ function UserNoLogged({ navigation }){
                 title = "Ir al login"
                 containerStyle = {{ margin: 20, width: "80%" }}
                 buttonStyle = {{ backgroundColor: "#442484"}}
-                onPress = {() => navigation.navigate("login", { screen: "login" } )}
+                onPress = {() => navigation.navigate("account", { screen: "login" } )}
             />
         </View>
     )

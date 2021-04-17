@@ -99,21 +99,12 @@ export default function Stores({ navigation }) {
                 }
                 <Icon
                     type = "material-community"
-                    name = "newspaper-variant-multiple"
-                    containerStyle =  {styles.iconTop}
-                    color = "#073a9a"
-                    size= {20}
-                    reverse
-                    onPress = {() => navigation.navigate("news")}
-                />
-                <Icon
-                    type = "material-community"
                     name = "trophy"
                     containerStyle =  {styles.iconBottom}
                     color = "#d9b453"
                     size= {20}
                     reverse
-                    onPress = {() => navigation.navigate("news")}
+                    onPress = {() => navigation.navigate("top-stores")}
                 />
                 <Loading isVisible={loading} text="Cargando tiendas..."/>
             {/* </ImageBackground> */}

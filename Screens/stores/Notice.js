@@ -201,12 +201,18 @@ function InfoNew({ name, description, category, createAt, createBy, rating, avat
             </View>
             <View style = {styles.avatar}>
                 <Avatar
-                    source = {{ uri: avatar }}
+                    source ={ avatar 
+                                ? { uri: avatar }
+                                : require("../../assets/avatar-default.jpg")
+                            }
                     rounded
                     renderPlaceholderContent={<ActivityIndicator color="#fff"/>}
                     size="large"
                 />
-                <Text style = {styles.createBy}>{createBy}</Text>
+                {createBy 
+                    ? <Text style = {styles.createBy}>{createBy}</Text>
+                    : <Text style = {styles.createBy}>Anónimo</Text>
+                } 
             </View>
         </View>
     )
