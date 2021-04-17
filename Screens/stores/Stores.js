@@ -90,8 +90,9 @@ export default function Stores({ navigation }) {
                             type = "material-community"
                             name = "book-plus-multiple"
                             containerStyle =  {styles.icon}
-                            color = "#fff"
-                            size= {35}
+                            color = "#84a4e0"
+                            size= {20}
+                            reverse
                             onPress = {() => navigation.navigate("add-store")}
                         />
                     )
@@ -100,16 +101,18 @@ export default function Stores({ navigation }) {
                     type = "material-community"
                     name = "newspaper-variant-multiple"
                     containerStyle =  {styles.iconTop}
-                    color = "#fff"
-                    size= {35}
+                    color = "#073a9a"
+                    size= {20}
+                    reverse
                     onPress = {() => navigation.navigate("news")}
                 />
                 <Icon
                     type = "material-community"
-                    name = "trophy-award"
+                    name = "trophy"
                     containerStyle =  {styles.iconBottom}
-                    color = "#fff"
-                    size= {35}
+                    color = "#d9b453"
+                    size= {20}
+                    reverse
                     onPress = {() => navigation.navigate("news")}
                 />
                 <Loading isVisible={loading} text="Cargando tiendas..."/>
@@ -121,7 +124,7 @@ export default function Stores({ navigation }) {
 const styles = StyleSheet.create({
     icon: {
         position: "absolute",
-        top: 150,
+        bottom: 90,
         right: 4,
         shadowColor: "black",
         shadowOffset: { width: 2, height: 2},
@@ -130,18 +133,17 @@ const styles = StyleSheet.create({
         padding: 5
     },
     viewBody:{
-        backgroundColor: "#cfcfcf"
+        backgroundColor: "#cfcfcf",
+        flex: 1
     },
     notFoundView:{
         flex: 1,
         justifyContent: "center",
-        alignItems: "center"
     },
     notFoundText:{
         fontSize: 18,
         fontWeight: "bold",
-        color: "white",
-        justifyContent: "center",
+        color: "black",
         alignSelf: "center"
     },
     imageBackground:{
@@ -150,7 +152,7 @@ const styles = StyleSheet.create({
     },
     iconTop:{
         position: "absolute",
-        top: 75,
+        bottom: 160,
         right: 4,
         shadowColor: "black",
         shadowOffset: { width: 2, height: 2},
@@ -160,7 +162,7 @@ const styles = StyleSheet.create({
     },
     iconBottom:{
         position: "absolute",
-        top: 200,
+        bottom: 20,
         right: 4,
         shadowColor: "black",
         shadowOffset: { width: 2, height: 2},

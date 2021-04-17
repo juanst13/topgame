@@ -9,7 +9,6 @@ import SearchStack from './SearchStack'
 import ConsolesStack from './ConsolesStack'
 import StoresStack from './StoresStack'
 
-
 const Tab = createBottomTabNavigator()
 
 export default function Navigation() {

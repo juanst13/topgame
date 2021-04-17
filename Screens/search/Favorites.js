@@ -6,7 +6,7 @@ import Toast from 'react-native-easy-toast'
 import firebase from 'firebase/app'
 
 import Loading from '../../components/Loading'
-import { getFavorites } from '../../Utils/actions'
+import { getFavorites, removeFavorites } from '../../Utils/actions'
 
 export default function Favorites({ navigation }) {
     const toastRef = useRef()
@@ -47,23 +47,6 @@ export default function Favorites({ navigation }) {
 
     return (
         <View style = {styles.viewBody}>
-            <View style = {styles.btns}>
-                <Icon
-                    containerStyle = {styles.leftIcon}
-                    type = "material-community"
-                    name = "controller-classic-outline"
-                    onPress = {() => navigation.navigate("list-favorites-games")}
-                    size = {35}
-                />
-                <Text style = {styles.title}>Tiendas Favoritas</Text>
-                <Icon
-                    containerStyle = {styles.rigthIcon}
-                    type = "material-community"
-                    name = "controller-classic-outline"
-                    onPress = {() => navigation.navigate("list-favorites-games")}
-                    size = {35}
-                />
-            </View>
             {
                 stores  ? (
                     <FlatList
@@ -75,6 +58,7 @@ export default function Favorites({ navigation }) {
                                 setLoading = {setLoading}
                                 toastRef = {toastRef}
                                 navigation = {navigation}
+                                setRealoadData = {setRealoadData}
                             />
                         )}
                     />
@@ -87,18 +71,100 @@ export default function Favorites({ navigation }) {
                     </View>
                 )
             }
+            <View style = {styles.btns}>
+                <Icon
+                    containerStyle = {styles.RightIconTop}
+                    type = "material-community"
+                    name = "tank"
+                    onPress = {() => navigation.navigate("list-favorites-games")}
+                    color = "#073a9a"
+                    size= {20}
+                    reverse
+                />
+                <Icon
+                    containerStyle = {styles.RightIconBottom}
+                    type = "material-community"
+                    name = "controller-classic"
+                    onPress = {() => navigation.navigate("list-favorites-consoles")}
+                    color = "#84a4e0"
+                    size= {20}
+                    reverse
+                />
+                <Icon
+                    containerStyle = {styles.iconBottom}
+                    type = "material-community"
+                    name = "newspaper-variant-multiple"
+                    onPress = {() => navigation.navigate("list-favorites-news")}
+                    color = "#d9b453"
+                    size= {20}
+                    reverse
+                />
+            </View>
             <Toast ref = {toastRef} position = "center" opacity = {0.9}/>
             <Loading isVisible = {loading} text = "Por favor espere..." />
         </View>
     )
 }
 
-function Store({ store, setLoading, toastRef, navigation}) {
+function Store({ store, setLoading, toastRef, navigation, setRealoadData }) {
     const { id, name, images } = store.item
 
+    const ConfirmRemoveFavorite = () => {
+        Alert.alert(
+            "Eliminar tienda de favoritos",
+            "¿Estas seguro de querer eliminar el restaurante de favoritos?",
+            [
+                {
+                    text: "No",
+                    style: "cancel"
+                },
+                {
+                    text: "Si",
+                    onPress: removeFavorite
+                }
+            ],
+            { cancelable: false }
+        )
+    }
+
+    const removeFavorite = async() => {
+        setLoading(true)
+        const response = await removeFavorites(id)
+        setLoading(false)
+        if(response.statusResponse){
+            setRealoadData(true)
+            toastRef.current.show("Tienda eliminada de favoritos", 3000)
+        } else {
+            toastRef.current.show("Error al eliminar tienda de favoritos.", 3000)
+        }
+    }
+
     return(
-        <View>
-            <Text>{name}</Text>
+        <View style = {styles.store}>
+            <TouchableOpacity
+                onPress = {() => navigation.navigate("stores", {
+                    screen: "store",
+                    params: {id}
+                })}
+            >
+                <Image
+                    style = {styles.image}
+                    resizeMode = "cover"
+                    PlaceholderContent = {<ActivityIndicator color = "#fff"/>}
+                    source = {{ uri: images[0]}}
+                />
+                <View style = {styles.info}>
+                    <Text style = {styles.name}>{name}</Text>
+                    <Icon
+                        type = "material-community"
+                        name = "bookmark-plus"
+                        color = "#f00"
+                        containerStyle = {styles.favorite}
+                        underlayColor = "transparent"
+                        onPress = {ConfirmRemoveFavorite}
+                    />
+                </View>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -136,23 +202,25 @@ const styles = StyleSheet.create({
         flex:1,
         backgroundColor: "#f2f2f2"
     },
-    leftIcon:{
+    RightIconBottom:{
         position: "absolute",
-        top: 0,
-        right: 0,
-        backgroundColor: "#fff",
-        borderBottomLeftRadius: 100,
-        padding: 5,
-        paddingLeft: 15
+        bottom: 90,
+        right: 4,
+        shadowColor: "black",
+        shadowOffset: { width: 2, height: 2},
+        shadowOpacity: 0.5,
+        borderRadius: 50,
+        padding: 5
     },
-    rigthIcon:{
+    RightIconTop:{
         position: "absolute",
-        top: 0,
-        left: 0,
-        backgroundColor: "#fff",
-        borderBottomRightRadius: 100,
-        padding: 5,
-        paddingRight: 15
+        bottom: 160,
+        right: 4,
+        shadowColor: "black",
+        shadowOffset: { width: 2, height: 2},
+        shadowOpacity: 0.5,
+        borderRadius: 50,
+        padding: 5
     },
     containerBtn:{
         padding: 5
@@ -168,5 +236,42 @@ const styles = StyleSheet.create({
     btns:{
         paddingVertical: 10,
         paddingBottom: 20
+    },
+    store:{
+        margin: 10
+    },
+    image:{
+        width: "100%",
+        height: 180
+    },
+    info:{
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "space-between",
+        flexDirection: "row",
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        marginTop: -30,
+        backgroundColor: "#FFFFFF"
+    },
+    name:{
+        fontWeight: "bold",
+        fontSize: 20
+    },
+    favorite:{
+        marginTop: -35,
+        backgroundColor: "#FFFFFF",
+        padding: 15,
+        borderRadius: 100
+    },
+    iconBottom:{
+        position: "absolute",
+        bottom: 20,
+        right: 4,
+        shadowColor: "black",
+        shadowOffset: { width: 2, height: 2},
+        shadowOpacity: 0.5,
+        borderRadius: 50,
+        padding: 5
     }
 })

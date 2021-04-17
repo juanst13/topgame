@@ -104,7 +104,7 @@ export default function RegisterForm() {
     }
 
     return (
-        <KeyboardAwareScrollView style = {styles.containerForm}>
+        <KeyboardAwareScrollView containerStyle = {styles.containerForm}>
             <Text style={styles.title}>
                 {"\n"}
                 <Icon
@@ -237,10 +237,13 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         opacity: 0.6,
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        alignSelf: "center"
     },
     container:{
-        ...containerScreen.containerScreen
+        ...containerScreen.containerScreen,
+        width:"95%",
+        alignSelf: "center"
     },
     title:{
         fontWeight: "bold",

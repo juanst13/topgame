@@ -68,7 +68,7 @@ export default function LoginForm() {
     }
         return (
     
-            <KeyboardAwareScrollView style = {styles.containerForm}>
+            <KeyboardAwareScrollView containerStyle = {styles.containerForm}>
                 <Text style={styles.title}>
                     {"\n"}
                     <Icon
@@ -148,6 +148,7 @@ const defaultFormValues = () => {
 
 const styles = StyleSheet.create({
     containerForm:{
+        flex: 1,
         ...containerForm.containerForm
     },
     btn:{
@@ -157,7 +158,9 @@ const styles = StyleSheet.create({
         ...btn.btnContainer
     },
     container:{
-        ...containerScreen.containerScreen
+        ...containerScreen.containerScreen,
+        width:"95%",
+        alignSelf: "center"
         
     },
     btn:{
@@ -175,7 +178,8 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         opacity: 0.6,
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        alignSelf: "center"
     },
     title:{
         fontWeight: "bold",

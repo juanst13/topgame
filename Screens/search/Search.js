@@ -6,7 +6,7 @@ export default function Search({ navigation }) {
 
     return (
         <View>
-            <Icon
+            {/* <Icon
                 type = "material-community"
                 name = "star"
                 size = {30}
@@ -14,7 +14,7 @@ export default function Search({ navigation }) {
                 reverse
                 color = "#d9b453"
                 onPress = {() => navigation.navigate("list-favorites-stores")}
-            />
+            /> */}
         </View>
     )
 }

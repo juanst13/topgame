@@ -31,11 +31,7 @@ export default function UserLogged() {
 
     return (    
         <View style = {styles.container}>
-            <BackgroundImage
-                source = {require('../../assets/31.png')}
-                resizeMode = "repeat"
-                style = {styles.imageBackground}
-            >
+            
             {            
                  user && (
                      <View>
@@ -68,6 +64,11 @@ export default function UserLogged() {
                     </View>
                 )
             }
+            <BackgroundImage
+                source = {require('../../assets/31.png')}
+                resizeMode = "cover"
+                style = {styles.imageBackground}
+            >
                 <Button
                     title = "  Cerrar Sesión"
                     buttonStyle = {styles.btn}

@@ -52,9 +52,7 @@ const styles = StyleSheet.create({
         height: height
     },
     container:{
-        ...containerScreen.containerScreen,
-       flex: 1,
-       alignContent: "center"
+        ...containerScreen.containerScreen
     },
     divider:{
         backgroundColor: "#1d62d9",
@@ -68,6 +66,6 @@ const styles = StyleSheet.create({
     btncontainer:{
         color: "#5380d3",
         fontWeight: "bold",
-        color: "white"
+        color: "#073a9a"
     }
 })

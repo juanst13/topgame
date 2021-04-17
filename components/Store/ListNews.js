@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
         borderRightWidth: 3,
         // borderTopWidth: 1,
         borderBottomWidth: 3,
-        width: width-60,
+        width: width-20,
         //borderTopRightRadius: 25,
         borderBottomRightRadius: 10,
         borderColor: "#C9C9C9",
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between"
     },
     imageNew:{
-        width: width-60,
+        width: width-20,
         height: 100,
         marginHorizontal: 10,
         borderTopLeftRadius: 10,
@@ -129,12 +129,12 @@ const styles = StyleSheet.create({
         //borderRadius: 50
     },
     viewNewImage:{
-        marginRight: 10
+        marginRight: 0
     },
     newTitle:{
         fontWeight: "bold",
         fontSize: 16,
-        left: 10,
+        marginHorizontal: 10,
         top: 5,
         color: "#073a9a"
     },
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     calification:{
         flexDirection: "row",
         alignItems: "center",
-        marginHorizontal: 10
+        marginHorizontal: 50
     },
     scoreIcon:{
         marginRight: 3  

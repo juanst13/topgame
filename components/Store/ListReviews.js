@@ -54,7 +54,7 @@ export default function ListReviews({ navigation, idStore }) {
                         style = {styles.mustLoginText}
                         onPress = {() => navigation.navigate("login")}
                     >
-                        Para escribir una opinión es necesario estar logueado. (" ")
+                        Para escribir una opinión es necesario estar logueado.{" \n"}
                         <Text style = {styles.loginText}>
                             Pulsa AQUÍ para inicar sesión
                         </Text>

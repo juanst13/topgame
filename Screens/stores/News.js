@@ -16,7 +16,7 @@ export default function News({ navigation }) {
     const [news, setNews] = useState([])    
     const [loading, setLoading] = useState(false)
 
-    const limitNews = 7
+    const limitNews = 5
 
     firebase.auth().onAuthStateChanged((user) => {
         user ? setUserLogged(true) : setUserLogged(false)
@@ -79,8 +79,9 @@ export default function News({ navigation }) {
                                 type = "material-community"
                                 name = "newspaper-plus"
                                 containerStyle =  {styles.icon}
-                                color = "#fff"
-                                size= {35}
+                                color = "#84a4e0"
+                                size= {20}
+                                reverse
                                 onPress = {() => navigation.navigate("add-new")}
                             />
                     )
@@ -89,16 +90,18 @@ export default function News({ navigation }) {
                     type = "material-community"
                     name = "book-multiple"
                     containerStyle =  {styles.iconTop}
-                    color = "#fff"
-                    size= {35}
+                    color = "#073a9a"
+                    size= {20}
+                    reverse
                     onPress = {() => navigation.navigate("stores")}
                 />
                 <Icon
                     type = "material-community"
                     name = "trophy-award"
                     containerStyle =  {styles.iconBottom}
-                    color = "#fff"
-                    size= {35}
+                    color = "#d9b453"
+                    size= {20}
+                    reverse
                     onPress = {() => navigation.navigate("news")}
                 />
             {/* </ImageBackground> */}
@@ -113,7 +116,7 @@ const styles = StyleSheet.create({
     },
     icon: {
         position: "absolute",
-        top: 150,
+        bottom: 90,
         right: 4,
         shadowColor: "black",
         shadowOffset: { width: 2, height: 2},
@@ -123,7 +126,7 @@ const styles = StyleSheet.create({
     },
     iconTop:{
         position: "absolute",
-        top: 75,
+        bottom: 160,
         right: 4,
         shadowColor: "black",
         shadowOffset: { width: 2, height: 2},
@@ -133,7 +136,7 @@ const styles = StyleSheet.create({
     },
     iconBottom:{
         position: "absolute",
-        top: 200,
+        bottom: 20,
         right: 4,
         shadowColor: "black",
         shadowOffset: { width: 2, height: 2},

@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
         borderRightWidth: 3,
         // borderTopWidth: 1,
         borderBottomWidth: 3,
-        width: width-60,
+        width: width-20,
         //borderTopRightRadius: 25,
         borderBottomRightRadius: 95,
         borderColor: "#c3c3c3",
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 10
     },
     imageStore:{
-        width: width-60,
+        width: width-20,
         height: 100,
         marginHorizontal: 10,
         borderTopLeftRadius: 10,
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
         //borderRadius: 50
     },
     viewStoreImage:{
-        marginRight: 10
+
     },
     storeTitle:{
         fontWeight: "bold",
