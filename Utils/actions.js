@@ -448,6 +448,5 @@ export const searchStore = async(criteria) => {
         result.statusResponse = false
         result.error = error
     }
-    console.log("DB", result)
     return result
 }

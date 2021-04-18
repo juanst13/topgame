@@ -16,7 +16,7 @@ import {
     getDocumentById, 
     getIsFavorite, 
     removeFavorites } from '../../Utils/actions'
-import { formatPhone } from '../../Utils/helpers'
+import { callNumber, formatPhone, sendEmail, sendWhatsApp, goWebSite } from '../../Utils/helpers'
 import MapStore from '../../components/Store/MapStore'
 import ListReviews from '../../components/Store/ListReviews'
 
@@ -63,9 +63,11 @@ export default function Store({ navigation, route}) {
     const [isFavorite, setIsFavorite] = useState(false)
     const [userLogged, setUserLogged] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [currentUser, setCurrentUser] = useState(null)
 
     firebase.auth().onAuthStateChanged(user => {
          user ? setUserLogged(true) : setUserLogged(false)
+         setCurrentUser(user)
     })
 
     React.useLayoutEffect(() => {
@@ -171,6 +173,7 @@ export default function Store({ navigation, route}) {
                 phone = {formatPhone(store.callingCode, store.phone)}
                 url = {store.url}
                 digitalStore = {store.storeDigital}
+                currentUser = {currentUser}   
             />
             <ListReviews
                 navigation = {navigation}
@@ -182,13 +185,38 @@ export default function Store({ navigation, route}) {
     )
 }
 
-function StoreInfo ({ name, location, address, email, phone, url, digitalStore }) {
+function StoreInfo ({ name, location, address, email, phone, url, digitalStore, currentUser }) {
     const listInfo = [
-        !digitalStore && { text: address, iconName: "map-marker" },
-        { text: phone, iconName: "phone" },
-        { text: email, iconName: "at" },
-        { text: url, iconName: "web" }
+        !digitalStore && { type: "address", text: address, iconLeft: "map-marker" },
+        { type: "phone", text: phone, iconLeft: "phone", iconRight: "whatsapp" },
+        { type: "email", text: email, iconLeft: "at", actionLeft: "send-email" },
+        { type: "url", text: url, iconLeft: "web"}
     ]
+
+    const actionLeft = (type) => {
+        if (type == "phone") {
+            callNumber(phone)
+        } else if (type == "email") {
+            if (currentUser) {
+                sendEmail(email, "Interesado", `Soy ${currentUser.displayName}, estoy interesado en sus servicios`)
+            } else {
+                sendEmail(email, "Interesado", `Estoy interesado en sus servicios`)
+            }
+        } else if (type == "url"){
+            goWebSite(url)
+        }
+    }
+
+    const actionRight = (type) => {
+        if (type == "phone"){
+            if (currentUser) {
+                sendWhatsApp(phone, `Soy ${currentUser.displayName}, estoy interesado en sus servicios`)
+            } else {
+                sendWhatsApp(phone, `Estoy interesado en sus servicios`)
+            }
+        }
+    }
+
 
     return(
         <View style = {styles.viewStoreInfo}>
@@ -217,12 +245,23 @@ function StoreInfo ({ name, location, address, email, phone, url, digitalStore }
                     >
                         <Icon
                             type = "material-community"
-                            name = {item.iconName}
+                            name = {item.iconLeft}
                             color = "#073a9a"
+                            onPress = {() => actionLeft(item.type)}
                         />
                         <ListItem.Content>
                             <ListItem.Title>{item.text}</ListItem.Title>
                         </ListItem.Content>
+                        {
+                            item.iconRight &&   (
+                                <Icon
+                                    type = "material-community"
+                                    name = {item.iconRight}
+                                    color = "#073a9a"
+                                    onPress = {() => actionRight(item.type)}
+                                />
+                            )
+                        }
                     </ListItem>
                 ))
             }

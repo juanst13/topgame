@@ -18,5 +18,34 @@ d9b453 ...
 
 
 Cuadrar userLogged (Vista - Menú)
-Favoritos boton y mensaje (Desordenado)
+Favoritos boton y mensaje (Desordenado) - Cuando no estoy logueado
 Logo navegación superior derecha
+Customiza Search Top
+Revisar Icono Store
+
+Mensaje personalizado WhatsApp
+
+
+Icon - Splash
+
+Lista para el buscar
+<DropDownPicker
+                        
+items={[
+                            
+	{label: 'Consolas', value: 'Consolas'},
+                            
+	{label: 'Juegos', value: 'Juegos'},
+                           
+	{label: 'Tiendas', value: 'Tiendas'},
+                        
+]}
+                        
+
+defaultValue = 'Consolas'
+                        
+onChangeItem = {item => setCategory(item.value)}
+                        
+containerStyle = {styles.dropdown}
+                    
+/>
