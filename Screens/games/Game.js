@@ -118,7 +118,7 @@ export default function Game({ navigation, route}) {
         }
     }
 
-    const removeFavorite = async() => {
+    const removeFavoritesGame = async() => {
         setLoading(true)
         const response = await removeFavoriteGame(game.id)
         setLoading(false)
@@ -130,6 +130,7 @@ export default function Game({ navigation, route}) {
             toastRef.current.show("No se pudo eliminar el juego de favoritos. Por favor intenta más tarde.", 3000)
         }
     }
+
 
     if (!game) {
         return <Loading isVisible={true} text="Cargando..."/>
@@ -147,7 +148,7 @@ export default function Game({ navigation, route}) {
             <Icon
                     type = "material-community"
                     name = { isFavorite ? "bookmark-plus" : "bookmark-plus-outline"}
-                    onPress = { isFavorite ? removeFavorite : addFavorite}
+                    onPress = { isFavorite ? removeFavoritesGame : addFavorite}
                     color = { isFavorite ? "#073a9a" : "#9c9c9c"}
                     size = {30}
                     underlayColor = "transparent"
