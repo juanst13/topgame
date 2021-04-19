@@ -55,7 +55,7 @@ export default function TopStore({ navigation }) {
                     containerStyle = {styles.iconBottom}
                     type = "material-community"
                     name = "newspaper-variant-multiple"
-                    onPress = {() => navigation.navigate("top-news")}
+                    onPress = {() => navigation.navigate("list-favorites-news")}
                     color = "#d9b453"
                     size= {20}
                     reverse

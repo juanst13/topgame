@@ -87,7 +87,7 @@ export default function Store({ navigation, route}) {
                     Alert.alert("Ocurrió un problema cargando la tienda, intente más tarde.")
                 }
             })()
-        }, [id])
+        }, [])
     )
 
     useEffect(() => {

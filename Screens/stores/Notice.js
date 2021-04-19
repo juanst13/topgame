@@ -80,7 +80,7 @@ export default function Notice({ navigation, route}) {
                 }
             })()
 
-        }, [id])
+        }, [])
     )
 
     useEffect(() => {

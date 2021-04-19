@@ -25,11 +25,13 @@ function Store({ store, navigation }) {
         if(store.index === 0){
             setIconColor("#efb819")
         } else if (store.index === 1){
-            setIconColor("#C0C0C0")
+            setIconColor("#e3e4e5")
         } else if(store.index === 2){
             setIconColor("#cd7f32")
         }
     }, [])
+
+    console.log(id)
 
     return (
         <View>
@@ -42,9 +44,9 @@ function Store({ store, navigation }) {
                 <Card containerStyle = {styles.containerCard}>
                     <Icon
                         type = "material-community"
-                        name = "crown"
+                        name = "chess-queen"
                         color = {iconColor}
-                        size = {50}
+                        size = {40}
                         containerStyle = {styles.containerIcon}
                     />
                     <Image
@@ -75,15 +77,9 @@ const styles = StyleSheet.create({
     },
     containerIcon: {
         position: "absolute",
-        top: -15,
+        top: -30,
         left: -30,
-        zIndex: 1, //Por encima de la imagen
-        paddingVertical: 20,
-        backgroundColor: "#fff",
-        borderRadius: 150,
-        marginLeft: 15,
-        paddingLeft: 20,
-        paddingRight: 20
+        zIndex: 1 //Por encima de la imagen
     },
     storeImage:{
         width: "100%",
@@ -91,8 +87,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 20,
-        fontWeight: "bold",
-        color: "#073a9a"
+        fontWeight: "bold"
     },
     description: {
         color: "gray",

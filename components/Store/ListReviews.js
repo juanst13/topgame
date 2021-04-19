@@ -28,7 +28,7 @@ export default function ListReviews({ navigation, idStore }) {
                     setReviews(response.reviews)
                 }
             })()
-        }, [idStore])
+        }, [])
     )
 
     return (
