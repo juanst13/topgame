@@ -15,12 +15,14 @@ export default function GamesStack() {
             <Stack.Screen
                 name= "games"
                 component ={Games}
-                options = {{ title: "Juegos" }}
+                options = {{ title: "Juegos",
+                headerTintColor: "#073a9a" }}
             />
             <Stack.Screen
                 name= "add-games"
                 component ={AddGames}
-                options = {{ title: "Crear Juegos" }}
+                options = {{ title: "Crear Juegos",
+                headerTintColor: "#073a9a" }}
             />
             <Stack.Screen
                 name= "game"
@@ -29,7 +31,8 @@ export default function GamesStack() {
             <Stack.Screen
                 name= "add-review-game"
                 component ={AddReviewGame}
-                options = {{ title: "Nuevo Comentario" }}
+                options = {{ title: "Nuevo Comentario",
+                headerTintColor: "#073a9a" }}
             />
         </Stack.Navigator>
     )

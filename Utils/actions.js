@@ -274,7 +274,6 @@ export const getNews = async(limitNews) => {
     try {
         const response = await db
         .collection("news")
-        .where("category", "==", "Tiendas")
         .limit(limitNews)
         .get()
         if (response.docs.length > 0) {
@@ -552,6 +551,49 @@ export const getIsFavoriteGame = async(idGame) => {
         .where("idUser", "==", getCurrentUser().uid)
         .get()
         result.isFavorite = response.docs.length > 0
+    } catch (error) {
+        result.statusResponse = false
+        result.error = error
+    }
+    return result
+}
+
+export const getFavoritesGames = async() => {
+    const result = { statusResponse: true, error: null, favorites: [] }
+    try {
+        const response = await db
+            .collection("favoritesGames")
+            .where("idUser", "==", getCurrentUser().uid)
+            .get()
+        await Promise.all(
+            map(response.docs, async(doc) => {
+                const favorite = doc.data()
+                const game = await getDocumentById("games", favorite.idGame)
+                if (game.statusResponse) {
+                    result.favorites.push(game.document)
+                }
+            })
+        )
+    } catch (error) {
+        result.statusResponse = false
+        result.error = error
+    }
+    return result     
+}
+
+export const getTopNews = async(limit) => {
+    const result = { statusResponse: true, error: null, news: [] }
+    try {
+        const response = await db
+        .collection("news")
+        .orderBy("rating", "desc")
+        .limit(limit)
+        .get()
+        response.forEach((doc) => {
+            const notice = doc.data()
+            notice.id = doc.id
+            result.news.push(notice)
+        })
     } catch (error) {
         result.statusResponse = false
         result.error = error

@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef } from 'react'
-import { ActivityIndicator, Alert, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Alert, Dimensions, FlatList, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useFocusEffect } from "@react-navigation/native"
 import { Button, Icon, Image } from 'react-native-elements'
 import Toast from 'react-native-easy-toast'
@@ -7,6 +7,9 @@ import firebase from 'firebase/app'
 
 import Loading from '../../components/Loading'
 import { getFavorites, removeFavorites } from '../../Utils/actions'
+import { btn } from '../../Styles'
+
+const {width, height} = Dimensions.get("window")
 
 export default function Favorites({ navigation }) {
     const toastRef = useRef()
@@ -113,7 +116,7 @@ function Store({ store, setLoading, toastRef, navigation, setRealoadData }) {
     const ConfirmRemoveFavorite = () => {
         Alert.alert(
             "Eliminar tienda de favoritos",
-            "¿Estas seguro de querer eliminar el restaurante de favoritos?",
+            "¿Estas seguro de querer eliminar la tienda de favoritos?",
             [
                 {
                     text: "No",
@@ -160,6 +163,7 @@ function Store({ store, setLoading, toastRef, navigation, setRealoadData }) {
                         type = "material-community"
                         name = "bookmark-plus"
                         color = "#f00"
+                        size = {30}
                         containerStyle = {styles.favorite}
                         underlayColor = "transparent"
                         onPress = {ConfirmRemoveFavorite}
@@ -172,29 +176,42 @@ function Store({ store, setLoading, toastRef, navigation, setRealoadData }) {
 
 function NotFoundStore() {
     return(
-        <View style = {{ flex:1, alignItems: "center", justifyContent: "center"}}>
-            <Icon type = "material-community" name = "alert-outline" size = {50}/>
-            <Text style = {{ fontSize: 20, fontWeight: "bold" }}>
-                Aún no tienes tiendas favoritas
-            </Text>
-        </View>
+            <ImageBackground
+                source = {require('../../assets/206954.jpg')}
+                resizeMode = "cover"
+                style = {styles.imageBackground}
+            >
+                <View style = {{ flex:1, alignItems: "center", justifyContent: "center"}}>
+                    <Icon type = "material-community" name = "alert-outline" size = {50} color= "#fff"/>
+                    <Text style = {{ fontSize: 20, fontWeight: "bold", color: "#FFFFFF" }}>
+                        Aún no tienes tiendas favoritas
+                    </Text>
+                </View>
+            </ImageBackground>
     )
 }
 
 function UserNoLogged({ navigation }){
     return(
-        <View style = {{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-            <Icon type = "material-community" name = "alert-outline" size = {50}/>
-            <Text style = {{ fontSize: 20, fontWeight: "bold" }}>
+        <ImageBackground
+                source = {require('../../assets/206954.jpg')}
+                resizeMode = "cover"
+                style = {styles.imageBackground}
+        >
+        <View style = {{ flex: 1, alignItems: "center", justifyContent: "center", alignContent: "center" }}>
+            
+            <Icon type = "material-community" name = "alert-outline" size = {50} color= "#fff"/>
+            <Text style = {{ fontSize: 20, fontWeight: "bold", color: "white", textAlign: "center", marginHorizontal: 20}}>
                 Necesitas estar logueado para ver los favoritos
             </Text>
             <Button
                 title = "Ir al login"
                 containerStyle = {{ margin: 20, width: "80%" }}
-                buttonStyle = {{ backgroundColor: "#442484"}}
+                buttonStyle = {{ ...btn.btnIn }}
                 onPress = {() => navigation.navigate("account", { screen: "login" } )}
             />
         </View>
+        </ImageBackground>
     )
 }
 
@@ -253,17 +270,21 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 10,
         marginTop: -30,
-        backgroundColor: "#FFFFFF"
+        backgroundColor: "#6a89c2",
+        width: "80%",
+        left: 5,
+        borderRadius: 20
     },
     name:{
         fontWeight: "bold",
-        fontSize: 20
+        fontSize: 20,
+        color: "white"
     },
     favorite:{
-        marginTop: -35,
+        marginTop: -45,
         backgroundColor: "#FFFFFF",
-        padding: 15,
-        borderRadius: 100
+        padding: 5,
+        borderRadius: 10
     },
     iconBottom:{
         position: "absolute",
@@ -274,5 +295,9 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.5,
         borderRadius: 50,
         padding: 5
+    },
+    imageBackground:{
+        width: width,
+        height: height
     }
 })

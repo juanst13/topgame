@@ -4,29 +4,29 @@ import { useFocusEffect } from '@react-navigation/native'
 import { Card, Icon, Image} from 'react-native-elements'
 import { Rating } from 'react-native-ratings'
 
-export default function ListTopStore({ stores, navigation }) {
+export default function ListTopGame({ games, navigation }) {
     
     return (
         <FlatList
-            data={stores}
+            data={games}
             keyExtractor={(item, index) => index.toString()}
-            renderItem={(store) => (
-                <Store store={store} navigation={navigation}/>
+            renderItem={(game) => (
+                <Game game={game} navigation={navigation}/>
             )}
         />
     )
 }
 
-function Store({ store, navigation }) {
-    const { name, rating, images, description, id } = store.item
+function Game({ game, navigation }) {
+    const { name, rating, images, description, id } = game.item
     const [iconColor, setIconColor] = useState("#000")
 
     useEffect(() => {
-        if(store.index === 0){
+        if(game.index === 0){
             setIconColor("#efb819")
-        } else if (store.index === 1){
+        } else if (game.index === 1){
             setIconColor("#C0C0C0")
-        } else if(store.index === 2){
+        } else if(game.index === 2){
             setIconColor("#cd7f32")
         }
     }, [])
@@ -34,8 +34,8 @@ function Store({ store, navigation }) {
     return (
         <View>
             <TouchableOpacity
-                    onPress={() => navigation.navigate("stores", {
-                        screen: "store",
+                    onPress={() => navigation.navigate("games", {
+                        screen: "game",
                         params: { id, name }
                     })}
             >

@@ -11,6 +11,7 @@ import TopStore from '../Screens/search/TopStore'
 import Search from '../Screens/search/Search'
 import TopGames from '../Screens/search/TopGames'
 import TopConsoles from '../Screens/search/TopConsoles'
+import TopNews from '../Screens/search/TopNews'
 
 
 const Stack = createStackNavigator()
@@ -78,7 +79,7 @@ export default function SearchStack({ navigation }) {
                         title = "Consolas"
                         titleStyle = {{ color: "#fff", fontSize: 20, marginRight: 10 }}
                         buttonStyle = {{ 
-                            backgroundColor: "#073a9a", 
+                            backgroundColor: "#84a4e0", 
                             paddingHorizontal: 5, 
                             marginHorizontal: 20,
                             paddingVertical: 2 
@@ -134,7 +135,7 @@ export default function SearchStack({ navigation }) {
                         title = "Noticias"
                         titleStyle = {{ color: "#fff", fontSize: 20, marginRight: 10 }}
                         buttonStyle = {{ 
-                            backgroundColor: "#073a9a", 
+                            backgroundColor: "#d9b453", 
                             paddingHorizontal: 5, 
                             marginHorizontal: 20,
                             paddingVertical: 2 
@@ -215,10 +216,10 @@ export default function SearchStack({ navigation }) {
                 headerTintColor: "#073a9a",
                 headerRight: (props) => (
                     <Button
-                        title = "Juegos"
+                        title = "Consolas"
                         titleStyle = {{ color: "#fff", fontSize: 20, marginRight: 10 }}
                         buttonStyle = {{ 
-                            backgroundColor: "#073a9a", 
+                            backgroundColor: "#84a4e0", 
                             paddingHorizontal: 5, 
                             marginHorizontal: 20,
                             paddingVertical: 2 
@@ -227,6 +228,34 @@ export default function SearchStack({ navigation }) {
                             <Icon
                                 type = "material-community"
                                 name = "star"
+                                color = "#fff"
+                                marginHorizontal = {5}
+                            />
+                        }
+                        onPress = {() => navigation.navigate("top-consoles")}
+                    />
+                )
+            }}
+        />
+        <Stack.Screen
+                name = "top-news"
+                component = {TopNews}
+                options = {{ title: "Top 10",
+                headerTintColor: "#073a9a",
+                headerRight: (props) => (
+                    <Button
+                        title = "Noticias"
+                        titleStyle = {{ color: "#fff", fontSize: 20, marginRight: 10 }}
+                        buttonStyle = {{ 
+                            backgroundColor: "#d9b453", 
+                            paddingHorizontal: 5, 
+                            marginHorizontal: 20,
+                            paddingVertical: 2 
+                        }}
+                        icon ={
+                            <Icon
+                                type = "material-community"
+                                name = "newspaper-variant-multiple"
                                 color = "#fff"
                                 marginHorizontal = {5}
                             />
