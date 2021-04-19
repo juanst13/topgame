@@ -12,7 +12,7 @@ import CarouselImages from '../../components/CarouselImage'
 import Loading from '../../components/Loading'
 import Modal from '../../components/Modal'
 import MapGame from '../../components/games/MapGame'
-import { addDocumentWithOutId, getDocumentById } from '../../Utils/actions'
+import { addDocumentWithOutId, getCurrentUser, getDocumentById, getIsFavorite } from '../../Utils/actions'
 import ListReviews from '../../components/games/ListReviews'
 
 const widthScreen = Dimensions.get("window").width
