@@ -31,7 +31,7 @@ export default function AddReviewGame({ navigation, route }) {
         const data = {
             idUser: user.uid,
             avatar: user.photoURL,
-            idStore,
+            idGame,
             title,
             rating,
             review,
@@ -48,7 +48,7 @@ export default function AddReviewGame({ navigation, route }) {
             return
         }
 
-        const responseGetStore = await getDocumentById("stores", idGame)
+        const responseGetGame = await getDocumentById("games", idGame)
         if (!responseGetGame.statusResponse){
             setLoading(false)
             toastRef.current.show(

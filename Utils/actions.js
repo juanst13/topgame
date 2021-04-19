@@ -250,36 +250,23 @@ export const getFavorites = async() => {
     const result = { statusResponse: true, error: null, favorites: [] }
     try {
         const response = await db
-        .collection("favorites")
-        .where("idUser", "==", getCurrentUser().uid)
-        .get()
-        // const storesId = []
-        // response.forEach(async(doc) => {
-        //     const favorite = doc.data()
-        //     storesId.push(favorite.idStore)
-        // })
-        // await Promise.all(
-        //     map(storesId, async(storeId) => {
-        //         const response2 = await getDocumentById("stores", storeId)
-        //         if(response2.statusResponse)
-        //         {
-        //             result.favorites.push(response2.document)
-        //         }
-        //     })
-        // )
-
+            .collection("favorites")
+            .where("idUser", "==", getCurrentUser().uid)
+            .get()
         await Promise.all(
             map(response.docs, async(doc) => {
                 const favorite = doc.data()
-                const responseGetStore = await getDocumentById("stores", favorite.idStore, "games", favorite.idGame )
-                result.favorites.push(responseGetStore.document)
+                const store = await getDocumentById("stores", favorite.idStore)
+                if (store.statusResponse) {
+                    result.favorites.push(store.document)
+                }
             })
         )
     } catch (error) {
         result.statusResponse = false
         result.error = error
     }
-    return result
+    return result     
 }
 
 export const getNews = async(limitNews) => {
@@ -355,7 +342,7 @@ export const getFavoritesNews = async() => {
         await Promise.all(
             map(response.docs, async(doc) => {
                 const favorite = doc.data()
-                const responseGetNotice = await getDocumentById("favoritesNews", favorite.idNotice)
+                const responseGetNotice = await getDocumentById("news", favorite.idNotice)
                 result.favorites.push(responseGetNotice.document)
             })
         )
@@ -471,7 +458,6 @@ export const getGames = async(limitGames) => {
         result.statusResponse = false
         result.error = error
     }
-    console.log(result)
     return result     
 }
 
@@ -535,94 +521,40 @@ export const getTopGames = async(limit) => {
         result.statusResponse = false
         result.error = error
     }
-<<<<<<< Updated upstream
-=======
     return result
 }
 
-export const getGames = async(limitGames) => {
-    const result = { statusResponse: true, error: null, games: [], startGame: null }
+export const removeFavoriteGame = async(idGame) => {
+    const result = { statusResponse: true, error: null }
     try {
         const response = await db
-            .collection("games")
-            .orderBy("createAt", "desc")
-            .limit(limitGames)
-            .get()
-        if (response.docs.length > 0) {
-            result.startGame = response.docs[response.docs.length - 1]
-        }
-        response.forEach((doc) => {
-            const game = doc.data()
-            game.id = doc.id
-            result.games.push(game)
-        })
-    } catch (error) {
-        result.statusResponse = false
-        result.error = error
-    }
-    console.log(result)
-    return result     
-}
-
-export const getMoreGames = async(limitGames) => {
-    const result = { statusResponse: true, error: null, Games: [], startGame: null }
-    try {
-        const response = await db
-            .collection("games")
-            .orderBy("createAt", "desc")
-            .startAfter(startRestaurant.data().createAt)
-            .limit(limitGames)
-            .get()
-        if (response.docs.length > 0) {
-            result.startGame = response.docs[response.docs.length - 1]
-        }
-        response.forEach((doc) => {
-            const game = doc.data()
-            game.id = doc.id
-            result.games.push(game)
-        })
-    } catch (error) {
-        result.statusResponse = false
-        result.error = error
-    }
-    return result     
-}
-
-export const getGameReviews = async(id) => {
-    const result = { statusResponse: true, error: null, reviews: [] }
-    try {
-        const response = await db
-            .collection("reviews")
-            .where("idGame", "==", id)
-            .get()
-        response.forEach((doc) => {
-            const review = doc.data()
-            review.id = doc.id
-            result.reviews.push(review)
-        })
-    } catch (error) {
-        result.statusResponse = false
-        result.error = error
-    }
-    return result
-}
-
-export const getTopGames = async(limit) => {
-    const result = { statusResponse: true, error: null, games: [] }
-    try {
-        const response = await db
-        .collection("games")
-        .orderBy("rating", "desc")
-        .limit(limit)
+        .collection("favoritesGames")
+        .where("idGame", "==", idGame)
+        .where("idUser", "==", getCurrentUser().uid)
         .get()
-        response.forEach((doc) => {
-            const game = doc.data()
-            game.id = doc.id
-            result.games.push(game)
+        response.forEach(async(doc) => {
+            const favoriteId = doc.id
+            await db.collection("favoritesGames").doc(favoriteId).delete()
         })
     } catch (error) {
         result.statusResponse = false
         result.error = error
     }
->>>>>>> Stashed changes
+    return result
+}
+
+export const getIsFavoriteGame = async(idGame) => {
+    const result = { statusResponse: true, error: null, isFavorite: false }
+    try {
+        const response = await db
+        .collection("favoritesGames")
+        .where("idGame", "==", idGame)
+        .where("idUser", "==", getCurrentUser().uid)
+        .get()
+        result.isFavorite = response.docs.length > 0
+    } catch (error) {
+        result.statusResponse = false
+        result.error = error
+    }
+    return result
 }

@@ -27,7 +27,7 @@ export default function ListReviews({ navigation, idGame }) {
                     setReviews(response.reviews)
                 }
             })()
-        }, [])
+        }, [idGame])
     )
 
     return (

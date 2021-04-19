@@ -12,7 +12,7 @@ import CarouselImages from '../../components/CarouselImage'
 import Loading from '../../components/Loading'
 import Modal from '../../components/Modal'
 import MapGame from '../../components/games/MapGame'
-import { addDocumentWithOutId, getCurrentUser, getDocumentById, getIsFavorite } from '../../Utils/actions'
+import { addDocumentWithOutId, getCurrentUser, getDocumentById, getIsFavoriteGame, deleteFavoriteGame, removeFavoriteGame } from '../../Utils/actions'
 import ListReviews from '../../components/games/ListReviews'
 
 const widthScreen = Dimensions.get("window").width
@@ -67,7 +67,13 @@ export default function Game({ navigation, route}) {
         setCurrentUser(user)
     })
 
-    navigation.setOptions({ title: name })
+
+    React.useLayoutEffect(() => {
+        navigation.setOptions({
+          title: name === '' ? 'No title' : name,
+        });
+      }, [navigation, name])
+      
 
     useFocusEffect(
         useCallback(() => {
@@ -80,13 +86,13 @@ export default function Game({ navigation, route}) {
                     Alert.alert("Ocurrió un problema cargando el juego, intente más tarde.")
                 }
             })()
-        }, [])
+        }, [id])
     )
 
     useEffect(() => {
         (async() => {
             if (userLogged && game) {
-                const response = await getIsFavorite(game.id)
+                const response = await getIsFavoriteGame(game.id)
                 response.statusResponse && setIsFavorite(response.isFavorite)
             }
         })()
@@ -99,7 +105,7 @@ export default function Game({ navigation, route}) {
         }
 
         setLoading(true)
-        const response = await addDocumentWithOutId("favorites", {
+        const response = await addDocumentWithOutId("favoritesGames", {
             idUser: getCurrentUser().uid,
             idGame: game.id
         })
@@ -114,7 +120,7 @@ export default function Game({ navigation, route}) {
 
     const removeFavorite = async() => {
         setLoading(true)
-        const response = await deleteFavorite(game.id)
+        const response = await removeFavoriteGame(game.id)
         setLoading(false)
 
         if (response.statusResponse) {

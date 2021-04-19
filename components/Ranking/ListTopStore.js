@@ -31,8 +31,6 @@ function Store({ store, navigation }) {
         }
     }, [])
 
-    console.log(id)
-
     return (
         <View>
             <TouchableOpacity

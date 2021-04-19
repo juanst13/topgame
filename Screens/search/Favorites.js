@@ -30,6 +30,7 @@ export default function Favorites({ navigation }) {
                     setLoading(false)
                 }
                 getData()
+                console.log(stores)
             }
             setRealoadData(false)
         }, [userLogged, realoadData])
