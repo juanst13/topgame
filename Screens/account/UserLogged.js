@@ -64,11 +64,6 @@ export default function UserLogged() {
                     </View>
                 )
             }
-            <BackgroundImage
-                source = {require('../../assets/31.png')}
-                resizeMode = "cover"
-                style = {styles.imageBackground}
-            >
                 <Button
                     title = "  Cerrar Sesión"
                     buttonStyle = {styles.btn}
@@ -86,7 +81,6 @@ export default function UserLogged() {
                         />
                     }  
                 />
-            </BackgroundImage>
             <Image
                 source = {require('../../assets/Game_Logo.png')}
                 resizeMode = "contain"

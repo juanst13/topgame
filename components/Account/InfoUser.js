@@ -74,12 +74,6 @@ export default function InfoUser({ user, setLoadingText, setLoading }) {
                     }
                 </Text>
             </View>
-            <Icon
-                type = "material-community"
-                name = "menu-down"
-                onPress = {() =>  setIsVisible(true) }
-                color = "white"
-            />
         </View>
     )     
 }

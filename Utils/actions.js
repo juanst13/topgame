@@ -489,7 +489,7 @@ export const getGameReviews = async(id) => {
     const result = { statusResponse: true, error: null, reviews: [] }
     try {
         const response = await db
-            .collection("reviews")
+            .collection("reviewsGames")
             .where("idGame", "==", id)
             .get()
         response.forEach((doc) => {

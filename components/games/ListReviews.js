@@ -6,8 +6,9 @@ import moment from 'moment/min/moment-with-locales'
 import { map, size } from 'lodash'
 import { Rating } from 'react-native-ratings'
 import { useFocusEffect } from '@react-navigation/native'
-import { getGameReviews } from '../../Utils/actions'
 
+import { getGameReviews, getStoreReviews } from '../../Utils/actions'
+import { btn } from '../../Styles/btn'
 
 moment.locale("es")
 
@@ -35,32 +36,35 @@ export default function ListReviews({ navigation, idGame }) {
             {
                 userLogged ? (
                     <Button
-                        buttonStyle={styles.btnAddReview}
-                        title="Cuentanos tu opinión"
-                        titleStyle={styles.btnTitleAddReview}
-                        onPress={() => navigation.navigate("add-review-game", { idGame })}
-                        icon={{
+                        title = "Cuentanos tu experiencia"
+                        buttonStyle = {styles.btnAddReview}
+                        titleStyle = {styles.btnTitleAddReview}
+                        onPress = {() => navigation.navigate(
+                            "add-review-game", 
+                            { idStore })
+                        }
+                        icon = {{
                             type: "material-community",
                             name: "square-edit-outline",
                             color: "#073a9a"
                         }}
                     />
-                ) : (
+                ):(
                     <Text 
-                        style={styles.mustLoginText}
-                        onPress={() => navigation.navigate("login")}
+                        style = {styles.mustLoginText}
+                        onPress = {() => navigation.navigate("login")}
                     >
-                        Para escribir una opinión es necesario estar logueado.{" "}
-                        <Text style={styles.loginText}>
-                            Pusla AQUÍ para iniciar sesión.
+                        Para escribir una opinión es necesario estar logueado.{" \n"}
+                        <Text style = {styles.loginText}>
+                            Pulsa AQUÍ para inicar sesión
                         </Text>
                     </Text>
                 )
             }
             {
                 size(reviews) > 0 && (
-                    map(reviews, reviewDocument => (
-                        <Review reviewDocument={reviewDocument}/>
+                    map(reviews, (reviewDocument, index) => (
+                        <Review key = {index} reviewDocument={reviewDocument}/>
                     ))
                 )
             }
@@ -69,35 +73,36 @@ export default function ListReviews({ navigation, idGame }) {
 }
 
 function Review({ reviewDocument }) {
-    const { title, review, createAt, avatarUser, rating } = reviewDocument 
+    const { title, review, createAt, avatar, rating } = reviewDocument 
     const createReview = new Date(createAt.seconds * 1000)
 
     return (
-        <View style={styles.viewReview}>
-            <View style={styles.imageAvatar}>
-                <Avatar
-                    renderPlaceholderContent={<ActivityIndicator color="#fff"/>}
-                    size="large"
-                    rounded
-                    containerStyle={styles.imageAvatarUser}
-                    source={
-                        avatarUser
-                            ? { uri: avatarUser}
-                            : require("../../assets/avatar-default.jpg")
-                    }
-                />
+            <View style={styles.viewReview}>
+                <View style={styles.imageAvatar}>
+                    <Avatar
+                        renderPlaceholderContent={<ActivityIndicator color="#fff"/>}
+                        size="large"
+                        rounded
+                        containerStyle={styles.imageAvatarUser}
+                        source={
+                            avatar
+                                ? { uri: avatar}
+                                : require("../../assets/avatar-default.jpg")
+                        }
+                    />
+                </View>
+                <View style={styles.viewInfo}>
+                    <Text style={styles.reviewTitle}>{title}</Text>
+                    <Text style={styles.reviewText}>{review}</Text>
+                    <Rating
+                        imageSize={15}
+                        startingValue={rating}
+                        readonly
+                        tintColor = "#d2e0f7"
+                    />
+                    <Text style={styles.reviewDate}>{moment(createReview).format("LLL")}</Text>
+                </View>
             </View>
-            <View style={styles.viewInfo}>
-                <Text style={styles.reviewTitle}>{title}</Text>
-                <Text style={styles.reviewText}>{review}</Text>
-                <Rating
-                    imageSize={15}
-                    startingValue={rating}
-                    readonly
-                />
-                <Text style={styles.reviewDate}>{moment(createReview).format("LLL")}</Text>
-            </View>
-        </View>
     )
 }
 

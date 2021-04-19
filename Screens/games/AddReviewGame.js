@@ -38,7 +38,7 @@ export default function AddReviewGame({ navigation, route }) {
             createAt: new Date()
         }
 
-        const responseAddReview = await addDocumentWithOutId("reviews", data)
+        const responseAddReview = await addDocumentWithOutId("reviewsGames", data)
         if(!responseAddReview.statusResponse){
             setLoading(false)
             toastRef.current.show(
