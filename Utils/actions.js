@@ -287,7 +287,6 @@ export const getNews = async(limitNews) => {
     try {
         const response = await db
         .collection("news")
-        .where("category", "==", "Tiendas")
         .limit(limitNews)
         .get()
         if (response.docs.length > 0) {
@@ -310,7 +309,6 @@ export const getMoreNews = async(limitNews, startNew) => {
     try {
         const response = await db
         .collection("news")
-        .where("category", "==", "Tiendas")
         .orderBy("createAt", "desc")
         .startAfter(startNew.data().createAt)
         .limit(limitNews)
@@ -337,26 +335,12 @@ export const getFavoritesNews = async() => {
         .collection("favoritesNews")
         .where("idUser", "==", getCurrentUser().uid)
         .get()
-        // const storesId = []
-        // response.forEach(async(doc) => {
-        //     const favorite = doc.data()
-        //     storesId.push(favorite.idStore)
-        // })
-        // await Promise.all(
-        //     map(storesId, async(storeId) => {
-        //         const response2 = await getDocumentById("stores", storeId)
-        //         if(response2.statusResponse)
-        //         {
-        //             result.favorites.push(response2.document)
-        //         }
-        //     })
-        // )
 
         await Promise.all(
             map(response.docs, async(doc) => {
                 const favorite = doc.data()
-                const responseGetNotice = await getDocumentById("favoritesNews", favorite.idNotice)
-                result.favorites.push(responseGetNotice.document)
+                const responseGetStore = await getDocumentById("news", favorite.idNotice)
+                result.favorites.push(responseGetStore.document)
             })
         )
     } catch (error) {
@@ -444,6 +428,26 @@ export const searchStore = async(criteria) => {
     const result = { statusResponse: true, error: null, stores: [] }
     try {
         result.stores = await fireSQL.query(`SELECT * FROM stores WHERE name LIKE '${criteria}%'`)
+    } catch (error) {
+        result.statusResponse = false
+        result.error = error
+    }
+    return result
+}
+
+export const getTopNews = async(limit) => {
+    const result = { statusResponse: true, error: null, news: [] }
+    try {
+        const response = await db
+        .collection("news")
+        .orderBy("rating", "desc")
+        .limit(limit)
+        .get()
+        response.forEach((doc) => {
+            const notice = doc.data()
+            notice.id = doc.id
+            result.news.push(notice)
+        })
     } catch (error) {
         result.statusResponse = false
         result.error = error

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import {  Dimensions, ImageBackground, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, ImageBackground, StyleSheet, Text, View } from 'react-native'
 import { Icon } from 'react-native-elements'
 import firebase from 'firebase/app'
 import { useFocusEffect } from "@react-navigation/native"
