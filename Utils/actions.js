@@ -271,7 +271,7 @@ export const getFavorites = async() => {
         await Promise.all(
             map(response.docs, async(doc) => {
                 const favorite = doc.data()
-                const responseGetStore = await getDocumentById("stores", favorite.idStore, "games", favorite.idGame )
+                const responseGetStore = await getDocumentById("stores", favorite.idStore)
                 result.favorites.push(responseGetStore.document)
             })
         )
@@ -287,7 +287,6 @@ export const getNews = async(limitNews) => {
     try {
         const response = await db
         .collection("news")
-        .where("category", "==", "Tiendas")
         .limit(limitNews)
         .get()
         if (response.docs.length > 0) {
@@ -310,7 +309,6 @@ export const getMoreNews = async(limitNews, startNew) => {
     try {
         const response = await db
         .collection("news")
-        .where("category", "==", "Tiendas")
         .orderBy("createAt", "desc")
         .startAfter(startNew.data().createAt)
         .limit(limitNews)
@@ -337,26 +335,12 @@ export const getFavoritesNews = async() => {
         .collection("favoritesNews")
         .where("idUser", "==", getCurrentUser().uid)
         .get()
-        // const storesId = []
-        // response.forEach(async(doc) => {
-        //     const favorite = doc.data()
-        //     storesId.push(favorite.idStore)
-        // })
-        // await Promise.all(
-        //     map(storesId, async(storeId) => {
-        //         const response2 = await getDocumentById("stores", storeId)
-        //         if(response2.statusResponse)
-        //         {
-        //             result.favorites.push(response2.document)
-        //         }
-        //     })
-        // )
 
         await Promise.all(
             map(response.docs, async(doc) => {
                 const favorite = doc.data()
-                const responseGetNotice = await getDocumentById("favoritesNews", favorite.idNotice)
-                result.favorites.push(responseGetNotice.document)
+                const responseGetStore = await getDocumentById("news", favorite.idNotice)
+                result.favorites.push(responseGetStore.document)
             })
         )
     } catch (error) {
@@ -451,88 +435,22 @@ export const searchStore = async(criteria) => {
     return result
 }
 
-export const getGames = async(limitGames) => {
-    const result = { statusResponse: true, error: null, games: [], startGame: null }
+export const getTopNews = async(limit) => {
+    const result = { statusResponse: true, error: null, news: [] }
     try {
         const response = await db
-            .collection("games")
-            .orderBy("createAt", "desc")
-            .limit(limitGames)
-            .get()
-        if (response.docs.length > 0) {
-            result.startGame = response.docs[response.docs.length - 1]
-        }
+        .collection("news")
+        .orderBy("rating", "desc")
+        .limit(limit)
+        .get()
         response.forEach((doc) => {
-            const game = doc.data()
-            game.id = doc.id
-            result.games.push(game)
-        })
-    } catch (error) {
-        result.statusResponse = false
-        result.error = error
-    }
-    console.log(result)
-    return result     
-}
-
-export const getMoreGames = async(limitGames) => {
-    const result = { statusResponse: true, error: null, Games: [], startGame: null }
-    try {
-        const response = await db
-            .collection("games")
-            .orderBy("createAt", "desc")
-            .startAfter(startRestaurant.data().createAt)
-            .limit(limitGames)
-            .get()
-        if (response.docs.length > 0) {
-            result.startGame = response.docs[response.docs.length - 1]
-        }
-        response.forEach((doc) => {
-            const game = doc.data()
-            game.id = doc.id
-            result.games.push(game)
-        })
-    } catch (error) {
-        result.statusResponse = false
-        result.error = error
-    }
-    return result     
-}
-
-export const getGameReviews = async(id) => {
-    const result = { statusResponse: true, error: null, reviews: [] }
-    try {
-        const response = await db
-            .collection("reviews")
-            .where("idGame", "==", id)
-            .get()
-        response.forEach((doc) => {
-            const review = doc.data()
-            review.id = doc.id
-            result.reviews.push(review)
+            const notice = doc.data()
+            notice.id = doc.id
+            result.news.push(notice)
         })
     } catch (error) {
         result.statusResponse = false
         result.error = error
     }
     return result
-}
-
-export const getTopGames = async(limit) => {
-    const result = { statusResponse: true, error: null, games: [] }
-    try {
-        const response = await db
-        .collection("games")
-        .orderBy("rating", "desc")
-        .limit(limit)
-        .get()
-        response.forEach((doc) => {
-            const game = doc.data()
-            game.id = doc.id
-            result.games.push(game)
-        })
-    } catch (error) {
-        result.statusResponse = false
-        result.error = error
-    }
 }

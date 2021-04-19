@@ -28,7 +28,7 @@ export default function ListReviewsNews({ navigation, idNotice }) {
                     setReviews(response.reviews)
                 }
             })()
-        }, [])
+        }, [idNotice])
     )
 
     return (
