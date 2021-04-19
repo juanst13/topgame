@@ -9,6 +9,8 @@ import FavoritesGames from '../Screens/search/FavoritesGames'
 import FavoritesNews from '../Screens/search/FavoritesNews'
 import TopStore from '../Screens/search/TopStore'
 import Search from '../Screens/search/Search'
+import TopGames from '../Screens/search/TopGames'
+import TopConsoles from '../Screens/search/TopConsoles'
 
 
 const Stack = createStackNavigator()
@@ -174,6 +176,62 @@ export default function SearchStack({ navigation }) {
                             />
                         }
                         onPress = {() => navigation.navigate("list-favorites-stores")}
+                    />
+                )
+            }}
+        />
+        <Stack.Screen
+                name = "top-games"
+                component = {TopGames}
+                options = {{ title: "Top 10",
+                headerTintColor: "#073a9a",
+                headerRight: (props) => (
+                    <Button
+                        title = "Juegos"
+                        titleStyle = {{ color: "#fff", fontSize: 20, marginRight: 10 }}
+                        buttonStyle = {{ 
+                            backgroundColor: "#073a9a", 
+                            paddingHorizontal: 5, 
+                            marginHorizontal: 20,
+                            paddingVertical: 2 
+                        }}
+                        icon ={
+                            <Icon
+                                type = "material-community"
+                                name = "star"
+                                color = "#fff"
+                                marginHorizontal = {5}
+                            />
+                        }
+                        onPress = {() => navigation.navigate("top.games")}
+                    />
+                )
+            }}
+        />
+        <Stack.Screen
+                name = "top-consoles"
+                component = {TopConsoles}
+                options = {{ title: "Top 10",
+                headerTintColor: "#073a9a",
+                headerRight: (props) => (
+                    <Button
+                        title = "Juegos"
+                        titleStyle = {{ color: "#fff", fontSize: 20, marginRight: 10 }}
+                        buttonStyle = {{ 
+                            backgroundColor: "#073a9a", 
+                            paddingHorizontal: 5, 
+                            marginHorizontal: 20,
+                            paddingVertical: 2 
+                        }}
+                        icon ={
+                            <Icon
+                                type = "material-community"
+                                name = "star"
+                                color = "#fff"
+                                marginHorizontal = {5}
+                            />
+                        }
+                        onPress = {() => navigation.navigate("top-consoles")}
                     />
                 )
             }}

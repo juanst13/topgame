@@ -37,7 +37,7 @@ export default function TopStore({ navigation }) {
                     containerStyle = {styles.RightIconTop}
                     type = "material-community"
                     name = "tank"
-                    onPress = {() => navigation.navigate("list-favorites-games")}
+                    onPress = {() => navigation.navigate("top-games")}
                     color = "#073a9a"
                     size= {20}
                     reverse
