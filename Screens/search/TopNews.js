@@ -3,21 +3,21 @@ import { StyleSheet, Text, View } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 import { Icon } from 'react-native-elements'
 
-import { getTopStore } from '../../Utils/actions'
+import { getTopNews } from '../../Utils/actions'
 import Loading from '../../components/Loading'
-import ListTopStore from '../../components/Ranking/ListTopStore'
+import ListTopNews from '../../components/Ranking/ListTopNews'
 
-export default function TopStore({ navigation }) {
-    const [stores, setStores] = useState(null)
+export default function TopNews({ navigation }) {
+    const [news, setNews] = useState(null)
     const [loading, setLoading] = useState(false)
 
     useFocusEffect(
         useCallback(() => {
                 async function getData() {
                     setLoading(true)
-                    const response = await getTopStore(10)
+                    const response = await getTopNews(10)
                     if (response.statusResponse){
-                        setStores(response.stores)
+                        setNews(response.news)
                     }
                     setLoading(false)
                 }
@@ -28,8 +28,8 @@ export default function TopStore({ navigation }) {
 
     return (
         <View>
-            <ListTopStore
-                stores = {stores}
+            <ListTopNews
+                news = {news}
                 navigation = {navigation}
             />
             <View style = {styles.btns}>
