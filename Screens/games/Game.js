@@ -12,7 +12,7 @@ import CarouselImages from '../../components/CarouselImage'
 import Loading from '../../components/Loading'
 import Modal from '../../components/Modal'
 import MapGame from '../../components/games/MapGame'
-import { addDocumentWithOutId, getCurrentUser, getDocumentById, getIsFavorite } from '../../Utils/actions'
+import { addDocumentWithOutId, getCurrentUser, getDocumentById, getIsFavorite, removeFavorites } from '../../Utils/actions'
 import ListReviews from '../../components/games/ListReviews'
 
 const widthScreen = Dimensions.get("window").width
@@ -112,9 +112,9 @@ export default function Game({ navigation, route}) {
         }
     }
 
-    const removeFavorite = async() => {
+    const removeFavoritesGame = async() => {
         setLoading(true)
-        const response = await deleteFavorite(game.id)
+        const response = await removeFavorites(game.id)
         setLoading(false)
 
         if (response.statusResponse) {
@@ -124,6 +124,7 @@ export default function Game({ navigation, route}) {
             toastRef.current.show("No se pudo eliminar el juego de favoritos. Por favor intenta más tarde.", 3000)
         }
     }
+
 
     if (!game) {
         return <Loading isVisible={true} text="Cargando..."/>
@@ -141,7 +142,7 @@ export default function Game({ navigation, route}) {
             <Icon
                     type = "material-community"
                     name = { isFavorite ? "bookmark-plus" : "bookmark-plus-outline"}
-                    onPress = { isFavorite ? removeFavorite : addFavorite}
+                    onPress = { isFavorite ? removeFavoritesGame : addFavorite}
                     color = { isFavorite ? "#073a9a" : "#9c9c9c"}
                     size = {30}
                     underlayColor = "transparent"

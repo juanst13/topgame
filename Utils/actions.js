@@ -536,3 +536,4 @@ export const getTopGames = async(limit) => {
         result.error = error
     }
 }
+
