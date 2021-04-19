@@ -41,7 +41,7 @@ export default function ListReviews({ navigation, idGame }) {
                         titleStyle = {styles.btnTitleAddReview}
                         onPress = {() => navigation.navigate(
                             "add-review-game", 
-                            { idStore })
+                            { idGame })
                         }
                         icon = {{
                             type: "material-community",

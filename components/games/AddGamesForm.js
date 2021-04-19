@@ -1,24 +1,26 @@
 import React, { useState, useEffect } from 'react'
-import { Alert, Dimensions, StyleSheet, Text, View, ScrollView } from 'react-native'
+import { Alert, Dimensions, StyleSheet, Text, View, ScrollView, ImageBackground } from 'react-native'
 import { Avatar, Button, Icon, Input, Image } from 'react-native-elements'
 import { map, size, filter, isEmpty } from 'lodash'
 import MapView from 'react-native-maps'
 import uuid from 'random-uuid-v4'
 
-
 import { getCurrentLocation, loadImageFromGallery } from '../../Utils/helpers'
 import Modal from '../../components/Modal'
 import { addDocumentWithOutId, getCurrentUser, uploadImage } from '../../Utils/actions'
+import {btn} from '../../Styles'
 
 
-const widthScreen = Dimensions.get("window").width
+const {width, height} = Dimensions.get("window")
 
 export default function AddGamesForm({ toastRef, setLoading, navigation }) {
     const [formData, setFormData] = useState(defaultFormValues())
     const [errorName, setErrorName] = useState(null)
     const [errorDescription, setErrorDescription] = useState(null)
-    const [errorCreateDate, setErrorCreateDate] = useState(null)
-    const [errorCreateBy, setErrorCreateBy] = useState(null)
+    const [errorNameDev, setErrorNameDev] = useState(null)
+    const [errorCategory, setErrorCategory] = useState(null)
+    const [errorClasification, setErrorClasification] = useState(null)
+    const [errorDeveloper, setErrorDeveloper] = useState(null)
     const [errorAddress, setErrorAddress] = useState(null)
     const [imagesSelected, setImagesSelected] = useState([])
     const [isVisibleMap, setIsVisibleMap] = useState(false)
@@ -30,20 +32,23 @@ export default function AddGamesForm({ toastRef, setLoading, navigation }) {
         }
 
          setLoading(true)
-         const responseUploadImages = await uploadImages()         
+         const responseUploadImages = await uploadImages()    
+         const user = getCurrentUser()     
          const game = {
              name: formData.name,
              address: formData.address,
              description: formData.description,
-             createDate: formData.createDate,
-             createBy: formData.createBy,
+             developer: formData.developer,
              location: locationGame,
+             category: formData.category,
+             clasification: formData.clasification,
+             nameDev: formData.nameDev,
              images: responseUploadImages,
              rating: 0,
              ratingTotal: 0,
              quantityVoting: 0,
              createAt: new Date(),
-             createBys: getCurrentUser().uid
+             createBy: user.uid
          }
          const responseAddDocument = await addDocumentWithOutId("games", game)         
          setLoading(false)
@@ -83,19 +88,33 @@ export default function AddGamesForm({ toastRef, setLoading, navigation }) {
             isValid = false
         }
 
-       
-        if (isEmpty(formData.createDate)) {
-            setErrorCreateDate("Debes ingresar una fecha de creación válido.")
+        if (isEmpty(formData.nameDev)) {
+            setErrorNameDev("Debes ingresar el nombre de la desarrolladora.")
             isValid = false
         }
 
         if (size(formData.createBy)) {
-            setErrorCreateBy("Debes ingresar el ID del usuario que creo el juego.")
+            setErrorCreateBy("Debes ingresar los nombres de los desarrolladores.")
             isValid = false
         }
 
         if (isEmpty(formData.description)) {
             setErrorDescription("Debes ingresar una descripción del juego.")
+            isValid = false
+        }
+
+        if (isEmpty(formData.category)) {
+            setErrorCategory("Debes ingresar una categoria del juego.")
+            isValid = false
+        }
+
+        if (isEmpty(formData.clasification)) {
+            setErrorClasification("Debes ingresar una clasificación del juego.")
+            isValid = false
+        }
+
+        if (isEmpty(formData.developer)) {
+            setErrorDeveloper("Debes ingresar los nombres de los desarrolladores del juego.")
             isValid = false
         }
 
@@ -111,14 +130,21 @@ export default function AddGamesForm({ toastRef, setLoading, navigation }) {
     }
 
     const clearErrors = () => {
-        setErrorAddress(null)
-        setErrorDescription(null)
-        setErrorCreateDate(null)
         setErrorName(null)
-        setErrorCreateBy(null)
+        setErrorDescription(null)
+        setErrorNameDev(null)
+        setErrorCategory(null)
+        setErrorClasification(null)
+        setErrorDeveloper(null)
+        setErrorAddress(null)
     }
     return (
         <ScrollView style={styles.viewContainer}>
+            <ImageBackground
+                source = {require('../../assets/206954.jpg')}
+                resizeMode = "cover"
+                style = {styles.imageBackground}
+            >
             <ImageGame
                 imageGame={imagesSelected[0]}
             />
@@ -127,9 +153,11 @@ export default function AddGamesForm({ toastRef, setLoading, navigation }) {
                 setFormData={setFormData}
                 errorName={errorName}
                 errorDescription={errorDescription}
-                errorCreateDate={errorCreateDate}
-                errorCreateBy={errorCreateBy}
+                errorNameDev={errorNameDev}
                 errorAddress={errorAddress}
+                errorCategory={errorCategory}
+                errorClasification={errorClasification}
+                errorDeveloper={errorDeveloper}
                 setIsVisibleMap={setIsVisibleMap}
                 locationGame={locationGame}
             />
@@ -149,6 +177,7 @@ export default function AddGamesForm({ toastRef, setLoading, navigation }) {
                 setLocationGame={setLocationGame}
                 toastRef={toastRef}
             />
+            </ImageBackground>
         </ScrollView>
     )
 }
@@ -215,7 +244,7 @@ function ImageGame({ imageGame }){
     return (
         <View style={styles.viewPhoto}>
             <Image
-                style={{ width: widthScreen, height: 200 }}
+                style={{ width: width, height: 200 }}
                 source={
                     imageGame
                     ? { uri: imageGame }
@@ -268,10 +297,10 @@ function UploadImage({ toastRef, imagesSelected, setImagesSelected }) {
             {
                 size(imagesSelected) < 10 && (
                     <Icon
-                        type="material-community"
-                        name="image-multiple-outline"
-                        color="#681aef"
-                        containerStyle={styles.containerIcon}
+                        type = "material-community"
+                        name = "camera"
+                        color = "#7A7A7A"
+                        containerStyle = {styles.containerIcon}
                         onPress={imageSelect}
                     />
                 )
@@ -298,11 +327,15 @@ function FormAdd({
     setFormData, 
     errorName, 
     errorDescription, 
-    errorCreateDate, 
-    errorCreateBy, 
+    errorNameDev, 
     errorAddress, 
+    errorCategory,
+    errorClasification,
+    errorDeveloper,
     setIsVisibleMap, 
-    locationGame 
+    locationGame,
+    createDate,
+    setCreateDate
 }) {
 
     const onChange = (e, type) => {
@@ -312,10 +345,17 @@ function FormAdd({
     return (
         <View style={styles.viewForm}>
             <Input
+                style = {{ marginTop: 10 }}
                 placeholder="Nombre del juego..."
                 defaultValue={formData.name}
                 onChange={(e) => onChange(e, "name")}
                 errorMessage={errorName}
+            />
+            <Input
+                placeholder="Nombre de la desarrolladora..."
+                defaultValue={formData.nameDev}
+                onChange={(e) => onChange(e, "nameDev")}
+                errorMessage={errorNameDev}
             />
             <Input
                 placeholder="Dirección de la desarrolladora..."
@@ -324,28 +364,28 @@ function FormAdd({
                 errorMessage={errorAddress}
                 rightIcon={{
                     type: "material-community",
-                    name: "earth",
-                    color: locationGame ? "#600df3" : "#De10bc",
+                    name: "google-maps",
+                    color: locationGame ? "#073a9a" : "#C2C2C2",
                     onPress: () => setIsVisibleMap(true)
                 }}
             />
             <Input
-                placeholder="Fecha de creación..."
-                defaultValue={formData.createDate}
-                onChange={(e) => onChange(e, "createDate")}
-                errorMessage={errorCreateDate}
-                rightIcon={{
-                    type: "material-community",
-                    name: "calendar-month-outline",
-                    color: "#600df3",
-                }}
+                placeholder="Nombres desarrolladores..."
+                defaultValue={formData.developer}
+                onChange={(e) => onChange(e, "developer")}
+                errorMessage={errorDeveloper}
             />
             <Input
-                //keyboardType="email-address"
-                placeholder="ID del usuario que creó el juego..."
-                defaultValue={formData.createBy}
-                onChange={(e) => onChange(e, "createBy")}
-                errorMessage={errorCreateBy}
+                placeholder="Categoria del juego..."
+                defaultValue={formData.category}
+                onChange={(e) => onChange(e, "category")}
+                errorMessage={errorCategory}
+            />
+            <Input
+                placeholder="Clasificación del juego..."
+                defaultValue={formData.clasification}
+                onChange={(e) => onChange(e, "clasification")}
+                errorMessage={errorClasification}
             />
             <Input
                 placeholder="Descripción del juego..."
@@ -363,9 +403,11 @@ const defaultFormValues = () => {
     return {
         name: "",
         description: "",
-        createDate: "",
-        createBy: "",
-        address: "",        
+        address: "",
+        nameDev:"",
+        category: "",
+        clasification: "",
+        developer: "" 
     }
 }
 
@@ -373,8 +415,12 @@ const styles = StyleSheet.create({
     viewContainer: {
         height: "100%"
     },
-    viewForm: {
+    viewForm:{
         marginHorizontal: 10,
+        borderRadius: 10,
+        opacity: 0.8,
+        backgroundColor: "#fff",
+        marginVertical: 10
     },
     textArea: {
         height: 100,
@@ -388,8 +434,8 @@ const styles = StyleSheet.create({
         width: "80%"
     },
     btnAddGame: {
-        margin: 20,
-        backgroundColor: "#681aef"
+        ...btn.btnIn,
+        margin: 10,
     },
     viewImages: {
         flexDirection: "row",
@@ -400,9 +446,10 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         marginRight: 10,
-        height: 50,
-        width: 50,
-        backgroundColor: "#cab1f6"
+        height: 70,
+        width: 70,
+        borderRadius: 15,
+        backgroundColor: "#E3E3E3"
     },
     miniatureStyle: {
         width: 70,
@@ -430,9 +477,12 @@ const styles = StyleSheet.create({
         paddingRight: 5,
     },
     viewMapBtnCancel: {
-        backgroundColor: "#cab1f6"
+        backgroundColor: "#A65273"
     },
     viewMapBtnSave: {
-        backgroundColor: "#681aef"
+        backgroundColor: "#073a9a"
+    },
+    imageBackground:{
+        width: width
     }
 })

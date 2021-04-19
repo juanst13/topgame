@@ -24,7 +24,17 @@ export default function ListGames({ games, navigation, handleLoadMore }) {
 }
 
 function Game({ game, navigation, handleLoadMore }) {
-    const { id, images, name, address, description, createDate, createBy, rating } = game.item
+    const { 
+        id, 
+        images,
+        name, 
+        address, 
+        description, 
+        createDate, 
+        createBy, 
+        rating, 
+        nameDev,
+        developer } = game.item
     const imageGame = images[0]
 
     const goGame = () => {
@@ -48,10 +58,10 @@ function Game({ game, navigation, handleLoadMore }) {
                                 {name}
                             </Text>
                             <Text style = {styles.gameInformation}>
-                                {createBy}
+                                {developer}
                             </Text>
                             <Text style = {styles.gameInformation}>
-                                {createDate}
+                                {nameDev}
                             </Text>
                             <Text style = {styles.gameInformation}>
                                 {address}

@@ -1,12 +1,13 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react'
 import { View } from 'react-native'
 import { Alert, Dimensions, StyleSheet, Text, ScrollView } from 'react-native'
-import { ListItem, Rating, Icon, Input, Button } from 'react-native-elements'
+import { ListItem, Icon, Input, Button } from 'react-native-elements'
 import { isEmpty, map } from 'lodash'
 import { useFocusEffect } from '@react-navigation/native'
 import firebase from 'firebase/app'
 import Toast from 'react-native-easy-toast'
 import * as Font from 'expo-font'
+import {Rating} from 'react-native-ratings'
 
 import CarouselImages from '../../components/CarouselImage'
 import Loading from '../../components/Loading'
@@ -165,9 +166,11 @@ export default function Game({ navigation, route}) {
                 address={game.address}
                 createDate={game.createDate}
                 createBy={game.createBy}
+                developer = {game.developer}
                 currentUser={currentUser}
                 setLoading={setLoading}
                 setModalNotification={setModalNotification}
+                nameDev = {game.nameDev}
             />
             <ListReviews
                 navigation={navigation}
@@ -282,14 +285,16 @@ function GameInfo({
     address, 
     createDate, 
     createBy, 
+    developer,
     currentUser,     
     setLoading,
-    setModalNotification 
+    setModalNotification,
+    nameDev
 }) {
     const listInfo = [
-        { type: "addres", text: address, iconLeft: "map-marker" },
-        { type: "createBy", text: createBy, iconLeft: "hammer-screwdriver" },
-        { type: "createDate", text: createDate, iconLeft: "calendar-month" },
+        { type: "address", text: address, iconLeft: "map-marker" },
+        { type: "createBy", text: developer , iconLeft: "hammer-screwdriver" },
+        { type: "createDate", text: nameDev, iconLeft: "keyboard" },
     ]
 
     return (

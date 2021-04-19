@@ -33,7 +33,6 @@ export default function Favorites({ navigation }) {
                     setLoading(false)
                 }
                 getData()
-                console.log(stores)
             }
             setRealoadData(false)
         }, [userLogged, realoadData])
@@ -270,10 +269,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 10,
         marginTop: -30,
-        backgroundColor: "#6a89c2",
+        backgroundColor: "#04235c",
         width: "80%",
-        left: 5,
-        borderRadius: 20
+        left: 20,
+        borderRadius: 10
     },
     name:{
         fontWeight: "bold",
@@ -283,7 +282,7 @@ const styles = StyleSheet.create({
     favorite:{
         marginTop: -45,
         backgroundColor: "#FFFFFF",
-        padding: 5,
+        padding: 10,
         borderRadius: 10
     },
     iconBottom:{

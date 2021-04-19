@@ -269,10 +269,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 10,
         marginTop: -30,
-        backgroundColor: "#6a89c2",
+        backgroundColor: "#04235c",
         width: "80%",
-        left: 5,
-        borderRadius: 20
+        left: 20,
+        borderRadius: 10
     },
     name:{
         fontWeight: "bold",
